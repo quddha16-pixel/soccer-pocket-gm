@@ -1,0 +1,31 @@
+import type { Career, Formation, Player, Position } from '../models';
+export const formations:Formation[]=['4-3-3','4-4-2','4-2-3-1'];
+export const slots:Record<Formation,Position[]>={
+ '4-3-3':['GK','FB','CB','CB','FB','CM','CM','CM','WG','ST','WG'],
+ '4-4-2':['GK','FB','CB','CB','FB','WG','CM','CM','WG','ST','ST'],
+ '4-2-3-1':['GK','FB','CB','CB','FB','CM','CM','WG','CM','WG','ST']
+};
+export const coordinates:Record<Formation,number[][]>={
+ '4-3-3':[[50,89],[14,71],[38,73],[62,73],[86,71],[23,48],[50,53],[77,48],[16,23],[50,16],[84,23]],
+ '4-4-2':[[50,89],[14,71],[38,73],[62,73],[86,71],[13,43],[38,47],[62,47],[87,43],[32,19],[68,19]],
+ '4-2-3-1':[[50,89],[14,72],[38,74],[62,74],[86,72],[33,56],[67,56],[16,32],[50,35],[84,32],[50,15]]
+};
+export function positionFit(p:Position,slot:Position){return p===slot?1:(['WG','ST','CM'].includes(p)&&['WG','ST','CM'].includes(slot))||(['FB','CB'].includes(p)&&['FB','CB'].includes(slot))?.94:.72;}
+export function autoLineup(players:Player[],clubId:string,formation:Formation){
+ const available=players.filter(p=>p.clubId===clubId);return slots[formation].map(slot=>{const candidates=available.filter(p=>slot==='GK'?p.position==='GK':p.position!=='GK').sort((a,b)=>b.overall*positionFit(b.position,slot)-a.overall*positionFit(a.position,slot));const chosen=candidates[0];if(!chosen)throw Error('Insufficient players for a valid lineup.');available.splice(available.indexOf(chosen),1);return chosen.id;});
+}
+export function validLineup(players:Player[],clubId:string,lineup:string[]){return Array.isArray(lineup)&&lineup.length===11&&new Set(lineup).size===11&&lineup.every(id=>players.some(p=>p.id===id&&p.clubId===clubId))&&players.find(p=>p.id===lineup[0])?.position==='GK'&&lineup.slice(1).every(id=>players.find(p=>p.id===id)?.position!=='GK');}
+export function assignPlayer(c:Career,index:number,id:string):Career{
+ if(c.pending||index<0||index>=11)return c;
+ const lineup=[...c.lineup],old=lineup.indexOf(id);if(old>=0)lineup[old]=lineup[index];lineup[index]=id;
+ if(!validLineup(c.players,c.clubId,lineup))return c;
+ return {...c,lineup,starId:eligibleStars({...c,lineup}).some(p=>p.id===c.starId)?c.starId:eligibleStars({...c,lineup})[0]?.id??''};
+}
+export function eligibleStars(c:Pick<Career,'players'|'lineup'>){return c.players.filter(p=>c.lineup.includes(p.id)&&['ST','WG','CM'].includes(p.position)).sort((a,b)=>b.overall-a.overall);}
+export function changeFormation(c:Career,formation:Formation):Career{
+ if(c.pending)return c;
+ const lineup=autoLineup(c.players,c.clubId,formation);const stars=eligibleStars({...c,lineup});return {...c,formation,lineup,starId:stars.some(p=>p.id===c.starId)?c.starId:stars[0]?.id??''};
+}
+export function valuation(p:Player){return p.transferValue??Math.round(Math.max(100000,(p.overall-48)**3*1150)*(p.age<25?1.25:p.age>29?.65:1)*(1+(p.potential-p.overall)/40)/10000)*10000;}
+export function mostValuable(players:Player[],clubId:string){return players.filter(p=>p.clubId===clubId).sort((a,b)=>valuation(b)-valuation(a)||a.id.localeCompare(b.id)).slice(0,3);}
+export const formatMoney=(value:number)=>value>=1e6?`£${(value/1e6).toFixed(1)}M`:`£${Math.round(value/1000)}K`;
