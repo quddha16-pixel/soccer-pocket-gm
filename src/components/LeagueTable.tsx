@@ -1,0 +1,6 @@
+import { clubById } from '../data/clubs';
+import type { Standing } from '../models';
+import { ClubMark } from './ClubMark';
+export function LeagueTable({rows,selected,compact=false,rankTable=rows}:{rows:Standing[];selected:string;compact?:boolean;rankTable?:Standing[]}){
+ return <div className="table-scroll"><table><thead><tr><th>#</th><th className="team-col">Club</th><th>P</th>{!compact&&<><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th></>}<th>GD</th><th>Pts</th></tr></thead><tbody>{rows.map(r=>{const club=clubById(r.clubId);const rank=rankTable.findIndex(x=>x.clubId===r.clubId)+1;return <tr key={r.clubId} className={`${selected===r.clubId?'selected':''} ${rank>=18?'danger-row':''}`}><td><span className={`rank ${rank<=4?'europe':rank>=18?'relegation':''}`}>{rank}</span></td><td className="team-col"><span className="team-name"><ClubMark club={club}/><span>{compact?club.short:club.name}</span>{selected===r.clubId&&<small className="you">YOU</small>}</span></td><td>{r.played}</td>{!compact&&<><td>{r.won}</td><td>{r.drawn}</td><td>{r.lost}</td><td>{r.gf}</td><td>{r.ga}</td></>}<td>{r.gf-r.ga>0?'+':''}{r.gf-r.ga}</td><td className="points">{r.points}</td></tr>;})}</tbody></table></div>;
+}
