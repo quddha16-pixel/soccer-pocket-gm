@@ -1,4 +1,6 @@
 import type { Career, Fixture, Formation, MatchEvent, Performance, Player, Tactic } from '../models';
+import { eligiblePlayers } from './economy';
+import { teamChemistry } from './chemistry';
 import { autoLineup, positionFit, slots } from './management';
 import { score } from './scoring';
 export { score } from './scoring';
@@ -7,7 +9,7 @@ export function attackWeight(p:Player,starId:string,tactic:Tactic){return ({ST:5
 export function lineupStrength(players:Player[],formation:Formation){return players.reduce((s,p,i)=>s+p.overall*positionFit(p.position,slots[formation][i])*(.85+.15*p.fitness/100)*(.95+.05*p.morale/100),0)/11;}
 export function selectMotm(performances:Performance[]){return [...performances].sort((a,b)=>b.rating-a.rating||b.goals-a.goals||b.assists-a.assists||b.saves-a.saves||a.playerId.localeCompare(b.playerId))[0].playerId;}
 export function resolveMatch(f:Fixture,c:Career,rng:()=>number):Fixture{
- const eleven=(clubId:string)=>{const ids=clubId===c.clubId?c.lineup:autoLineup(c.players,clubId,'4-3-3');return ids.map(id=>c.players.find(p=>p.id===id)!);};
+ const eleven=(clubId:string)=>{const ids=clubId===c.clubId?c.lineup:autoLineup(eligiblePlayers(c,clubId),clubId,'4-3-3');return ids.map(id=>c.players.find(p=>p.id===id)!);};
  const home=eleven(f.homeId),away=eleven(f.awayId);
  const formation=(id:string)=>id===c.clubId?c.formation:'4-3-3';
  const tactic=(id:string):Tactic=>id===c.clubId?c.tactic:'balanced';
@@ -16,6 +18,7 @@ export function resolveMatch(f:Fixture,c:Career,rng:()=>number):Fixture{
  if(formation(id)==='4-4-2')value+=.5;
  if(formation(id)==='4-2-3-1')value-=.2;
  if(tactic(id)==='feed-star'){const star=team.find(p=>p.id===c.starId);value+=(star? (star.overall-team.reduce((s,p)=>s+p.overall,0)/11)*.18:0)-1.7;}
+ value+=(teamChemistry(c,team.map(p=>p.id),formation(id),tactic(id)).score-60)*.045;
  return value;
  };
  const [homeGoals,awayGoals]=score(effective(home,f.homeId),effective(away,f.awayId),rng,tactic(f.homeId),tactic(f.awayId));
@@ -38,5 +41,5 @@ export function resolveMatch(f:Fixture,c:Career,rng:()=>number):Fixture{
  return {playerId:p.id,clubId:p.clubId,goals,assists,shots,saves,tackles,rating};
  });
  const homePossession=Math.round(Math.max(32,Math.min(68,50+(effective(home,f.homeId)-effective(away,f.awayId))*.5+(rng()-.5)*12)));
- return {...f,homeGoals,awayGoals,report:{events,performances,homePossession,motmId:selectMotm(performances)}};
+ return {...f,homeGoals,awayGoals,report:{events,performances,homePossession,motmId:selectMotm(performances),homeLineup:home.map(p=>p.id),awayLineup:away.map(p=>p.id),homeFormation:formation(f.homeId),awayFormation:formation(f.awayId)}};
 }

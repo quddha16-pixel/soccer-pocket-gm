@@ -9,7 +9,7 @@ export function dashboard(c:Career){
  });
  let unbeaten=0,winning=0;for(const r of [...results].reverse()){if(r.outcome==='L')break;unbeaten++;}for(const r of [...results].reverse()){if(r.outcome!=='W')break;winning++;}
  const squad=c.players.filter(p=>p.clubId===c.clubId),stats=new Map(squad.map(p=>[p.id,{player:p,goals:0,assists:0}]));
- for(const f of c.fixtures)for(const p of f.report?.performances??[]){const stat=stats.get(p.playerId);if(stat){stat.goals+=p.goals;stat.assists+=p.assists;}}
+ for(const f of c.fixtures)for(const p of f.report?.performances??[]){const stat=stats.get(p.playerId);if(stat&&p.clubId===c.clubId){stat.goals+=p.goals;stat.assists+=p.assists;}}
  const leaders=[...stats.values()],topScorer=[...leaders].sort((a,b)=>b.goals-a.goals)[0],topAssister=[...leaders].sort((a,b)=>b.assists-a.assists)[0];
  return {table,row,rank,recent:results.slice(-5).reverse(),unbeaten,winning,squad,average:squad.reduce((s,p)=>s+p.overall,0)/squad.length,topScorer:topScorer?.goals?topScorer:null,topAssister:topAssister?.assists?topAssister:null};
 }

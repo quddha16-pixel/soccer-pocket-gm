@@ -8,6 +8,7 @@ import { autoLineup, assignPlayer, changeFormation, formations, validLineup, mos
 import { dashboard } from '../simulation/dashboard';
 import { attackWeight, resolveMatch, selectMotm } from '../simulation/match';
 import { random } from '../simulation/random';
+import { decodeSave } from '../simulation/codec';
 import { loadCareer, saveCareer, SAVE_KEY } from '../storage';
 import { Matchday, playbackInterval, visibleMatch } from '../components/Matchday';
 import App from '../App';
@@ -79,8 +80,8 @@ describe('matchweek integrity and persistence',()=>{
  });
  it('migrates version-1 saves without changing completed results or players',()=>{
  const old=advance(career());const legacy={version:1,manager:old.manager,reputation:old.reputation,clubId:old.clubId,players:old.players,fixtures:old.fixtures.map(({report,...f})=>f),week:old.week,tactic:old.tactic,status:old.status,seed:old.seed};
- localStorage.setItem(SAVE_KEY,JSON.stringify(legacy));const loaded=loadCareer();expect(loaded.error).toBe('');expect(loaded.career!.version).toBe(2);expect(loaded.career!.players).toEqual(legacy.players);expect(loaded.career!.fixtures).toEqual(legacy.fixtures);expect(loaded.career!.statsStartWeek).toBe(2);expect(validLineup(loaded.career!.players,old.clubId,loaded.career!.lineup)).toBe(true);
- saveCareer(loaded.career!);expect(JSON.parse(localStorage.getItem(`${SAVE_KEY}-backup-v1`)!)).toEqual(legacy);
+ localStorage.setItem(SAVE_KEY,JSON.stringify(legacy));const loaded=loadCareer();expect(loaded.error).toBe('');expect(loaded.career!.version).toBe(3);expect(loaded.career!.players).toEqual(legacy.players);expect(loaded.career!.fixtures).toEqual(legacy.fixtures);expect(loaded.career!.statsStartWeek).toBe(2);expect(validLineup(loaded.career!.players,old.clubId,loaded.career!.lineup)).toBe(true);
+ saveCareer(loaded.career!);expect(JSON.parse(decodeSave(localStorage.getItem(`${SAVE_KEY}-backup-v1`)!))).toEqual(legacy);
  });
  it('round trips formation, star and lineup changes and rejects invalid pending state',()=>{
  let c=changeFormation(career(),'4-2-3-1');c={...c,tactic:'feed-star'};saveCareer(c);expect(loadCareer().career).toEqual(c);
