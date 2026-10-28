@@ -1,7 +1,8 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { customRosterDraft } from '../data/customRoster';
-import { clubs } from '../data/clubs';
+import { clubs, leagueClubs } from '../data/clubs';
+import { standings } from '../simulation/league';
 import { customStartingPlayers, startingProfiles, validatePlayableRoster, keeperAttributes, outfieldAttributes } from '../data/playerProfiles';
 import { newCareer, prepareWeek, advance, offers } from '../simulation/career';
 import { autoLineup, naturalFit, formations, validLineup, valuation } from '../simulation/management';
@@ -153,10 +154,14 @@ describe('careers, transfers and mobile profile protection',()=>{
   let c=newCareer('Long career','elite','liverpool',8080);const ids=c.players.filter(p=>p.real).map(p=>p.id);
   for(let season=0;season<3;season++){
    for(let week=0;week<38;week++)c=advance(c);
-   expect(c.players.filter(p=>p.real).map(p=>p.id)).toEqual(ids);
+   expect(c.players.filter(p=>ids.includes(p.id)).map(p=>p.id)).toEqual(ids);
    expect(c.players.every(p=>Number.isFinite(p.overall)&&p.overall>=1&&p.overall<=p.potential)).toBe(true);
-   // Exercise world rollover even if this test manager is dismissed; dismissal itself is covered by the season tests.
-   if(season<2){c=rolloverSeason({...c,status:'survived'});for(const club of clubs){const available=eligiblePlayers(c,club.id);expect(validLineup(available,club.id,autoLineup(available,club.id,'4-3-3'))).toBe(true);}}
+   // Follow a surviving club in this world-progression fixture if dismissed.
+   // Actual manager dismissal remains covered separately; never promote the relegated club back.
+   if(season<2){
+    if(c.status==='fired'){const clubId=standings(leagueClubs(c),c.fixtures)[0].clubId;const lineup=autoLineup(eligiblePlayers(c,clubId),clubId,c.formation);c={...c,clubId,lineup,status:'survived'};}
+    c=rolloverSeason(c);for(const club of leagueClubs(c)){const available=eligiblePlayers(c,club.id);expect(validLineup(available,club.id,autoLineup(available,club.id,'4-3-3'))).toBe(true);}
+   }
   }
   saveCareer(c);expect(loadCareer().error).toBe('');
  },30000);

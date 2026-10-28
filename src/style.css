@@ -741,3 +741,12 @@ td { padding: 15px 9px; text-align: center; border-bottom: 1px solid #263647; co
  .roster-card .player-avatar { width: 48px; height: 56px; }
  .roster-card .trait-pill { font-size: 10px; padding: 3px 5px; }
 }
+
+.championship-panel > .muted { margin-bottom: 20px; }
+.championship-clubs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 10px; }
+.pool-club { display: flex; align-items: center; gap: 12px; padding: 14px; background: var(--raised); border: 1px solid var(--line); border-radius: 14px; min-width: 0; }
+.pool-club > span { min-width: 0; }
+.pool-club strong { display: block; overflow-wrap: anywhere; }
+.pool-club small { display: block; color: var(--muted); margin-top: 3px; }
+.promotion-summary { padding: 16px; margin: 16px 0 22px; border: 1px solid #527d3c; border-radius: 14px; }
+.promotion-summary p { margin-top: 8px; }

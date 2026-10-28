@@ -1,8 +1,8 @@
 import type { Career } from '../models';
-import { clubs } from '../data/clubs';
+import { leagueClubs } from '../data/clubs';
 import { standings } from './league';
 export function dashboard(c:Career){
- const table=standings(clubs,c.fixtures),row=table.find(r=>r.clubId===c.clubId)!,rank=table.findIndex(r=>r.clubId===c.clubId)+1;
+ const table=standings(leagueClubs(c),c.fixtures),row=table.find(r=>r.clubId===c.clubId)!,rank=table.findIndex(r=>r.clubId===c.clubId)+1;
  const results=c.fixtures.filter(f=>f.homeGoals!==undefined&&[f.homeId,f.awayId].includes(c.clubId)).sort((a,b)=>a.week-b.week).map(f=>{
  const home=f.homeId===c.clubId,gf=home?f.homeGoals!:f.awayGoals!,ga=home?f.awayGoals!:f.homeGoals!;
  return {fixture:f,opponentId:home?f.awayId:f.homeId,gf,ga,outcome:gf>ga?'W':gf===ga?'D':'L',home};

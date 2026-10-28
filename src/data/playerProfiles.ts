@@ -11,7 +11,7 @@ export type DetailedAttribute=typeof outfieldAttributes[number]|typeof keeperAtt
 export type DetailedAttributes=Record<typeof outfieldAttributes[number],number>&Partial<Record<typeof keeperAttributes[number],number>>;
 export interface PlayerTrait {id:string;level:1|2}
 export interface RealPlayerProfile {
- draftId:string;displayName:string;assignedClubId:string;canonicalIdentityId:string;matchedIdentity:string;dateOfBirth:string;nationality:string;preferredFoot:string|null;primaryPosition:NaturalPosition;secondaryPositions:NaturalPosition[];overall:number;potential:number;attributes:DetailedAttributes;traits:PlayerTrait[];traitRationale:string;ratingStatus:'official'|'secondary'|'provisional';identityConfidence:'high'|'review';assessmentDate:string;sources:{url:string;retrievedDate:string;kind:string;fields:string[]}[];estimatedFields:string[];startingValue:number;weeklyWageEstimate:number;contractYearsEstimate:number;startingAge:number;development:{rate:number;tendency:'early'|'late'|'volatile'|'steady';uncertainty:number;confidence:number};ratingRationale:string;playingStyle:'creator'|'runner'|'anchor'|'finisher'|'keeper';coreBaseline?:Attributes;
+ origin?:'custom'|'championship';draftId:string;displayName:string;assignedClubId:string;canonicalIdentityId:string;matchedIdentity:string;dateOfBirth:string;nationality:string;preferredFoot:string|null;primaryPosition:NaturalPosition;secondaryPositions:NaturalPosition[];overall:number;potential:number;attributes:DetailedAttributes;traits:PlayerTrait[];traitRationale:string;ratingStatus:'official'|'secondary'|'provisional';identityConfidence:'high'|'review';assessmentDate:string;sources:{url:string;retrievedDate:string;kind:string;fields:string[]}[];estimatedFields:string[];startingValue:number;weeklyWageEstimate:number;contractYearsEstimate:number;startingAge:number;development:{rate:number;tendency:'early'|'late'|'volatile'|'steady';uncertainty:number;confidence:number};ratingRationale:string;playingStyle:'creator'|'runner'|'anchor'|'finisher'|'keeper';coreBaseline?:Attributes;
 }
 export const startingProfiles=data.players as RealPlayerProfile[];
 export const coarsePosition=(position:NaturalPosition):Position=>position==='GK'?'GK':position==='CB'?'CB':['LB','RB','LWB','RWB'].includes(position)?'FB':['CDM','CM','CAM'].includes(position)?'CM':['LW','RW','LM','RM'].includes(position)?'WG':'ST';
@@ -19,12 +19,13 @@ export function coreAttributes(profile:RealPlayerProfile):Attributes {
  const a=profile.attributes,avg=(...keys:DetailedAttribute[])=>keys.reduce((sum,k)=>sum+(a[k]??profile.overall),0)/keys.length;
  return {finishing:avg('finishing','shotPower','composure'),passing:avg('shortPassing','longPassing','vision'),control:avg('dribbling','ballControl','agility'),tackling:avg('standingTackle','interceptions','marking'),positioning:profile.primaryPosition==='GK'?a.gkPositioning!:['CB','LB','RB','CDM'].includes(profile.primaryPosition)?avg('marking','interceptions'):a.positioning,reflexes:a.reflexes??profile.overall,handling:a.handling??profile.overall,movement:avg('acceleration','sprintSpeed','positioning')};
 }
-export function customStartingPlayers():Player[]{
- return startingProfiles.map(source=>{
+export function customStartingPlayers():Player[]{return playersFromProfiles(startingProfiles);}
+export function playersFromProfiles(profiles:RealPlayerProfile[],season=2026):Player[]{
+ return profiles.map(source=>{
   // Each new career owns its snapshot; developing a player cannot mutate the database.
   const real=structuredClone(source),attributes=coreAttributes(real);real.coreBaseline={...attributes};
-  const p=enrichPlayer({id:real.draftId,clubId:real.assignedClubId,name:real.displayName,age:real.startingAge,position:coarsePosition(real.primaryPosition),overall:real.overall,potential:real.potential,wage:real.weeklyWageEstimate,contractYears:real.contractYearsEstimate,fitness:96,morale:75,real});
-  p.identity={...p.identity!,appearanceSeed:hash(real.canonicalIdentityId),nationality:real.nationality,birthDate:real.dateOfBirth,trainingYears:0,style:real.playingStyle==='keeper'?'anchor':real.playingStyle,attributes,development:{...p.identity!.development,tendency:real.development.tendency,growth:real.development.rate,confidence:real.development.confidence,baseline:{...attributes}},contractEnd:`${2026+real.contractYearsEstimate}-06-30`};
+  const p=enrichPlayer({id:real.draftId,clubId:real.assignedClubId,name:real.displayName,age:real.startingAge+season-2026,position:coarsePosition(real.primaryPosition),overall:real.overall,potential:real.potential,wage:real.weeklyWageEstimate,contractYears:real.contractYearsEstimate,fitness:96,morale:75,real},season);
+  p.identity={...p.identity!,appearanceSeed:hash(real.canonicalIdentityId),nationality:real.nationality,birthDate:real.dateOfBirth,trainingYears:0,style:real.playingStyle==='keeper'?'anchor':real.playingStyle,attributes,development:{...p.identity!.development,tendency:real.development.tendency,growth:real.development.rate,confidence:real.development.confidence,baseline:{...attributes}},contractEnd:`${season+real.contractYearsEstimate}-06-30`};
   return p;
  });
 }

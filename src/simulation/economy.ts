@@ -1,5 +1,5 @@
 import type { Career, Player } from '../models';
-import { clubs, clubById } from '../data/clubs';
+import { leagueClubs, clubById } from '../data/clubs';
 import { financeRules, inWindow, seasonRules } from '../data/rules';
 import { identity } from './identity';
 import { valuation, autoLineup, eligibleStars, validLineup } from './management';
@@ -48,7 +48,7 @@ export function submitOffer(c:Career,playerId:string,fee:number):Career{
  world.offers.unshift({id:`offer-${c.world.season}-${c.week}-${p.id}-${c.world.news.length}`,playerId:p.id,buyerId:c.clubId,sellerId:p.clubId,fee,asking,status,message,season:world.season,week:c.week});world.news.unshift({id:`news-${world.news.length}-${world.season}-${c.week}`,date:world.date,text:`${clubName(c.clubId)}: ${status} offer for ${p.name}. ${message}`});
  return {...c,world};
 }
-export function wageDemand(c:Career,p:Player,buyer=c.clubId){const quality=clubById(buyer).strength,rank=standings(clubs,c.fixtures).findIndex(r=>r.clubId===buyer)+1,ambition=p.overall>quality+4?1.65:1.12,competition=p.potential>=87?1.12:1;
+export function wageDemand(c:Career,p:Player,buyer=c.clubId){const quality=clubById(buyer).strength,rank=standings(leagueClubs(c),c.fixtures).findIndex(r=>r.clubId===buyer)+1,ambition=p.overall>quality+4?1.65:1.12,competition=p.potential>=87?1.12:1;
  return Math.ceil(Math.max(2000,p.wage)*ambition*competition*(p.clubId?1:1.15)*(c.week>5&&rank>15?1.1:1)/100)*100;
 }
 export function finalizeSigning(c:Career,offerId:string,wage:number,years:number,bonus:number):Career{

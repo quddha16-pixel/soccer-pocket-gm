@@ -1,4 +1,4 @@
-import { clubs, clubById } from '../data/clubs';
+import { clubs, clubById, leagueClubs } from '../data/clubs';
 import { customStartingPlayers } from '../data/playerProfiles';
 import type { Career, Player, Reputation } from '../models';
 import { generateFixtures, isRelegated, standings } from './league';
@@ -32,7 +32,7 @@ export function commitWeek(c:Career,expectedWeek=c.pending?.week):Career{
  const grown=developRound(c);
  const players=grown.map(p=>({...p,fitness:Math.min(100,Math.max(75,p.fitness+Math.floor(rng()*7)-3)),morale:Math.min(100,Math.max(25,p.morale+Math.floor(rng()*7)-3))}));
  const world={...c.world,chemistry:buildFamiliarity(c)};
- const updated={...c,world,fixtures,players,week,pending:undefined,status:week===38?(isRelegated(standings(clubs,fixtures),c.clubId,true)?'fired' as const:'survived' as const):'active' as const};
+ const updated={...c,world,fixtures,players,week,pending:undefined,status:week===38?(isRelegated(standings(leagueClubs(c),fixtures),c.clubId,true)?'fired' as const:'survived' as const):'active' as const};
  return repairLineup(aiTransfers(settleFinances(updated)));
 }
 // Headless quick simulation retains the original API for full-season tests and tooling.

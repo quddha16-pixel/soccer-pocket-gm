@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, BarChart3, BriefcaseBusiness, CalendarDays, ChevronRight, Flag, Home, ShoppingBag, Shield, SlidersHorizontal, Trophy, Users, Wallet } from 'lucide-react';
-import { clubById, league } from './data/clubs';
+import { clubById, league, leagueClubs } from './data/clubs';
 import type { Career, Reputation, Tactic } from './models';
 import { prepareWeek, commitWeek, newCareer, offers } from './simulation/career';
 import { standings } from './simulation/league';
@@ -36,7 +36,7 @@ export default function App(){
  useEffect(()=>{document.documentElement.scrollTop=scrolls.current[screen]??0;heading.current?.focus({preventScroll:true});},[screen]);
  useEffect(()=>{if(watching)document.documentElement.scrollTop=0;},[watching]);
  useEffect(()=>{if(career){try{saveCareer(career);setError('');}catch{setError('Saving is unavailable. Keep this tab open to preserve your progress.');}}},[career]);
- const table=useMemo(()=>standings(clubsForTable,career?.fixtures??[]),[career]);
+ const table=useMemo(()=>standings(leagueClubs(career),career?.fixtures??[]),[career]);
  const club=career?clubById(career.clubId):null,row=table.find(r=>r.clubId===career?.clubId),rank=table.findIndex(r=>r.clubId===career?.clubId)+1;
  const season=career?`${career.world.season}–${String(career.world.season+1).slice(-2)}`:league.season;
  function start(){if(career)setReset(true);else navigate('new');}
@@ -44,7 +44,7 @@ export default function App(){
  function beginMatch(watch:boolean){if(!career)return;setCareer(previous=>previous?prepareWeek(previous,watch):previous);}
  function finishMatch(){if(!career?.pending||career.pending.minute<90)return;setCareer(commitWeek(career));setResults(true);scrolls.current.dashboard=0;setRoute(['menu','dashboard']);}
  return <div className={`app-shell ${watching?'watching':''}`}>
-  <aside className="sidebar"><a className="brand" href="#" onClick={e=>{e.preventDefault();navigate('menu');}}><span className="brand-symbol"><Flag size={26}/></span><span>Pocket<span className="brand-sub">Football GM</span></span></a><nav aria-label="Desktop navigation">{nav.map(([s,label,Icon])=><button key={s} disabled={!career} className={`side-link ${root===s?'active':''}`} aria-current={root===s?'page':undefined} onClick={()=>navigate(s)}><Icon size={24}/>{label}</button>)}</nav><div className="sidebar-bottom"><span className="tag">First team edition · v1.4</span><button className="side-link" onClick={()=>navigate('menu')}><Home size={23}/>Main menu</button><p>Created By: Quentin Warminsky</p></div></aside>
+  <aside className="sidebar"><a className="brand" href="#" onClick={e=>{e.preventDefault();navigate('menu');}}><span className="brand-symbol"><Flag size={26}/></span><span>Pocket<span className="brand-sub">Football GM</span></span></a><nav aria-label="Desktop navigation">{nav.map(([s,label,Icon])=><button key={s} disabled={!career} className={`side-link ${root===s?'active':''}`} aria-current={root===s?'page':undefined} onClick={()=>navigate(s)}><Icon size={24}/>{label}</button>)}</nav><div className="sidebar-bottom"><span className="tag">First team edition · v1.5</span><button className="side-link" onClick={()=>navigate('menu')}><Home size={23}/>Main menu</button><p>Created By: Quentin Warminsky</p></div></aside>
   <div className="main-shell"><header className="topbar">{!primary&&screen!=='menu'?<button className="back-button" aria-label="Back" onClick={back}><ArrowLeft size={24}/><span>Back</span></button>:<span className="topbar-brand"><Flag size={22}/>{playing?titles[screen]:'Pocket GM'}</span>}<span className="topbar-context">{!primary&&playing?titles[screen]:playing?club?.name:'Football management'}</span><span className="season-chip">{season}</span></header>
    <main className={`${screen==='menu'?'welcome-main':''} ${screen==='matchday'?'matchday-main':''}`}>
     {error&&<div className="error" role="alert">{error}</div>}
@@ -64,7 +64,7 @@ export default function App(){
      {screen==='finances'&&<Finances career={career}/>}
      {screen==='tactics'&&<section className="panel tactics-panel"><SlidersHorizontal size={32}/><h2>Give your team a plan.</h2><p className="muted">Your approach affects the next match.</p><label htmlFor="tactic">Match approach<select id="tactic" disabled={!!career.pending} value={career.tactic} onChange={e=>setCareer({...career,tactic:e.target.value as Tactic})}><option value="balanced">Balanced</option><option value="attacking">Attack</option><option value="defensive">Defensive</option><option value="feed-star">Feed Your Star</option></select></label><label htmlFor="star">Designated star<select id="star" disabled={!!career.pending} value={career.starId} onChange={e=>setCareer({...career,starId:e.target.value})}>{eligibleStars(career).map(p=><option key={p.id} value={p.id}>{p.name} · {p.position} · {p.overall}</option>)}</select></label><details className="disclosure"><summary>How the approaches work</summary><p>Attack creates more chances and leaves more space. Defensive reduces opportunities at both ends. Feed Your Star directs chances toward your selected attacker, at the cost of predictability. Ability and opposition still matter.</p></details>{career.pending&&<p className="notice">This round is resolved. Changes unlock after full time.</p>}<button className="primary full" disabled={career.status!=='active'} onClick={()=>navigate('matchday')}>{career.pending?'Resume matchday':'Go to matchday'} <ArrowRight size={22}/></button></section>}
      {screen==='matchday'&&<Matchday career={career} onUpdate={setCareer} onStart={beginMatch} onCommit={finishMatch} onTactics={()=>navigate('tactics')}/>}
-     <footer className="game-footer">Pocket Football GM · v1.3 <span>{career.world.season>2026?'Fixed 20-club career league':'Premier League · 20 clubs'}</span></footer>
+     <footer className="game-footer">Pocket Football GM · v1.5 <span>{'Premier League · 20 clubs · Promotion & relegation'}</span></footer>
     </div>}
    </main>
    {playing&&<nav className="mobile-nav" aria-label="Primary navigation">{nav.map(([s,label,Icon])=><button key={s} aria-current={root===s?'page':undefined} className={root===s?'active':''} onClick={()=>navigate(s)}><Icon size={24}/><span>{label}</span></button>)}</nav>}
@@ -74,4 +74,3 @@ export default function App(){
   {reset&&<Modal title="Start a new chapter?" onClose={()=>setReset(false)} role="alertdialog" closeLabel="Keep current career"><p>Your current career will be replaced. This cannot be undone.</p><div className="confirmation-actions"><button className="primary full" onClick={clear}>Start completely new career</button><button className="secondary full" onClick={()=>setReset(false)}>Keep current career</button></div></Modal>}
  </div>;
 }
-import { clubs as clubsForTable } from './data/clubs';

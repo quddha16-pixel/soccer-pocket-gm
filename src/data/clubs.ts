@@ -1,4 +1,5 @@
-import type { Club } from '../models';
+import type { Career, Club } from '../models';
+import { championshipClubs } from './championship';
 // Authoritative 2026–27 membership supplied by the project owner.
 // Replace this module to configure clubs; players are maintained separately.
 // Preserve club IDs and row order for compatibility with existing career saves.
@@ -18,4 +19,9 @@ const rows: [string,string,string,string,number,number][] = [
  ['hull','Hull City','HUL','#efb649',68,18],['ipswich','Ipswich Town','IPS','#608def',70,22]
 ];
 export const clubs:Club[]=rows.map(([id,name,short,color,strength,budget])=>({id,name,short,color,strength,budget,expectation:strength>=85?'Challenge for the title':strength>=80?'Qualify for Europe':strength>=75?'Secure a mid-table finish':'Avoid relegation'}));
-export const clubById=(id:string)=>clubs.find(c=>c.id===id)!;
+// The starting 20 remain immutable. Every career stores its own current league.
+export const allClubs:Club[]=[...clubs,...championshipClubs];
+export const clubById=(id:string)=>allClubs.find(c=>c.id===id)!;
+export function leagueClubs(c?:Pick<Career,'world'>|null):Club[]{return c?.world?.leagueClubIds?c.world.leagueClubIds.map(clubById):clubs;}
+export function poolClubs(c?:Pick<Career,'world'>|null):Club[]{return c?.world?.championshipClubIds?c.world.championshipClubIds.map(clubById):championshipClubs;}
+export function managedClubs(c:Pick<Career,'world'>):Club[]{return allClubs.filter(club=>!!c.world.finances[club.id]);}
