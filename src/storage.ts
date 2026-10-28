@@ -1,3 +1,4 @@
+import { validAimedShot } from './simulation/shotGeometry';
 import { validLegacy, legacyState, settleLegacySeason } from './simulation/legacy';
 import { momentKinds } from './simulation/momentRules';
 import { fixtureLineup } from './simulation/substitutionRules';
@@ -70,6 +71,7 @@ export function loadCareer():{career:Career|null;error:string}{
    if(!Array.isArray(r.keyMoments)||r.keyMoments.length>64||new Set(r.keyMoments.map(m=>m.id)).size!==r.keyMoments.length||new Set(r.keyMoments.map(m=>m.eventId)).size!==r.keyMoments.length)throw Error();
    for(const m of r.keyMoments){
     if(typeof m.id!=='string'||typeof m.eventId!=='string'||!momentKinds.includes(m.kind)||![f.homeId,f.awayId].includes(m.clubId)||!Number.isInteger(m.minute)||m.minute<1||m.minute>90||!Number.isFinite(m.baseXg)||m.baseXg<0||m.baseXg>1||![0,1,2].includes(m.autoChoice)||(m.selection!==undefined&&![0,1,2].includes(m.selection))||!['set','advancing','committing'].includes(m.keeperApproach)||!['space','closing'].includes(m.pressure)||!['goal','saved','wide','blocked','intercepted'].includes(m.outcome))throw Error();
+    if(m.shot!==undefined&&(!['penalty','free-kick'].includes(m.kind)||m.selection!==(m.kind==='penalty'?1:0)||!validAimedShot(m.shot)))throw Error();
     const own=fixtureLineup(f,m.clubId,m.minute-1),other=fixtureLineup(f,m.clubId===f.homeId?f.awayId:f.homeId,m.minute-1);
     if([m.actorId,m.receiverId,m.alternateId,m.supportId].some(id=>!ids.has(id)||!own.slice(1).includes(id))||m.keeperId!==other[0])throw Error();
     const events=r.events.filter(e=>e.momentId===m.id),shot=['goal','saved','wide'].includes(m.outcome);

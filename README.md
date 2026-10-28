@@ -1,6 +1,14 @@
-# Pocket Football GM — v1.10
+# Pocket Football GM — v1.11
 
 Created By: Quentin Warminsky. A mobile-first football management game built with React, TypeScript and Vite in the existing `quddha16-pixel/soccer-pocket-gm` repository. No licensed club marks, photos, external portrait services or external fonts are used.
+
+## Drawn set pieces, depth chart and arrows (v1.11)
+
+Penalties and free kicks in interactive **Watch Match** now open a mini-game with your taker and the opposing keeper. Draw a line or curve from the ball to the goal, preview/redraw it, then **Take shot**. The ball follows your saved path. This replaces the three-option menus for these two moments; other key chances keep their tactical choices. Placement, player ability, goalkeeper quality and the free-kick wall affect the actual result. Tap and keyboard aiming and reduced-motion replay are supported.
+
+**Squad → Depth** shows every XI role and ranked eligible cover. Choose a role, use its starter slider, tap Start, or drag a player's grip into the sticky starting spot. Changes update the real XI and survive refresh. Existing starters swap slots; rotation players replace the current starter. Injured/unregistered players and goalkeeper restrictions follow the existing rules. During a matchweek, use Matchday substitutions instead.
+
+Small green ↑ / ↑↑ / ↑↑↑ arrows beside squad player names mean normal, fast and ultra development. Red downward arrows show the same levels of decline; a dash means stable. Indicators use a read-only forecast from the actual progression engine, reflecting current minutes, age, injuries, role, coaching and potential. The depth-chart legend and tooltips explain the rates and uncertainty. [v1.11 mechanics and validation](docs/v1.11-release.md).
 
 ## Legacy, achievements and GM contracts (v1.10)
 
@@ -40,7 +48,7 @@ Relegation dismisses the GM from that club; the same career can continue through
 
 1. Start a career, choose reputation and one of three managerial specialties, then browse all 20 clubs. Unknown coaches receive six highlighted offers; Established and Elite coaches can choose any club, including smaller ones. Continue restores a saved career or pending matchday.
 2. **Home** shows your club, league position, points, recent form, next opponent and **Play Next Match**. Detailed season metrics and squad leaders are a secondary view.
-3. **Squad** contains Lineup, Players and Progress. Choose 4-3-3, 4-4-2 or 4-2-3-1; tap a starter, choose a replacement and confirm. Selecting another starter swaps slots. Toggle chemistry or open a complete profile. Match approach remains a separate screen.
+3. **Squad** contains Lineup, Depth, Players and Progress. Choose 4-3-3, 4-4-2 or 4-2-3-1; tap a starter, choose a replacement and confirm. Selecting another starter swaps slots. Toggle chemistry or open a complete profile. Match approach remains a separate screen.
 4. **Market** contains player/free-agent search, negotiations, incoming offers, history and shortlist. Search/filter opens a sheet; contract and scouting details expand on each card. **Club** links to Legacy & achievements, GM job offers, Staff & contracts, Finances and performance. **League** contains Table, Fixtures, Stats, EFL pool, Awards and Records, including previous-season scores, head coaches and promotion/relegation changes.
 5. Choose Balanced, Attack, Defensive or Feed Your Star. Ability, opposition, fitness, morale and chemistry still affect strength; no approach guarantees success.
 6. Play Next Match opens **Watch Match** or **Quick Sim**. Both resolve the same engine. Watch can pause/resume, use 1×/2×/4×, switch to text, expand the pitch, or skip to full time. Finish the matchweek to commit all ten matches, finances, familiarity and development once. Refresh, skipping and speed changes cannot reroll or duplicate this round.
@@ -77,7 +85,7 @@ The key-moment system remains active in Watch Match, alongside the v1.8 sticky s
 
 ## v1.8: interactive key moments
 
-Watch Match now pauses **before your team's chance is resolved on screen** for penalties, free kicks, corners, one-on-ones, big play chances and major crosses. Each situation offers three football decisions with short tradeoff descriptions, the player involved and a read on the opposition. Choose an approach, see the outcome, then continue. **Let player decide** delegates a single chance; the pre-match **Interactive key moments** toggle enables uninterrupted watching. Quick Sim, opponent teams and skipped chances use the same assessment and resolution rules automatically.
+Watch Match now pauses **before your team's chance is resolved on screen** for penalties, free kicks, corners, one-on-ones, big play chances and major crosses. Corners, one-on-ones, big chances and major crosses offer three football decisions with short tradeoff descriptions. As of v1.11, penalties and free kicks use the draw-to-aim mini-game instead. Choose an approach, see the outcome, then continue. **Let player decide** delegates a single chance; the pre-match **Interactive key moments** toggle enables uninterrupted watching. Quick Sim, opponent teams and skipped chances use the same assessment and resolution rules automatically.
 
 Decisions use individual finishing, power, composure, control, passing, crossing, aerial ability, specialist traits, goalkeeper quality/movement, defensive pressure, fatigue and positional fit. Deliveries or dribbles can fail before a shot, passing options can produce a teammate's goal, and penalties are not constrained by the open-play conversion cap. There is no guaranteed scoring option. Only the current chance changes: past events, unrelated chances and the other fixtures retain their outcomes. Substitutions update future opportunities without erasing completed decisions.
 

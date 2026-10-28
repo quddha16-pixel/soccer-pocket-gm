@@ -1,3 +1,4 @@
+import { aimedProbabilities } from './shotGeometry';
 import type { Career, Fixture, KeyMoment, MatchEvent, MomentKind, MomentOption, Player } from '../models';
 import { hash, identity } from './identity';
 import { random } from './random';
@@ -90,12 +91,14 @@ export function assessMoment(f:Fixture,c:Career,m:KeyMoment,option:MomentOption,
  if(m.kind!=='penalty')completion*=fatigue*(setPiece?1:.7+.3*familiarity);
  conversion*=form*(m.kind==='penalty'?(.9+.1*a.fitness/100):(.75+.25*shooter.fitness/100)*(setPiece?1:shooter.id===a.id?familiarity:fit(shooter)));
  if(m.kind!=='penalty')conversion+=(m.baseXg-.15)*.12;
- return {completion:completion===1?1:clamp(completion,.2,.97),conversion:clamp(conversion,m.kind==='penalty'?.4:.015,m.kind==='penalty'?.93:.48),onTarget,shooterId:shooter.id,assistId,chanceType};
+ const base={completion:completion===1?1:clamp(completion,.2,.97),conversion:clamp(conversion,m.kind==='penalty'?.4:.015,m.kind==='penalty'?.93:.48),onTarget,shooterId:shooter.id,assistId,chanceType};
+ if(m.shot&&(m.kind==='penalty'||m.kind==='free-kick'))return {...base,...aimedProbabilities(base,m.shot,m.kind,meanSkill(a,...(m.kind==='penalty'?['finishing','composure'] as const:['longShots','shotPower','composure'] as const))+trait(a,'set-piece-specialist')*3)};
+ return base;
 }
 
 export function resolveMoment(f:Fixture,c:Career,m:KeyMoment,option:MomentOption,prepared?:ReturnType<typeof context>):{moment:KeyMoment;event?:MatchEvent}{
  const seed=f.report!.simulationSeed??hash(f.id),rng=random(hash(`${seed}:${m.id}:outcome`)),a=assessMoment(f,c,m,option,prepared),deliveryRoll=rng(),goalRoll=rng(),targetRoll=rng();
- if(deliveryRoll>=a.completion)return {moment:{...m,outcome:['corner','cross','free-kick'].includes(m.kind)?'intercepted':'blocked'}};
+ if(deliveryRoll>=a.completion)return {moment:{...m,outcome:m.shot?'blocked':['corner','cross','free-kick'].includes(m.kind)?'intercepted':'blocked'}};
  const goal=goalRoll<a.conversion,onTarget=goal||targetRoll<a.onTarget;
  const event:MatchEvent={id:m.eventId,momentId:m.id,minute:m.minute,clubId:m.clubId,playerId:a.shooterId,creatorId:a.assistId,assistId:goal?a.assistId:undefined,type:goal?'goal':'shot',onTarget,chanceType:a.chanceType,xG:a.conversion};
  return {moment:{...m,outcome:goal?'goal':onTarget?'saved':'wide'},event};

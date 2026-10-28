@@ -1,0 +1,26 @@
+const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
+const assert=require('node:assert/strict'),fs=require('node:fs');
+const url=process.env.BASE_URL||'http://localhost:5175/soccer-pocket-gm/';
+const dir=process.env.QA_ARTIFACTS||'/tmp/pocket-gm-depth-chart-qa';fs.mkdirSync(dir,{recursive:true});
+(async()=>{
+ const browser=await chromium.launch({headless:true,...(process.env.CHROMIUM_PATH?{executablePath:process.env.CHROMIUM_PATH}:{}),args:['--no-sandbox']});
+ try{
+  for(const[width,height]of[[320,568],[375,812],[390,844],[430,932]]){
+   const page=await browser.newPage({viewport:{width,height},isMobile:true,hasTouch:true}),errors=[];page.on('pageerror',e=>errors.push(e.message));await page.goto(url);
+   await page.evaluate(async()=>{localStorage.clear();sessionStorage.clear();const{newCareer}=await import('./src/simulation/career.ts'),{saveCareer}=await import('./src/storage.ts');saveCareer(newCareer('Depth Mobile QA','elite','liverpool',23,'developer'));});await page.reload();await page.getByRole('button',{name:'Continue career',exact:true}).click();
+   const nav=name=>page.getByRole('navigation',{name:'Primary navigation'}).getByRole('button',{name,exact:true});await nav('Squad').click();await page.getByRole('button',{name:'Depth',exact:true}).click();assert.equal(await page.locator('.depth-xi>button').count(),11);
+   const overflow=async label=>assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,`${width}: ${label} overflow`);await overflow('XI depth chart');assert(await page.locator('.development-arrows.up').count()>0);assert(await page.locator('.development-arrows.down').count()>0);
+   await page.getByLabel('Depth chart position',{exact:true}).selectOption('9');await page.getByRole('slider').scrollIntoViewIfNeeded();
+   const before=await page.evaluate(async()=>{const{loadCareer}=await import('./src/storage.ts');return loadCareer().career.lineup;});await page.getByRole('slider').focus();await page.getByRole('slider').press('ArrowRight');
+   const changed=await page.evaluate(async()=>{const{loadCareer}=await import('./src/storage.ts');return loadCareer().career.lineup;});assert.notEqual(changed[9],before[9]);assert.equal(new Set(changed).size,11);await overflow('slider change');
+   // Drag a nonstarter from the next eligible row onto the persistent drop spot.
+   const source=page.locator('.depth-candidates article').filter({hasText:'Bench / rotation'}).first();await source.scrollIntoViewIfNeeded();const handle=source.getByRole('button',{name:/Drag .* into starting XI/});await handle.evaluate(el=>el.scrollIntoView({block:'center'}));const draggedName=(await handle.getAttribute('aria-label')).replace(/^Drag /,'').replace(/ into starting XI$/,'');
+   const from=await handle.boundingBox(),to=await page.locator('[data-depth-drop]').boundingBox();assert(to.y>=50&&to.y+to.height<=height,'sticky starting spot remains visible');const cdp=await page.context().newCDPSession(page),start={x:from.x+from.width/2,y:from.y+from.height/2},end={x:to.x+to.width/2,y:to.y+to.height/2};
+   await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{...start,radiusX:5,radiusY:5,force:1,id:1}]});for(let i=1;i<=8;i++)await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:start.x+(end.x-start.x)*i/8,y:start.y+(end.y-start.y)*i/8,radiusX:5,radiusY:5,force:1,id:1}]});await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+   await page.getByRole('status').filter({hasText:`${draggedName} starts`}).waitFor();const after=await page.evaluate(async()=>{const{loadCareer}=await import('./src/storage.ts');const c=loadCareer().career;return {lineup:c.lineup,name:c.players.find(p=>p.id===c.lineup[9]).name};});assert.equal(after.name,draggedName);assert.equal(new Set(after.lineup).size,11);await overflow('touch drag');await page.screenshot({path:`${dir}/${width}-depth-drag.png`,fullPage:true});
+   await page.getByLabel('Depth chart position',{exact:true}).selectOption('0');assert((await page.locator('.depth-candidates article').first().textContent()).includes('GK'));await page.reload();await page.getByRole('button',{name:'Continue career',exact:true}).click();await nav('Squad').click();await page.getByRole('button',{name:'Depth',exact:true}).click();const restored=await page.evaluate(async()=>{const{loadCareer}=await import('./src/storage.ts');return loadCareer().career.lineup;});assert.deepEqual(restored,after.lineup);
+   await nav('Home').click();await page.getByRole('button',{name:'Play Next Match',exact:true}).click();await page.getByRole('button',{name:'Quick Sim',exact:true}).click();await nav('Squad').click();await page.getByRole('button',{name:'Depth',exact:true}).click();assert(await page.getByRole('slider').isDisabled());assert(await page.getByText(/Lineup locked during the matchweek/).isVisible());assert.deepEqual(errors,[]);
+   console.log(`PASS ${width}x${height}: all XI roles, green/red development arrows, slider changes, real touch drag from bench to XI, sticky drop target, goalkeeper roles, unique saved lineup, refresh and in-match locks`);await page.close();
+  }
+ }finally{await browser.close();}
+})().catch(e=>{console.error(e);process.exitCode=1;});

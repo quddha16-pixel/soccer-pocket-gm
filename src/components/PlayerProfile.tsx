@@ -1,3 +1,4 @@
+import { DevelopmentArrows } from './DevelopmentArrows';
 import { PlayerTraits } from './PlayerTraits';
 import { keeperAttributes, outfieldAttributes } from '../data/playerProfiles';
 import type { DetailedAttribute } from '../data/playerProfiles';
@@ -22,7 +23,7 @@ export function PlayerProfile({player:p,career:c,onClose,onChange}:{player:Playe
  const careerStats=useMemo(()=>allTimePlayers(c).find(s=>s.playerId===p.id),[c,p.id]);
  const termination=Math.max(0,(Date.parse(a.contractEnd)-Date.parse(c.world.date))/(7*864e5))*p.wage*.5;
  function apply(fn:()=>Career,message:string){try{onChange?.(fn());setSuccess(message);setError('');}catch(e){setError((e as Error).message);setSuccess('');}}
- return <><Modal title="Player profile" onClose={onClose} closeLabel="Close profile" className="profile-modal"><div className="profile-identity"><PlayerAvatar player={p} large/><div><p className="eyebrow">{clubName(p.clubId)}</p><h2>{p.name}</h2><p>{profileLabel(p)} · {p.age} years</p></div><span className="overall-badge"><strong>{p.overall}</strong><small>OVR</small></span></div>
+ return <><Modal title="Player profile" onClose={onClose} closeLabel="Close profile" className="profile-modal"><div className="profile-identity"><PlayerAvatar player={p} large/><div><p className="eyebrow">{clubName(p.clubId)}</p><h2>{p.name}<DevelopmentArrows player={p} career={c}/></h2><p>{profileLabel(p)} · {p.age} years</p></div><span className="overall-badge"><strong>{p.overall}</strong><small>OVR</small></span></div>
  {p.real&&<><PlayerTraits player={p} limit={20}/><p className={`rating-reference ${p.real.ratingStatus==='provisional'?'provisional':''}`}>{p.real.ratingStatus==='provisional'?'Provisional game assessment':p.real.ratingStatus==='official'?'FC 27 official reference':'FC 27 supporting reference'} · Starting OVR {p.real.overall}</p></>}
  <div className="profile-tabs" role="group" aria-label="Player profile views">{['Overview','Attributes','Contract','Progress'].map(v=><button key={v} aria-pressed={view===v} onClick={()=>setView(v)}>{v}</button>)}</div>
  {error&&<p className="error" role="alert">{error}</p>}{success&&<p className="success-message" role="status">{success}</p>}

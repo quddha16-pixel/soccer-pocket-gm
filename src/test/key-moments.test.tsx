@@ -90,13 +90,13 @@ describe('six football decisions with real outcomes',()=>{
   const bad={...c,pending:{...c.pending!,decisionFeedback:'unknown'}};localStorage.setItem(SAVE_KEY,JSON.stringify(bad));expect(loadCareer().career).toBeNull();
   const legacy=fresh();delete legacy.interactiveMoments;saveCareer(legacy);expect(loadCareer().career).toEqual(legacy);
  });
- it('shows all eighteen requested actions and no outcome until the user chooses',()=>{
-  for(const kind of momentKinds){const c=scenario(kind);const {unmount}=render(<KeyMomentDialog career={c} onUpdate={()=>{}}/>);expect(screen.getByRole('dialog',{name:momentTitles[kind]})).toBeTruthy();for(const option of momentOptions[kind])expect(screen.getByRole('button',{name:new RegExp(option.title.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'))})).toBeTruthy();expect(screen.queryByRole('status')).toBeNull();unmount();}
+ it('shows drawing for set pieces, three actions for other moments, and no early outcome',()=>{
+  for(const kind of momentKinds){const c=scenario(kind);const {unmount}=render(<KeyMomentDialog career={c} onUpdate={()=>{}}/>);expect(screen.getByRole('dialog',{name:momentTitles[kind]})).toBeTruthy();if(kind==='penalty'||kind==='free-kick'){expect(screen.getByRole('group',{name:'Shot aiming area'})).toBeTruthy();expect(document.querySelector('.moment-options')).toBeNull();}else for(const option of momentOptions[kind])expect(screen.getByRole('button',{name:new RegExp(option.title.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'))})).toBeTruthy();expect(screen.queryByRole('dialog',{name:'The outcome'})).toBeNull();unmount();}
  });
  it('pauses the real Matchday timer, persists a choice and resumes after the result',()=>{
   vi.useFakeTimers();let latest:Career;const start=scenario('penalty');start.pending!.paused=false;
   function Harness(){const [c,setC]=useState(start);latest=c;return <Matchday career={c} onUpdate={setC} onStart={()=>{}} onCommit={()=>{}} onTactics={()=>{}}/>;}
   render(<Harness/>);expect(latest!.pending!.paused).toBe(true);const dialog=screen.getByRole('dialog',{name:'Penalty kick'});act(()=>vi.advanceTimersByTime(5000));expect(latest!.pending!.minute).toBe(start.pending!.minute);
-  fireEvent.click(within(dialog).getByRole('button',{name:/Precise placement/}));expect(screen.getByRole('dialog',{name:'The outcome'})).toBeTruthy();expect(screen.getByRole('status')).toBeTruthy();fireEvent.click(screen.getByRole('button',{name:'Continue match'}));expect(latest!.pending!.decisionFeedback).toBeUndefined();expect(latest!.pending!.minute).toBe(start.pending!.minute+1);
+  fireEvent.keyDown(within(dialog).getByRole('group',{name:'Shot aiming area'}),{key:'Enter'});fireEvent.click(within(dialog).getByRole('button',{name:'Take shot'}));expect(screen.getByRole('dialog',{name:'The outcome'})).toBeTruthy();expect(screen.getByRole('status')).toBeTruthy();act(()=>vi.advanceTimersByTime(1200));fireEvent.click(screen.getByRole('button',{name:'Continue match'}));expect(latest!.pending!.decisionFeedback).toBeUndefined();expect(latest!.pending!.minute).toBe(start.pending!.minute+1);
  });
 });
