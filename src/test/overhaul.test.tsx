@@ -13,7 +13,7 @@ import { loadCareer, saveCareer, SAVE_KEY } from '../storage';
 import { Matchday, playbackInterval, visibleMatch } from '../components/Matchday';
 import App from '../App';
 const career=()=>newCareer('Jamie Test','unknown','hull',1234);
-afterEach(()=>{cleanup();localStorage.clear();vi.useRealTimers();});
+afterEach(()=>{cleanup();localStorage.clear();sessionStorage.clear();vi.useRealTimers();});
 describe('management',()=>{
  it('supports three formations, valid automatic lineups and duplicate-free swaps',()=>{
  let c=career();for(const formation of formations){c=changeFormation(c,formation);expect(c.formation).toBe(formation);expect(validLineup(c.players,c.clubId,c.lineup)).toBe(true);}
@@ -100,7 +100,7 @@ describe('playback and navigation',()=>{
  expect(latest.pending!.fixtures).toEqual(original);
  });
  it('retains setup fields and correct previous screens without clearing a saved career',()=>{
- render(<App/>);fireEvent.click(screen.getByRole('button',{name:'START CAREER'}));fireEvent.change(screen.getByLabelText('Manager name'),{target:{value:'Saved Name'}});fireEvent.click(screen.getByRole('button',{name:'Find job offers'}));fireEvent.click(screen.getByRole('button',{name:'Back'}));expect((screen.getByLabelText('Manager name') as HTMLInputElement).value).toBe('Saved Name');
- cleanup();saveCareer(career());render(<App/>);fireEvent.click(screen.getByRole('button',{name:'CONTINUE CAREER'}));fireEvent.click(screen.getAllByRole('button',{name:'Tactics'})[0]);fireEvent.click(screen.getByRole('button',{name:'Back'}));expect(screen.getByRole('heading',{name:'Club overview'})).toBeTruthy();expect(loadCareer().career!.week).toBe(0);
+ render(<App/>);fireEvent.click(screen.getByRole('button',{name:'Start career'}));fireEvent.change(screen.getByLabelText('Manager name'),{target:{value:'Saved Name'}});fireEvent.click(screen.getByRole('button',{name:'Find job offers'}));fireEvent.click(screen.getByRole('button',{name:'Back'}));expect((screen.getByLabelText('Manager name') as HTMLInputElement).value).toBe('Saved Name');
+ cleanup();saveCareer(career());render(<App/>);fireEvent.click(screen.getByRole('button',{name:'Continue career'}));fireEvent.click(screen.getAllByRole('button',{name:'Squad'})[0]);fireEvent.click(screen.getByRole('button',{name:/Match approach/}));fireEvent.click(screen.getByRole('button',{name:'Back'}));expect(screen.getByRole('heading',{name:'Squad'})).toBeTruthy();expect(loadCareer().career!.week).toBe(0);
  });
 });

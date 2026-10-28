@@ -1,4 +1,4 @@
-# Pocket Football GM — v1.2
+# Pocket Football GM — v1.3
 
 Created By: Quentin Warminsky. A mobile-first football management game built with React, TypeScript and Vite in the existing `quddha16-pixel/soccer-pocket-gm` repository. No licensed club marks, photos, external portrait services or external fonts are used.
 
@@ -27,11 +27,21 @@ Relegation still ends the user’s career. A surviving manager can start the nex
 ## Play and manage the club
 
 1. Start a career, choose reputation and accept an appropriate offer. Continue restores a saved career or pending matchday.
-2. Overview shows actual completed results, goals, W/D/L, form, streaks, club expectations, injury availability, finances and the three most valuable current players.
-3. Squad/Tactics provides an editable 4-3-3, 4-4-2 or 4-2-3-1 pitch and the full roster. Tap a starter to replace them; another starter swaps slots. Registration and goalkeeper restrictions apply. Position fit, ability, fitness, morale and chemistry influence strength.
-4. Choose Balanced, Attack, Defensive or Feed Your Star. The star gets a larger share of recorded chances and goals, with an efficiency/predictability drawback. Ability, opposition strength and randomness still matter.
-5. Advance Matchweek opens the choice of Watch Match or Quick Sim. Both resolve the same engine. Watch can pause/resume, use 1×/2×/4×, switch to text, or skip to full time. Finish the matchweek to commit all ten matches, finances, familiarity and development once. Refresh, skipping and speed changes cannot reroll or duplicate this round.
-6. Use the management links on Overview or the desktop sidebar to access Transfers, Staff, Finances and Development.
+2. **Home** shows your club, league position, points, recent form, next opponent and **Play Next Match**. Detailed season metrics and squad leaders are a secondary view.
+3. **Squad** contains Lineup, Players and Progress. Choose 4-3-3, 4-4-2 or 4-2-3-1; tap a starter, choose a replacement and confirm. Selecting another starter swaps slots. Toggle chemistry or open a complete profile. Match approach remains a separate screen.
+4. **Market** contains player/free-agent search, negotiations, incoming offers, history and shortlist. Search/filter opens a sheet; contract and scouting details expand on each card. **Club** links to Staff & contracts, Finances and performance. **League** contains Table, Fixtures and Stats, including previous-season scores.
+5. Choose Balanced, Attack, Defensive or Feed Your Star. Ability, opposition, fitness, morale and chemistry still affect strength; no approach guarantees success.
+6. Play Next Match opens **Watch Match** or **Quick Sim**. Both resolve the same engine. Watch can pause/resume, use 1×/2×/4×, switch to text, expand the pitch, or skip to full time. Finish the matchweek to commit all ten matches, finances, familiarity and development once. Refresh, skipping and speed changes cannot reroll or duplicate this round.
+
+Five persistent destinations replace the old navigation: Home, Squad, Market, Club and League. Secondary screens have Back navigation. Roster and fixture browsing and scroll position survive section changes. Search filters, player/staff negotiation fields and profile contract drafts use separate sessionStorage presentation keys, surviving refresh in the same tab. Saved careers remain in localStorage with the same schema and key. Modal sheets support keyboard focus trapping, Escape and focus restoration. Forms support Enter submission. Reduced-motion preferences default match playback to text. Safe-area insets are applied to headers, bottom navigation and sheets.
+
+## Custom roster research intake — not active yet
+
+The exact user-supplied roster is accounted for in `src/data/custom-roster-draft.json`: **546 entries across all 20 clubs**, including the clarified separate Bournemouth players **Rayan** and **Ben Gannon-Doak**. Gabriel, Allan, Kevin, Florentino, Alysson and Costinha retain the confirmed display names. Club assignments and Unicode spellings are preserved. The original submission and every-club counts are in [the research audit](docs/roster-research-audit.md).
+
+**0 independently verified identities, 0 active real-player imports, 546 explicitly unresolved profiles.** Research requests to Premier League, UEFA, Transfermarkt and FBref were blocked by the environment proxy with HTTP 403 / CONNECT tunnel failed. Source fields and ratings remain empty; these failures are not citations. A network-settings draft has been saved for user review/publication, but is not applied to the runtime.
+
+`src/data/customRoster.ts` defines the research intake, 15 real position codes, 19 required attributes and a validation gate that rejects incomplete profiles. This is preparation, not a playable real-roster implementation. Actual positions, calibrated weighted ratings, potential, valuations, identity deduplication and valid custom starting elevens require source-backed research and subsequent engine integration. New careers continue using the existing fictional player generator; existing saves and transactions are preserved. No guessed real-player ratings have been activated.
 
 ## Persistent portraits and player profiles
 
@@ -102,7 +112,7 @@ Finances shows cash, debt, transfer budget, weekly wage capacity, player/staff p
 
 ## Saves and compatibility
 
-The original localStorage key remains `pocket-football-gm-v1`. Schema version is now **3**. Versions 1 and 2 migrate without changing existing IDs, names, overall/potential ratings, wages, fixtures, scores, tactic, formation or valid lineup. A raw legacy snapshot is retained under a versioned `-backup-v1` or `-backup-v2` key (large backups are losslessly compressed).
+The original localStorage key remains `pocket-football-gm-v1`. Schema version remains **3**; v1.3 does not change the simulation or career schema. Versions 1 and 2 migrate without changing existing IDs, names, overall/potential ratings, wages, fixtures, scores, tactic, formation or valid lineup. A raw legacy snapshot is retained under a versioned `-backup-v1` or `-backup-v2` key (large backups are losslessly compressed).
 
 Migration adds deterministic identities, attributes, finances, staff, registration and free agents. Historical reports can establish actual 90-minute appearances, form and partnership counts. Old matches lacking reports have no invented contributions or tactical familiarity. Historical reports refer to immutable player IDs and snapshot clubs, so a later transfer does not invalidate an earlier match.
 
@@ -111,15 +121,30 @@ Large saves use the internal lossless LZW codec, with an explicit format prefix 
 ## Architecture and validation
 
 - `src/models.ts`, `worldModels.ts`: typed career, player identity, match, contract, finance and staff state.
-- `src/data/`: replaceable clubs, player generation and season rules.
+- `src/data/`: replaceable clubs, fictional player generation, season rules and an inactive custom-roster research intake.
 - `src/simulation/identity.ts`, `chemistry.ts`, `development.ts`: deterministic appearance, relationships and skill progression.
 - `src/simulation/economy.ts`, `recruitment.ts`, `staff.ts`, `world.ts`, `worldTick.ts`: negotiations, registration, club accounts, staff, AI and season rollover.
 - `src/simulation/career.ts`, `match.ts`, `scoring.ts`, `league.ts`, `animation.ts`: authoritative progression and its visual reconstruction.
 - `src/storage.ts`, `simulation/codec.ts`: migration, validation, compression and playback persistence.
-- `src/components/`: existing shared components plus portraits/profiles, development, recruitment, staff, finances and animated match viewer.
+- `src/components/`: five-section UI, accessible shared modal sheets, portraits/profiles, development, recruitment, staff, finances and animated match viewer.
+- `src/uiState.ts`: session-scoped presentation drafts, separate from the career save.
 - `src/test/`: existing fixture/standings/relegation tests plus identities, chemistry, progression/coaching/doctor effects, transfer/contract outcomes, staff compensation, AI, registration/windows, migration, save compression, animation and UI flows.
 
 Validation includes three full simulated seasons of ownership/finances/registration and a separate 20-year individual-development stress test. This does **not** establish that complete 20-season careers and all market behaviors have undergone extended balance testing. Long-term tuning remains ongoing.
+
+## Mobile browser QA
+
+`scripts/mobile-qa.cjs` is an optional Playwright browser check against the running Vite dev server. It exercises 320×568, 375×812, 390×844 and 430×932 viewports, all three formations, player overlap, scrolling, long Unicode names, modal dialogs, draft restoration, keyboard signings, compact table width, match controls, results and career refresh. It uses disposable browser storage and saves screenshots under `/tmp/pocket-gm-mobile-qa`.
+
+With Playwright available to Node and its Chromium installed, run:
+
+```sh
+npm run dev
+# In another terminal:
+node scripts/mobile-qa.cjs
+```
+
+For external tooling installations, set `PLAYWRIGHT_MODULE` to the Playwright module path and optionally `CHROMIUM_PATH` to a Chromium executable. `BASE_URL` and `QA_ARTIFACTS` override the dev URL and screenshot directory. This script imports Vite development modules to create deterministic disposable fixtures; it is not a production-site test. Browser emulation does not replace physical iPhone/Safari and on-device keyboard testing. See [v1.3 QA notes](docs/v1.3-qa.md) for recorded results and limits.
 
 ## GitHub Pages
 

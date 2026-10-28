@@ -1,0 +1,604 @@
+EVERTON
+
+Jordan Pickford
+Mark Travers
+Tom King
+Ainsley Maitland-Niles
+Jarrad Branthwaite
+Michael Keane
+James Tarkowski
+Jake O’Brien
+Vitalii Mykolenko
+Kiernan Dewsbury-Hall
+Jack Grealish
+Christian Nørgaard
+Charly Alcaraz
+Hayden Hackney
+Merlin Röhl
+James Garner
+Harrison Armstrong
+Thierno Barry
+Tyrique George
+Tyler Dibling
+Brennan Johnson
+
+ARSENAL
+
+David Raya
+Illan Meslier
+Kepa Arrizabalaga
+William Saliba
+Gabriel
+Piero Hincapié
+Ezri Konsa
+Cristhian Mosquera
+Riccardo Calafiori
+Jurriën Timber
+Ben White
+Martín Zubimendi
+Myles Lewis-Skelly
+Declan Rice
+Bruno Guimarães
+Mikel Merino
+Martin Ødegaard
+Eberechi Eze
+Christos Tzolis
+Bukayo Saka
+Max Dowman
+Noni Madueke
+Kai Havertz
+Viktor Gyökeres
+
+MANCHESTER CITY
+
+Gianluigi Donnarumma
+Gerónimo Rulli
+Marcus Bettinelli
+Marc Guéhi
+Rúben Dias
+Abdukodir Khusanov
+Vitor Reis
+Josko Gvardiol
+Nico O’Reilly
+Rayan Aït-Nouri
+Matheus Nunes
+Rico Lewis
+Elliot Anderson
+Ayyoub Bouaddi
+Enzo Fernández
+Mateo Kovacic
+Rayan Cherki
+Phil Foden
+Jérémy Doku
+Iliman Ndiaye
+Antoine Semenyo
+Allan
+Ryan McAidoo
+Erling Haaland
+
+LIVERPOOL
+
+Giorgi Mamardashvili
+Alisson
+Vítězslav Jaroš
+Freddie Woodman
+Harvey Davies
+Jérémy Jacquet
+Giovanni Leoni
+Ronald Araújo
+Virgil van Dijk
+Joe Gomez
+Milos Kerkez
+Konstantinos Tsimikas
+Luke Chambers
+Jeremie Frimpong
+Conor Bradley
+Ryan Gravenberch
+Wataru Endo
+Alexis Mac Allister
+Trey Nyoni
+James McConnell
+Dominik Szoboszlai
+Florian Wirtz
+Bradley Barcola
+Cody Gakpo
+Rio Ngumoha
+Víctor Muñoz
+Federico Chiesa
+Alexander Isak
+Hugo Ekitiké
+Lewis Koumas
+Jayden Danns
+
+CHELSEA
+
+Mike Penders
+Emiliano Martínez
+Gabriel Slonina
+Teddy Sharman-Lowe
+Maxence Lacroix
+Levi Colwill
+Wesley Fofana
+Josh Acheampong
+Aarón Anselmino
+Jorrel Hato
+Pep Chavarría
+Reece James
+Marco Palestra
+Malo Gusto
+Moisés Caicedo
+Roméo Lavia
+Valentín Barco
+Mahdi Nicoll-Jazuli
+Jordan Henderson
+Morgan Rogers
+Cole Palmer
+Jamie Gittens
+Estêvão
+Pedro Neto
+Geovany Quenda
+João Pedro
+Emmanuel Emegha
+Danny Welbeck
+
+BRIGHTON
+
+Bart Verbruggen
+Jason Steele
+Tom McGill
+Luka Vuskovic
+Pascal Struijk
+Olivier Boscagli
+Michael Svoboda
+Lewis Dunk
+Ferdi Kadıoğlu
+Maxim De Cuyper
+Jaouen Hadjam
+Mats Wieffer
+Costinha
+Jack Hinshelwood
+Chema Andrés
+Yasin Ayari
+Diego Gómez
+Malick Yalcouyé
+Matt O’Riley
+Pascal Groß
+Kaoru Mitoma
+Ibrahim Osman
+Yankuba Minteh
+Zadok Yohanna
+Femi Azeez
+Charalampos Kostoulas
+Georginio Rutter
+Promise David
+Stefanos Tzimas
+Evan Ferguson
+
+TOTTENHAM
+
+Antonín Kinský
+Martin Dúbravka
+Brandon Austin
+Jan Paul van Hecke
+Micky van de Ven
+Marcos Senesi
+Tosin Adarabioyo
+Ben Davies
+Destiny Udogie
+Andrew Robertson
+Pedro Porro
+Archie Gray
+Sandro Tonali
+Rodrigo Bentancur
+Mateus Fernandes
+Lucas Bergvall
+Conor Gallagher
+Xavi Simons
+James Maddison
+Dejan Kulusevski
+Sávio
+Mathys Tel
+Wilson Odobert
+Mykhaylo Mudryk
+Mohammed Kudus
+Omar Marmoush
+Dominic Solanke
+Richarlison
+
+MANCHESTER UNITED
+
+Senne Lammens
+Karl Darlow
+Tom Heaton
+Dermot Mee
+Lisandro Martínez
+Leny Yoro
+Ayden Heaven
+Matthijs de Ligt
+Harry Maguire
+Luke Shaw
+Harry Amass
+Diogo Dalot
+Noussair Mazraoui
+Carlos Baleba
+Andrey Santos
+Manuel Ugarte
+Kobbie Mainoo
+Youri Tielemans
+Tyler Fletcher
+Bruno Fernandes
+Mason Mount
+Marcus Rashford
+Patrick Dorgu
+Bryan Mbeumo
+Amad Diallo
+Shea Lacey
+Matheus Cunha
+Benjamin Šeško
+Joshua Zirkzee
+
+BRENTFORD
+
+Caoimhín Kelleher
+Hákon Valdimarsson
+Ellery Balcombe
+Sepp van den Berg
+Nathan Collins
+Kristoffer Ajer
+Jannik Schuster
+Ji-soo Kim
+Benjamin Fredrick
+El Hadji Malick Diouf
+Keane Lewis-Potter
+Rico Henry
+Michael Kayode
+Aaron Hickey
+Vitaly Janelt
+Mamadou Sangaré
+Yegor Yarmolyuk
+Mathias Jensen
+Josh Dasilva
+Mikkel Damsgaard
+Antoni Milambo
+Fábio Carvalho
+Kevin Schade
+Jaidon Anthony
+Gustavo Nunes
+Dango Ouattara
+Igor Thiago
+Kaye Furo
+Callum Wilson
+
+LEEDS UNITED
+
+James Trafford
+Michael Zetterer
+Alex Cairns
+Tarik Muharemović
+Jaka Bijol
+Joe Rodon
+Nico Elvedi
+Gabriel Gudmundsson
+Melvin Bard
+Jayden Bogle
+James Justin
+Ethan Ampadu
+Anton Stach
+Ilia Gruev
+Ao Tanaka
+Sean Longstaff
+Brenden Aaronson
+Noah Okafor
+Jean-Mattéo Bahoya
+Harry Wilson
+Daniel James
+Dominic Calvert-Lewin
+Lukas Nmecha
+Mateo Joseph
+
+NEWCASTLE UNITED
+
+Lukas Hornicek
+Ewen Jaouen
+Nick Pope
+Mark Gillespie
+Malick Thiaw
+Sven Botman
+Dan Burn
+Fabian Schär
+Lewis Hall
+Tino Livramento
+Amar Dedic
+Nico González
+Aladji Bamba
+Jacob Ramsey
+Lewis Miley
+Sean Steur
+Joelinton
+Joe Willock
+Bazoumana Touré
+Harvey Barnes
+Anthony Elanga
+Jacob Murphy
+Matias Fernandez-Pardo
+William Osula
+Yoane Wissa
+
+ASTON VILLA
+
+Zion Suzuki
+Marco Bizot
+James Wright
+Taylor Harwood-Bellis
+Pau Torres
+Modou Kéba Cissé
+Victor Lindelöf
+Tyrone Mings
+Ian Maatsen
+Matteo Ruggeri
+Matty Cash
+Aaron Wan-Bissaka
+Boubacar Kamara
+Amadou Onana
+Lamare Bogarde
+João Gomes
+Leon Goretzka
+Ross Barkley
+John McGinn
+Johan Manzambi
+Emiliano Buendía
+Alejandro Garnacho
+George Hemmings
+Ibrahim Mbaye
+Alysson
+Nicolas Jackson
+Brian Madjo
+Tammy Abraham
+
+HULL CITY
+
+Konstantinos Tzolakis
+Jack Butland
+Dillon Phillips
+Nobel Mendy
+Lucas Herrington
+Charlie Hughes
+John Egan
+Paddy McNair
+Semi Ajayi
+Ryan Giles
+Matt Targett
+Brooke Norton-Cuffy
+Lewie Coyle
+Regan Slater
+Lucas Gourna-Douath
+Óscar Zambrano
+Christos Mouzakitis
+Tim Iroegbunam
+Jens Hjertø-Dahl
+Hidemasa Morita
+Darko Gyabi
+Eliot Matazo
+Matt Crooks
+Kieran Dowell
+Sorba Thomas
+Elliot Stroud
+Mohamed Belloumi
+Mohamed-Ali Cho
+Abdülkadir Ömür
+Robinio Vaz
+Ilyas Ansah
+Joe Gelhardt
+Oli McBurnie
+
+IPSWICH TOWN
+
+Kjell Scherpen
+Christian Walton
+Alex Palmer
+David Button
+Dara O’Shea
+Jacob Greaves
+Issa Diop
+Cédric Kipré
+Leif Davis
+Abdoul Ouattara
+Darnell Furlong
+Florentino
+Azor Matusiwa
+Exequiel Palacios
+Marcelino Núñez
+Saša Lukić
+Jack Taylor
+Julio Enciso
+Anis Mehmeti
+Jaden Philogene
+Jack Clarke
+Daizen Maeda
+Abdul Fatawu
+Sindre Walle Egeli
+Kasey McAteer
+Emersonn
+Zian Flemming
+Chuba Akpom
+
+BOURNEMOUTH
+
+Djordje Petrović
+Michele Di Gregorio
+Fraser Forster
+James Hill
+António Silva
+Bafodé Diakité
+Veljko Milosavljević
+Adrien Truffert
+Julio Soler
+Juanlu Sánchez
+Julián Araujo
+Max Aarons
+Adam Smith
+Tyler Adams
+Alex Scott
+Alex Tóth
+Lewis Cook
+Ryan Christie
+Marcus Tavernier
+Justin Kluivert
+Amine Adli
+Rayan Ben Gannon-Doak
+David Brooks
+Junior Kroupi
+Evanilson
+Álvaro Rodríguez
+Daniel Jebbison
+
+FULHAM
+
+Bernd Leno
+Benjamin Lecomte
+Alex Borto
+Calvin Bassey
+David Affengruber
+Joachim Andersen
+Jorge Cuenca
+Ryan Sessegnon
+Antonee Robinson
+Timothy Castagne
+Kenny Tete
+Sander Berge
+Shea Charles
+Alex Iwobi
+Hugo Larsson
+Manuel Ángel
+Harrison Reed
+Tom Cairney
+Josh King
+Emile Smith Rowe
+César Palacios
+Kevin
+Oscar Bobb
+Gonzalo García
+Rodrigo Muniz
+Jonah Kusi-Asare
+
+CRYSTAL PALACE
+
+Dean Henderson
+Walter Benítez
+Remi Matthews
+Honest Ahanor
+Jaydee Canvot
+Chris Richards
+Chadi Riad
+Axel Disasi
+Takehiro Tomiyasu
+Tyrick Mitchell
+Ben Chilwell
+Anan Khalaili
+Óscar Mingueza
+Adam Wharton
+Cheick Doucouré
+Jefferson Lerma
+Quinten Timber
+Daichi Kamada
+Will Hughes
+Yéremy Pino
+Dwight McNeil
+Ismaïla Sarr
+Darío Osorio
+Evann Guessand
+Zavier Gozo
+Jørgen Strand Larsen
+Jean-Philippe Mateta
+Eddie Nketiah
+
+NOTTINGHAM FOREST
+
+John Victor
+Matz Sels
+Steven Benda
+Murillo
+Ousmane Diomande
+Nikola Milenković
+Jair Cunha
+Neco Williams
+Luca Netz
+Daniel Muñoz
+Ola Aina
+Nicolò Savona
+Ibrahim Sangaré
+Xaver Schlager
+Nicolás Domínguez
+Ryan Yates
+Morgan Gibbs-White
+James McAtee
+Callum Hudson-Odoi
+Dan Ndoye
+Liam Delap
+Igor Jesus
+Arnaud Kalimuendo
+Chris Wood
+
+COVENTRY CITY
+
+Carl Rushworth
+Dan Bentley
+Ben Wilson
+Bobby Thomas
+Aurèle Amenda
+Ethan Pinnock
+Stephen Mfuni
+Joel Latibeaudiere
+Luke Woolfenden
+Jay Dasilva
+Jake Bidwell
+Milan van Ewijk
+Kaine Kesler-Hayden
+Matt Grimes
+Caleb Yirenkyi
+Victor Torp
+Gustavo Hamer
+Josh Eccles
+Frank Onyeka
+Jack Rudoni
+Ephron Mason-Clark
+Yann Gboho
+Loum Tchaouna
+Tatsuhiro Sakamoto
+Sidiki Chérif
+Haji Wright
+Brandon Thomas-Asante
+Ellis Simms
+Taiwo Awoniyi
+
+SUNDERLAND
+
+Robin Roefs
+Melker Ellborg
+Simon Moore
+Dan Ballard
+Kevin Danso
+Omar Alderete
+Luke O’Nien
+Aji Alese
+Dayann Méthalie
+Reinildo Mandava
+Trai Hume
+Nordi Mukiele
+Thomas Meunier
+Granit Xhaka
+Jules Ahoka
+Noah Sadiki
+Habib Diarra
+Enzo Le Fée
+Alan Browne
+Chris Rigg
+Malick Fofana
+Nilson Angulo
+Romaine Mundle
+Timur Tuterov
+Chemsdine Talbi
+Jocelin Ta Bi
+Abdoullah Ba
+Brian Brobbey
+Wilson Isidor
