@@ -1,6 +1,14 @@
-# Pocket Football GM — v1.12
+# Pocket Football GM — v2.0
 
 Created By: Quentin Warminsky. A mobile-first football management game built with React, TypeScript and Vite in the existing `quddha16-pixel/soccer-pocket-gm` repository. No licensed club marks, photos, external portrait services or external fonts are used.
+
+## Play the full match (v2.0)
+
+**Matchday → Play Match** is a complete top-down, 11-a-side contest. Move with the left stick, aim and Pass, hold for a lofted pass, or hold Shoot for power. The buttons become Switch/Tackle when defending. Tap a teammate to control them. Teammates and opponents play around you; the live ball, keeper and your decisions determine the result. Teams change ends at half time. Choose a 3-, 4- or 6-minute real-time match representing the full 90 minutes.
+
+Subs and Controls are always accessible. Tap your selected player's card for all assigned traits and ability details. Earn extra, capped partnership familiarity through successful forward combinations; actual minutes and performances feed development. New passing/interception/live-distance stats appear in the match box. Pause, reload and resume safely, or explicitly let the assistant finish the unplayed portion without erasing your score.
+
+Home shortcuts, screen-specific navigation help, clearer match-mode ordering, touch-friendly controls and mobile tab layouts make the career tools easier to reach. Watch Match and Quick Sim remain available. The following avatar update will replace the existing appearances using researched references. [v2.0 controls, mechanics, saves and validation](docs/v2.0-release.md).
 
 ## Match box scores (v1.12)
 

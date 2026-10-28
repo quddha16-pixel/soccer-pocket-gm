@@ -1,11 +1,12 @@
+import type { ManualPlayerStats } from './manualModels';
 import type { Career, Fixture } from '../models';
 import { naturalSlots } from './management';
 import { profileLabel } from './playerSkills';
 
-export interface BoxPlayer {playerId:string;position:string;minutes:number;entered:number|null;exited:number|null;goals:number;assists:number;shots:number;onTarget:number;chances:number;saves:number;tackles:number;conceded:number;rating:number|null}
+export interface BoxPlayer {manual?:ManualPlayerStats & {minutes:number};playerId:string;position:string;minutes:number;entered:number|null;exited:number|null;goals:number;assists:number;shots:number;onTarget:number;chances:number;saves:number;tackles:number;conceded:number;rating:number|null}
 export interface MatchBoxScore {home:BoxPlayer[];away:BoxPlayer[];homePossession:number;motmId:string}
 /** Compact records preserve individual games without retaining replay events. */
-export type BoxRow=[string,string,number,number|null,number|null,number,number,number,number,number,number,number,number,number|null];
+export type BoxRow=[string,string,number,number|null,number|null,number,number,number,number,number,number,number,number,number|null,(ManualPlayerStats & {minutes:number})?];
 export interface ArchivedBoxScore {h:BoxRow[];a:BoxRow[];p:number;m:string}
 export const completedFixture=(f:Fixture)=>f.homeGoals!==undefined&&f.awayGoals!==undefined;
 export function buildBoxScore(f:Fixture,c:Career):MatchBoxScore|undefined {
@@ -18,13 +19,13 @@ export function buildBoxScore(f:Fixture,c:Career):MatchBoxScore|undefined {
   const order=[...new Set([...start,...performances.map(p=>p.playerId),...bench])];
   return order.map(id=>{
    const p=byId.get(id),perf=performances.find(p=>p.playerId===id),minutes=perf?.minutes??(perf?90:0),entered=perf?(perf.entered??0):null,exited=perf?(perf.exited??entered!+minutes):null;
-   return {playerId:id,position:roles.get(id)|| (p?profileLabel(p):'—'),minutes,entered,exited,goals:perf?.goals??0,assists:perf?.assists??0,shots:perf?.shots??0,onTarget:r.events.filter(e=>e.playerId===id&&e.onTarget).length,chances:r.events.filter(e=>e.creatorId===id).length,saves:perf?.saves??0,tackles:perf?.tackles??0,conceded:perf?(perf.conceded??r.events.filter(e=>e.clubId!==clubId&&e.type==='goal'&&e.minute>entered!&&e.minute<=exited!).length):0,rating:perf?.rating??null};
+   return {...(r.manualStats?.[id]?{manual:{...r.manualStats[id],minutes:r.manualMinutes??90}}:{}),playerId:id,position:roles.get(id)|| (p?profileLabel(p):'—'),minutes,entered,exited,goals:perf?.goals??0,assists:perf?.assists??0,shots:perf?.shots??0,onTarget:r.events.filter(e=>e.playerId===id&&e.onTarget).length,chances:r.events.filter(e=>e.creatorId===id).length,saves:perf?.saves??0,tackles:perf?.tackles??0,conceded:perf?(perf.conceded??r.events.filter(e=>e.clubId!==clubId&&e.type==='goal'&&e.minute>entered!&&e.minute<=exited!).length):0,rating:perf?.rating??null};
   });
  }
  return {home:team(f.homeId),away:team(f.awayId),homePossession:r.homePossession,motmId:r.motmId};
 }
-const pack=(p:BoxPlayer):BoxRow=>[p.playerId,p.position,p.minutes,p.entered,p.exited,p.goals,p.assists,p.shots,p.onTarget,p.chances,p.saves,p.tackles,p.conceded,p.rating];
-const unpack=([playerId,position,minutes,entered,exited,goals,assists,shots,onTarget,chances,saves,tackles,conceded,rating]:BoxRow):BoxPlayer=>({playerId,position,minutes,entered,exited,goals,assists,shots,onTarget,chances,saves,tackles,conceded,rating});
+const pack=(p:BoxPlayer):BoxRow=>{const row:BoxRow=[p.playerId,p.position,p.minutes,p.entered,p.exited,p.goals,p.assists,p.shots,p.onTarget,p.chances,p.saves,p.tackles,p.conceded,p.rating];if(p.manual)row[14]=p.manual;return row;};
+const unpack=([playerId,position,minutes,entered,exited,goals,assists,shots,onTarget,chances,saves,tackles,conceded,rating,manual]:BoxRow):BoxPlayer=>({... (manual?{manual}:{}),playerId,position,minutes,entered,exited,goals,assists,shots,onTarget,chances,saves,tackles,conceded,rating});
 export const packBoxScore=(b:MatchBoxScore):ArchivedBoxScore=>({h:b.home.map(pack),a:b.away.map(pack),p:b.homePossession,m:b.motmId});
 export const unpackBoxScore=(b:ArchivedBoxScore):MatchBoxScore=>({home:b.h.map(unpack),away:b.a.map(unpack),homePossession:b.p,motmId:b.m});
 export function archiveBoxScores(c:Career){
@@ -44,8 +45,8 @@ export function validArchivedBoxScore(b:ArchivedBoxScore,f:Fixture,players:Set<s
  for(const rows of [b.h,b.a]){
   if(!Array.isArray(rows)||rows.length<11||rows.length>20)return false;
   for(const row of rows){
-   if(!Array.isArray(row)||row.length!==14||!players.has(row[0])||typeof row[1]!=='string')return false;
-   const p=unpack(row);if(!Number.isInteger(p.minutes)||p.minutes<0||p.minutes>90||[p.goals,p.assists,p.shots,p.onTarget,p.chances,p.saves,p.tackles,p.conceded].some(n=>!Number.isInteger(n)||n<0)||p.goals>p.onTarget||p.onTarget>p.shots)return false;
+   if(!Array.isArray(row)||(row.length!==14&&row.length!==15)||!players.has(row[0])||typeof row[1]!=='string')return false;
+   const p=unpack(row);if(p.manual&&([p.manual.attempted,p.manual.completed,p.manual.interceptions,p.manual.tackles].some(n=>!Number.isInteger(n)||n<0)||p.manual.completed>p.manual.attempted||!Number.isFinite(p.manual.distance)||p.manual.distance<0||!Number.isInteger(p.manual.minutes)||p.manual.minutes<0||p.manual.minutes>90))return false;if(!Number.isInteger(p.minutes)||p.minutes<0||p.minutes>90||[p.goals,p.assists,p.shots,p.onTarget,p.chances,p.saves,p.tackles,p.conceded].some(n=>!Number.isInteger(n)||n<0)||p.goals>p.onTarget||p.onTarget>p.shots)return false;
    if(p.minutes===0){if(p.entered!==null||p.exited!==null||p.rating!==null||[p.goals,p.assists,p.shots,p.onTarget,p.chances,p.saves,p.tackles,p.conceded].some(n=>n!==0))return false;}
    else if(!Number.isInteger(p.entered)||!Number.isInteger(p.exited)||p.entered!<0||p.exited!>90||(p.exited! - p.entered!)!==p.minutes||!Number.isFinite(p.rating)||p.rating!<0||p.rating!>10)return false;
    all.push(p);

@@ -33,6 +33,7 @@ export function prepareWeek(c:Career,watch=true):Career{
  return {...c,matchPlan:nextMatchPlan(c),pending:{week,fixtures,decisionMode:watch&&(c.interactiveMoments??true)?'interactive':'automatic',minute:watch?0:90,speed:1,paused:false}};
 }
 export function commitWeek(c:Career,expectedWeek=c.pending?.week):Career{
+ if(c.pending?.manual&&c.pending.manual.phase!=='fulltime')return c;
  if(!c.pending||c.pending.week!==expectedWeek||c.pending.minute<90||c.pending.week!==c.week+1)return c;
  const week=c.pending.week,finished=new Map(c.pending.fixtures.map(f=>[f.id,f]));
  const fixtures=c.fixtures.map(f=>finished.get(f.id)??f),rng=random(c.seed+(c.world.season-2026)*3271+week*3571);

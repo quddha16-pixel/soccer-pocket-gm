@@ -1,0 +1,6 @@
+import type { Career, Fixture } from '../models';
+export function ManualSummary({career:c,fixture:f}:{career:Career;fixture:Fixture}){
+ const stats=f.report?.manualStats;if(!stats)return null;
+ const own=f.report!.performances.filter(p=>p.clubId===c.clubId).map(p=>stats[p.playerId]).filter(Boolean),total=(key:'attempted'|'completed'|'tackles'|'interceptions')=>own.reduce((n,p)=>n+p[key],0),combinations=f.report!.manualLinks??[],bonus=Math.min(4,combinations.reduce((n,l)=>n+Math.min(.35,l.passes*.025),0));
+ return <section className="panel manual-summary"><div className="section-heading"><h3>Your impact on the pitch</h3><span className="tag">{f.report!.manualMinutes??90} min controlled</span></div><div className="manual-impact-grid">{[[`${total('completed')}/${total('attempted')}`,'Completed passes'],[total('tackles'),'Tackles won'],[total('interceptions'),'Interceptions'],[combinations.reduce((n,l)=>n+l.passes,0),'Forward combinations']].map(([value,label])=><span key={label}><strong>{value}</strong><small>{label}</small></span>)}</div><p className="small muted">{bonus>0?`Your combinations earned up to +${bonus.toFixed(2)} partnership familiarity, shared across these pairs. Applied once after you finish the matchweek.`:'Complete forward passes to build extra partnership familiarity. Standard shared-minute chemistry still applies.'}</p></section>;
+}

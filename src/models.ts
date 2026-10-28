@@ -1,3 +1,4 @@
+import type { ManualState, ManualCombination, ManualPlayerStats } from './simulation/manualModels';
 import type { ManagerStyle, GeniusPlaystyle } from './simulation/managerStyles';
 import type { PlayerIdentity, World } from './worldModels';
 import type { RealPlayerProfile } from './data/playerProfiles';
@@ -16,11 +17,11 @@ export type MomentOutcome='goal'|'saved'|'wide'|'blocked'|'intercepted';
 export interface AimPoint {x:number;y:number}
 export interface AimedShot {path:AimPoint[]}
 export interface KeyMoment {shot?:AimedShot;id:string;eventId:string;minute:number;clubId:string;kind:MomentKind;actorId:string;receiverId:string;alternateId:string;supportId:string;keeperId:string;baseXg:number;keeperApproach:'set'|'advancing'|'committing';pressure:'space'|'closing';autoChoice:MomentOption;selection?:MomentOption;outcome:MomentOutcome}
-export interface MatchReport {keyMoments?:KeyMoment[]; simulationSeed?:number;substitutions?:Substitution[];homeBench?:string[];awayBench?:string[]; events:MatchEvent[]; performances:Performance[]; homePossession:number; motmId:string; homeLineup?:string[]; awayLineup?:string[]; homeFormation?:Formation; awayFormation?:Formation }
+export interface MatchReport {manualMinutes?:number;manualStats?:Record<string,ManualPlayerStats>;manualLinks?:ManualCombination[];keyMoments?:KeyMoment[]; simulationSeed?:number;substitutions?:Substitution[];homeBench?:string[];awayBench?:string[]; events:MatchEvent[]; performances:Performance[]; homePossession:number; motmId:string; homeLineup?:string[]; awayLineup?:string[]; homeFormation?:Formation; awayFormation?:Formation }
 export interface Fixture { id:string; week:number; homeId:string; awayId:string; homeGoals?:number; awayGoals?:number; report?:MatchReport }
 export interface Standing { clubId:string; played:number; won:number; drawn:number; lost:number; gf:number; ga:number; points:number }
 export type Reputation = 'unknown'|'established'|'elite';
 export type Tactic = 'balanced'|'attacking'|'defensive'|'feed-star';
 export type Formation = '4-3-3'|'4-4-2'|'4-2-3-1';
-export interface PendingWeek {decisionMode?:'interactive'|'automatic';decisionFeedback?:string; week:number; fixtures:Fixture[]; minute:number; speed:1|2|4; paused:boolean }
+export interface PendingWeek {manual?:ManualState;decisionMode?:'interactive'|'automatic';decisionFeedback?:string; week:number; fixtures:Fixture[]; minute:number; speed:1|2|4; paused:boolean }
 export interface Career {legacy?:Legacy;recentSubPlans?:SavedSubPlan[];interactiveMoments?:boolean;matchPlan?:MatchPlan; managerStyle?:ManagerStyle;geniusPlaystyle?:GeniusPlaystyle; version:3; world:World; manager:string; reputation:Reputation; clubId:string; players:Player[]; fixtures:Fixture[]; week:number; tactic:Tactic; status:'active'|'survived'|'fired'; seed:number; formation:Formation; lineup:string[]; starId:string; transferBudget:number; statsStartWeek:number; pending?:PendingWeek }

@@ -1,3 +1,5 @@
+import { snapshotManual } from './manualCareer';
+import { createManualState } from './manualEngine';
 import type { Career, MatchPlan, Substitution } from '../models';
 import { resolveMatch } from './match';
 import { defaultBench, fixtureLineup, validateSubstitutions } from './substitutionRules';
@@ -18,12 +20,15 @@ function editLive(c:Career,changes:Substitution[]):Career {
  const start=(f.homeId===c.clubId?f.report!.homeLineup:f.report!.awayLineup)??fixtureLineup(f,c.clubId,0);
  const bench=(f.homeId===c.clubId?f.report!.homeBench:f.report!.awayBench)??defaultBench(c,c.clubId,start);
  validateSubstitutions(c,c.clubId,start,bench,changes.filter(s=>s.clubId===c.clubId));
+ if(pending.manual){const updated={...c,pending:{...pending,fixtures:pending.fixtures.map(x=>x.id===f.id?{...f,report:{...f.report!,substitutions:changes}}:x)}};return snapshotManual(updated,pending.manual,true);}
  const resolved=resolveMatch(f,c,random(hash(`${c.seed}:${c.world.season}:${f.id}`)),f,changes,pending.minute);
  return {...c,pending:{...pending,paused:true,fixtures:pending.fixtures.map(x=>x.id===f.id?resolved:x)}};
 }
 export function makeLiveSubstitution(c:Career,offId:string,onId:string):Career {
  if(!c.pending)throw Error('Start the match first.');
  const f=c.pending.fixtures.find(f=>f.homeId===c.clubId||f.awayId===c.clubId)!;
+ if(c.pending.manual&&c.pending.minute>=89)throw Error('Manual substitutions close before the final minute.');
+ if(c.pending.manual&&c.pending.minute===0&&c.pending.manual.elapsed>0)throw Error('Kickoff has started. Substitutions unlock after the first match minute.');
  if(c.pending.minute===0){
   if(c.pending.decisionFeedback||f.report?.keyMoments?.some(m=>m.selection!==undefined&&m.minute>0))throw Error('Continue the current chance before changing the kickoff lineup.');
   const start=(f.homeId===c.clubId?f.report!.homeLineup:f.report!.awayLineup)??fixtureLineup(f,c.clubId,0),bench=(f.homeId===c.clubId?f.report!.homeBench:f.report!.awayBench)??defaultBench(c,c.clubId,start);
@@ -36,10 +41,11 @@ export function makeLiveSubstitution(c:Career,offId:string,onId:string):Career {
   if(!stars.length)throw Error('Keep a midfielder, winger or striker in the starting XI for the designated-star role.');
   const context={...base,starId:stars.some(p=>p.id===c.starId)?c.starId:stars[0].id};
   const known={...f,report:{...f.report!,...(f.homeId===c.clubId?{homeLineup:lineup,homeBench:newBench}:{awayLineup:lineup,awayBench:newBench}),substitutions:changes}};
+  if(c.pending.manual){const updated={...context,pending:{...c.pending,fixtures:c.pending.fixtures.map(x=>x.id===f.id?known:x)}};const manual=createManualState(updated,known,c.pending.manual.duration);return snapshotManual(updated,manual,true);}
   const resolved=resolveMatch(f,context,random(hash(`${c.seed}:${c.world.season}:${f.id}`)),known,changes,0);
   return {...context,pending:{...c.pending,paused:true,fixtures:c.pending.fixtures.map(x=>x.id===f.id?resolved:x)}};
  }
- return editLive(c,[...(f.report?.substitutions??[]),{clubId:c.clubId,offId,onId,minute:c.pending.minute}]);
+ return editLive(c,[...(f.report?.substitutions??[]),{clubId:c.clubId,offId,onId,minute:c.pending.manual?(c.pending.manual.phase==='halftime'?45:Math.min(89,c.pending.minute+1)):c.pending.minute}]);
 }
 export function cancelPlannedSubstitution(c:Career,index:number):Career {
  if(!c.pending)throw Error('Start the match first.');

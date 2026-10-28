@@ -26,6 +26,7 @@ export function buildFamiliarity(c:Career){
  for(let i=0;i<players.length;i++){const p=players[i],key=`${p.playerId}:${clubId===c.clubId?c.tactic:'balanced'}`;chemistry.familiarity[key]=(chemistry.familiarity[key]??0)+(.7+staffQuality(c,clubId,'Assistant Manager')/140)*(p.minutes??90)/90;
   for(let j=i+1;j<players.length;j++){const other=players[j],overlap=Math.max(0,Math.min(p.exited??90,other.exited??90)-Math.max(p.entered??0,other.entered??0)),key=pairKey(p.playerId,other.playerId);if(overlap)chemistry.pairs[key]=(chemistry.pairs[key]??0)+overlap/90;}
  }
+ if(clubId===c.clubId){let budget=4;for(const link of f.report?.manualLinks??[]){const a=players.find(p=>p.playerId===link.a),b=players.find(p=>p.playerId===link.b);if(!a||!b)continue;const overlap=Math.max(0,Math.min(a.exited??90,b.exited??90)-Math.max(a.entered??0,b.entered??0));const bonus=Math.min(budget,.35,Math.max(0,link.passes)*.025,overlap/90*.35);if(bonus>0){const key=pairKey(link.a,link.b);chemistry.pairs[key]=(chemistry.pairs[key]??0)+bonus;budget-=bonus;}}}
  chemistry.lastLineups[clubId]=fixtureLineup(f,clubId,90);
  }}return chemistry;
 }
