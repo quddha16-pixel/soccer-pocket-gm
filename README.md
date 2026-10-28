@@ -1,4 +1,4 @@
-# Pocket Football GM — v1.7
+# Pocket Football GM — v1.8
 
 Created By: Quentin Warminsky. A mobile-first football management game built with React, TypeScript and Vite in the existing `quddha16-pixel/soccer-pocket-gm` repository. No licensed club marks, photos, external portrait services or external fonts are used.
 
@@ -55,6 +55,16 @@ Overall, identity, positions, preferred foot, summary skills and referenced Play
 
 Existing saves adopt the pool at their next season rollover without replacing their current players or fixtures. Off-league clubs keep their accounts and squads; annual aging, contracts and existing youth replenishment continue. They do not receive simulated Championship matches, weekly performance development or weekly league revenue/payroll settlements. The existing future youth-intake system remains separate from the real first-entry squads.
 
+## v1.8: interactive key moments
+
+Watch Match now pauses **before your team's chance is resolved on screen** for penalties, free kicks, corners, one-on-ones, big play chances and major crosses. Each situation offers three football decisions with short tradeoff descriptions, the player involved and a read on the opposition. Choose an approach, see the outcome, then continue. **Let player decide** delegates a single chance; the pre-match **Interactive key moments** toggle enables uninterrupted watching. Quick Sim, opponent teams and skipped chances use the same assessment and resolution rules automatically.
+
+Decisions use individual finishing, power, composure, control, passing, crossing, aerial ability, specialist traits, goalkeeper quality/movement, defensive pressure, fatigue and positional fit. Deliveries or dribbles can fail before a shot, passing options can produce a teammate's goal, and penalties are not constrained by the open-play conversion cap. There is no guaranteed scoring option. Only the current chance changes: past events, unrelated chances and the other fixtures retain their outcomes. Substitutions update future opportunities without erasing completed decisions.
+
+**Substitution access:** while watching, tap the sticky **Substitutions** button below the playback controls, select **Player off** and **Player on**, then **Confirm substitution**. **Done** returns to the paused pitch; press **Resume**. At minute 0, **Confirm lineup change** updates the starting XI without using a substitution. Clear future substitution plans if a desired bench player is reserved for a later change. For Quick Sim, set the bench and schedule changes under **Set your subs** before kickoff.
+
+Waiting choices and result panels survive refresh, with a locked selection that prevents trying different options on the same chance. Goal, assist, shot, save, appearance and award records use the final resolved event. Existing saves and historical reports remain compatible. See [v1.8 implementation and validation](docs/v1.8-release.md).
+
 ## v1.7: competitive transfers, substitutions and positional discipline
 
 Clubs now make sporting decisions before agreeing sales: key-player importance, fit/registered replacements, rivals, contract length, financial pressure, deadline timing and departures in the current window. **Not for sale means the club can refuse any fee.** Negotiator benefits cannot bypass the veto. Agreements expire after two matchweeks and are checked again before completion. AI clubs use the same seller rules, shop for weak positions each transfer-window week and reject inflated user listings against their own valuation. The current market implements permanent transfers; a separate loan-contract system is not included.
@@ -109,7 +119,7 @@ Injuries are resolved at round completion, restrict selection and recover weekly
 
 `src/simulation/animation.ts` reconstructs schematic movements from recorded match events, saved lineups/formations and the substitution timeline. SVG rendering uses requestAnimationFrame with 22 selectable colored circles, a contrasting ball and pitch markings. It illustrates link-up passes, runs, dribbling, defensive pressure, shots, recorded saves/goals and transitions between attacking teams. These movements do not create extra goals, assists or official passing statistics. Simultaneous events may share a highlight; commentary preserves every recorded event.
 
-The score, contributions, shots, full-time possession and Man of the Match come from the same report used by Quick Sim. Live substitutions preserve watched events and update only the remaining play. The award can go to either team, including a losing goalkeeper. Playback speed affects intervals only. Rendering stops when paused/unmounted; hiding the tab pauses playback. Reduced-motion users start in text view. Corners/set pieces are not statistical engine events in this core version and are not fabricated.
+The score, contributions, shots, full-time possession and Man of the Match come from the same report used by Quick Sim. Live substitutions preserve watched events and update only the remaining play. The award can go to either team, including a losing goalkeeper. Playback speed affects intervals only. Rendering stops when paused/unmounted; hiding the tab pauses playback. Reduced-motion users start in text view. Key set pieces are represented by the generated decision moments; intercepted deliveries record no phantom shot or assist. This remains a compact chance-based match model, not an exhaustive foul/corner/pass log.
 
 ## Functional core transfers
 

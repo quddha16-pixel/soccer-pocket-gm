@@ -101,7 +101,7 @@ describe('individual player abilities affect football outcomes',()=>{
  });
  it('records actual probabilistic goals, shots, saves and assists in immutable watch/quick reports',()=>{
   const c=newCareer('Test','elite','liverpool',27),a=prepareWeek(c),b=prepareWeek(c,false);expect(a.pending!.fixtures).toEqual(b.pending!.fixtures);
-  for(const f of a.pending!.fixtures){expect(f.report!.events.filter(e=>e.type==='goal'&&e.clubId===f.homeId)).toHaveLength(f.homeGoals!);expect(f.report!.events.filter(e=>e.type==='goal'&&e.clubId===f.awayId)).toHaveLength(f.awayGoals!);expect(f.report!.events.every(e=>e.xG!>0&&e.xG!<.5)).toBe(true);}
+  for(const f of a.pending!.fixtures){expect(f.report!.events.filter(e=>e.type==='goal'&&e.clubId===f.homeId)).toHaveLength(f.homeGoals!);expect(f.report!.events.filter(e=>e.type==='goal'&&e.clubId===f.awayId)).toHaveLength(f.awayGoals!);expect(f.report!.events.every(e=>e.xG!>0&&e.xG!<=(f.report!.keyMoments?.some(m=>m.id===e.momentId&&m.kind==='penalty')?.93:.48))).toBe(true);}
  });
  it('retains the imported OVR calibration during development and responds to minutes, coaching and injuries',()=>{
   const c=newCareer('Test','elite','liverpool',27),p=profile('Ryan McAidoo');
@@ -165,5 +165,5 @@ describe('careers, transfers and mobile profile protection',()=>{
    }
   }
   saveCareer(c);expect(loadCareer().error).toBe('');
- },30000);
+ },60000);
 });

@@ -46,7 +46,7 @@ describe('persistent managerial specialties',()=>{
  });
  it('changes actual match probabilities and fitness, keeps replay deterministic and never guarantees results',()=>{
   const c=newCareer('Genius','elite','arsenal',1),gen={...c,managerStyle:'genius' as const,geniusPlaystyle:'counterpress' as const},fixture=c.fixtures.find(f=>f.homeId===c.clubId||f.awayId===c.clubId)!;
-  let different=0;for(let seed=1;seed<=20;seed++){const normal=resolveMatch(fixture,c,random(seed)),special=resolveMatch(fixture,gen,random(seed));expect(resolveMatch(fixture,gen,random(seed))).toEqual(special);if(JSON.stringify(normal.report)!==JSON.stringify(special.report))different++;expect(special.report!.events.every(e=>e.xG!>=.015&&e.xG!<=.48)).toBe(true);}expect(different).toBeGreaterThan(0);
+  let different=0;for(let seed=1;seed<=20;seed++){const normal=resolveMatch(fixture,c,random(seed)),special=resolveMatch(fixture,gen,random(seed));expect(resolveMatch(fixture,gen,random(seed))).toEqual(special);if(JSON.stringify(normal.report)!==JSON.stringify(special.report))different++;expect(special.report!.events.every(e=>e.xG!>=.015&&e.xG!<=(special.report!.keyMoments?.some(m=>m.id===e.momentId&&m.kind==='penalty')?.93:.48))).toBe(true);}expect(different).toBeGreaterThan(0);
   const p=prepareWeek(c,false),played=new Set(p.pending!.fixtures.flatMap(f=>f.report!.performances.map(p=>p.playerId))),normal=commitWeek(p),special=commitWeek({...p,managerStyle:'genius',geniusPlaystyle:'counterpress'});
   for(const id of c.lineup){expect(played.has(id)).toBe(true);expect(special.players.find(p=>p.id===id)!.fitness).toBe(normal.players.find(p=>p.id===id)!.fitness-2);}
  });

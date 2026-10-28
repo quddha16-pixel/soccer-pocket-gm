@@ -107,7 +107,7 @@ it('keeps search and negotiation drafts through unmount and refresh without comp
 });
 
 it('pauses, changes speed, changes rendering and skips without rerolling the pending report', () => {
- let latest = prepareWeek(newCareer('Test', 'unknown', 'hull', 1234), true);
+ let latest = prepareWeek({...newCareer('Test', 'unknown', 'hull', 1234),interactiveMoments:false}, true);
  latest = { ...latest, pending: { ...latest.pending!, paused: true } };
  const reports = structuredClone(latest.pending!.fixtures);
  function Harness() { const [c, set] = useState(latest); latest = c; return <Matchday career={c} onUpdate={set} onStart={() => {}} onCommit={() => {}} onTactics={() => {}}/>; }

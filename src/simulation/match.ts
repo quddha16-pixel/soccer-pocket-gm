@@ -1,3 +1,4 @@
+import { addKeyMoments } from './momentRules';
 import { coachedPattern } from './managerStyles';
 import type { Career, Fixture, Formation, MatchEvent, Performance, Player, Substitution, Tactic } from '../models';
 import { activeLineup, defaultBench, nextMatchPlan, validateSubstitutions } from './substitutionRules';
@@ -81,12 +82,22 @@ export function resolveMatch(f:Fixture,c:Career,rng:()=>number,known?:Fixture,ch
   const lineups={[f.homeId]:activeLineup(home,changes.filter(s=>s.clubId===f.homeId),from),[f.awayId]:activeLineup(away,changes.filter(s=>s.clubId===f.awayId),from)};
   const players=c.players.map(p=>{const time=intervals.get(p.id);return time?{...p,fitness:Math.max(40,p.fitness-Math.max(0,from-time.entered)*.18)}:p;});
   const segment=resolveStaticMatch(f,{...c,players},random(from===0?simulationSeed:hash(`${simulationSeed}:${from}`)),lineups);
-  events.push(...segment.events.filter(e=>e.minute>Math.max(from,preserveThrough)&&e.minute<=to));possession+=segment.homePossession*(to-from)/90;
+  events.push(...segment.events.filter(e=>e.minute>Math.max(from,preserveThrough)&&e.minute<=to).map(e=>({...e,id:`${e.id}-from-${from}`})));possession+=segment.homePossession*(to-from)/90;
  }
  if(known)events.push(...known.report!.events.filter(e=>e.minute<=preserveThrough));
  events.sort((a,b)=>a.minute-b.minute||a.id.localeCompare(b.id));
- // Segment IDs retain the old readable format but must be unique in one report.
- events.forEach((e,i)=>{if(e.minute>preserveThrough)e.id=`${f.id}-${e.clubId}-${e.minute}-${i}`;});
+ // IDs depend on the source interval, never the number of past shots. A lost
+ // delivery must not change the identity or random draw of a later chance.
+ const base:Fixture={...f,report:{simulationSeed,substitutions:changes,homeBench,awayBench,homeLineup:home,awayLineup:away,homeFormation:f.homeId===c.clubId?c.formation:'4-3-3',awayFormation:f.awayId===c.clubId?c.formation:'4-3-3',events,performances:[],homePossession:Math.round(possession),motmId:''}};
+ return refreshMatchStatistics(addKeyMoments(base,c,known,preserveThrough),c);
+}
+
+/** Reconcile one changed chance with the same participant-minute ledger. */
+export function refreshMatchStatistics(f:Fixture,c:Career):Fixture {
+ const report=f.report!,events=report.events,simulationSeed=report.simulationSeed??hash(f.id),home=report.homeLineup!,away=report.awayLineup!,changes=report.substitutions??[];
+ const intervals=new Map<string,{entered:number;exited:number}>();
+ for(const id of [...home,...away])intervals.set(id,{entered:0,exited:90});
+ for(const sub of [...changes].sort((a,b)=>a.minute-b.minute)){intervals.get(sub.offId)!.exited=sub.minute;intervals.set(sub.onId,{entered:sub.minute,exited:90});}
  const performances:Performance[]=[...intervals].filter(([,time])=>time.exited>time.entered).map(([id,time])=>{
   const p=c.players.find(p=>p.id===id)!,minutes=time.exited-time.entered,own=events.filter(e=>e.playerId===id),opponent=events.filter(e=>e.clubId!==p.clubId&&e.minute>time.entered&&e.minute<=time.exited);
   const goals=own.filter(e=>e.type==='goal').length,assists=events.filter(e=>e.assistId===id).length,shots=own.length,conceded=opponent.filter(e=>e.type==='goal').length,saves=p.position==='GK'?opponent.filter(e=>e.onTarget&&e.type==='shot').length:0;
@@ -95,5 +106,5 @@ export function resolveMatch(f:Fixture,c:Career,rng:()=>number,known?:Fixture,ch
   const rating=Math.round(Math.min(10,Math.max(4,5.8-(1-fit)*1.4+goals*1.15+assists*.7+shots*.05+saves*.19+tackles*.13+(minutes>=60&&conceded===0&&['GK','CB','FB'].includes(p.position)?.7:0)-conceded*(p.position==='GK'?.15:.07)+r()*.55))*10)/10;
   return {playerId:id,clubId:p.clubId,goals,assists,shots,saves,tackles,rating,minutes,entered:time.entered,exited:time.exited,conceded};
  });
- return {...f,homeGoals:events.filter(e=>e.clubId===f.homeId&&e.type==='goal').length,awayGoals:events.filter(e=>e.clubId===f.awayId&&e.type==='goal').length,report:{simulationSeed,substitutions:changes,homeBench,awayBench,homeLineup:home,awayLineup:away,homeFormation:f.homeId===c.clubId?c.formation:'4-3-3',awayFormation:f.awayId===c.clubId?c.formation:'4-3-3',events,performances,homePossession:Math.round(possession),motmId:selectMotm(performances)}};
+ return {...f,homeGoals:events.filter(e=>e.clubId===f.homeId&&e.type==='goal').length,awayGoals:events.filter(e=>e.clubId===f.awayId&&e.type==='goal').length,report:{...report,performances,motmId:selectMotm(performances)}};
 }

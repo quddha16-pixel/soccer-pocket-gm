@@ -27,7 +27,7 @@ export function prepareWeek(c:Career,watch=true):Career{
  c=repairLineup(c);
  const week=c.week+1,rng=random(c.seed+(c.world.season-2026)*104729+week*7919);
  const fixtures=c.fixtures.filter(f=>f.week===week).map(f=>resolveMatch(f,c,rng));
- return {...c,matchPlan:nextMatchPlan(c),pending:{week,fixtures,minute:watch?0:90,speed:1,paused:false}};
+ return {...c,matchPlan:nextMatchPlan(c),pending:{week,fixtures,decisionMode:watch&&(c.interactiveMoments??true)?'interactive':'automatic',minute:watch?0:90,speed:1,paused:false}};
 }
 export function commitWeek(c:Career,expectedWeek=c.pending?.week):Career{
  if(!c.pending||c.pending.week!==expectedWeek||c.pending.minute<90||c.pending.week!==c.week+1)return c;
