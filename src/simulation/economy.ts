@@ -6,9 +6,12 @@ import { valuation, autoLineup, eligibleStars, validLineup } from './management'
 import { standings } from './league';
 export function clubName(id:string){return id?clubById(id)?.name??id:'Free agent';}
 export function under21(p:Player,season:number){return identity(p).birthDate>=seasonRules(season).u21Cutoff;}
+// Unknown training histories are never asserted as homegrown. Custom starting
+// rosters receive an explicit game exemption; existing careers keep their rules.
+export function trainingExempt(c:Career,p:Player){return !!c.world.customRoster?.unverifiedTrainingExempt&&!!p.real?.estimatedFields.includes('homegrownTraining');}
 export function registrationStatus(c:Career,clubId:string,players=c.players){
  const registered=new Set(c.world.registration[clubId]??[]),seniors=players.filter(p=>p.clubId===clubId&&!under21(p,c.world.season)&&registered.has(p.id));
- return {senior:seniors.length,nonHomegrown:seniors.filter(p=>identity(p).trainingYears<3).length,u21:players.filter(p=>p.clubId===clubId&&under21(p,c.world.season)).length};
+ return {senior:seniors.length,nonHomegrown:seniors.filter(p=>identity(p).trainingYears<3&&!trainingExempt(c,p)).length,u21:players.filter(p=>p.clubId===clubId&&under21(p,c.world.season)).length};
 }
 export function eligiblePlayers(c:Career,clubId:string){return c.players.filter(p=>p.clubId===clubId&&identity(p).injuryWeeks===0&&(under21(p,c.world.season)||(c.world.registration[clubId]??[]).includes(p.id)));}
 export function repairLineup(c:Career){const available=eligiblePlayers(c,c.clubId);if(validLineup(available,c.clubId,c.lineup))return c;const lineup=autoLineup(available,c.clubId,c.formation);return {...c,lineup,starId:eligibleStars({...c,lineup}).some(p=>p.id===c.starId)?c.starId:eligibleStars({...c,lineup})[0]?.id??''};}
@@ -21,8 +24,8 @@ export function financialSummary(c:Career,clubId=c.clubId){
 }
 export function canRegister(c:Career,p:Player,clubId:string){
  if(under21(p,c.world.season))return '';
- const r=registrationStatus(c,clubId);if(r.senior>=25)return 'The 25-player senior registration limit is full.';
- if(identity(p).trainingYears<3&&r.nonHomegrown>=17)return 'The 17 non-homegrown senior player limit is full.';
+ const r=registrationStatus(c,clubId);const limit=c.world.customRoster?.seniorLimits[clubId]??25;if(r.senior>=limit)return `The ${limit}-player senior registration limit is full.`;
+ if(identity(p).trainingYears<3&&!trainingExempt(c,p)&&r.nonHomegrown>=17)return 'The 17 non-homegrown senior player limit is full.';
  return '';
 }
 export function canSignNow(c:Career,p:Player){if(inWindow(c.world.date,c.world.season))return true;if(p.clubId)return false;

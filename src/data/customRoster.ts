@@ -1,7 +1,9 @@
 import draftData from './custom-roster-draft.json';
 import { clubs } from './clubs';
 
-// Research intake only. Unresearched profiles must never become playable ratings.
+// Historical v1.3 intake only. Active, researched/explicitly provisional starting
+// profiles now live in playerProfiles.ts and custom-roster.json. Preserve this
+// intake and its strict gate for auditing the original unresearched submission.
 export const realPositions=['GK','RB','RWB','CB','LB','LWB','CDM','CM','CAM','RM','LM','RW','LW','CF','ST'] as const;
 export type RealPosition=typeof realPositions[number];
 export const requiredRealAttributes=['pace','acceleration','finishing','shooting','passing','vision','dribbling','control','tackling','marking','defensiveAwareness','strength','stamina','positioning','composure','reflexes','handling','distribution','shotStopping'] as const;

@@ -1,0 +1,268 @@
+{
+  "edition": "FC 27",
+  "season": "2026/27",
+  "researchDate": "2026-10-28",
+  "creator": "Quentin Warminsky",
+  "discovered": 546,
+  "imported": 546,
+  "verifiedFC27Identities": 543,
+  "officialEARatings": 523,
+  "supportingReferenceRatings": 20,
+  "sourceVerifiedRatings": 543,
+  "provisionalRatings": 3,
+  "individualizedAttributes": 546,
+  "playersWithTraits": 354,
+  "noEstablishedTraitWithRationale": 192,
+  "youngPlayers": 235,
+  "identityReview": [],
+  "provisionalProfiles": [
+    {
+      "name": "Max Dowman",
+      "overall": 68,
+      "potential": 88,
+      "reason": "Creative academy attacker with documented close control, ball carrying and composure. Technical strengths exceed his current senior consistency and physical readiness. High ceiling is uncertain, not a promised outcome."
+    },
+    {
+      "name": "Jayden Danns",
+      "overall": 64,
+      "potential": 79,
+      "reason": "Source-confirmed striker with senior FA Cup goals but injury-disrupted development and limited recent senior minutes. Aerial presence and penalty-area finishing are more developed than build-up passing. The FC 26 63/81 reference is historical, not verified FC 27 data."
+    },
+    {
+      "name": "Mahdi Nicoll-Jazuli",
+      "overall": 59,
+      "potential": 82,
+      "reason": "Youth midfielder with documented line-breaking carrying, composure and experience as a six, eight and ten. Senior evidence is limited; strength, defensive consistency and endurance remain development areas. No elite specialist trait asserted."
+    }
+  ],
+  "estimatedPotentialProfiles": [
+    "Martin Ødegaard",
+    "Max Dowman",
+    "Luke Chambers",
+    "Jayden Danns",
+    "Mahdi Nicoll-Jazuli",
+    "Michael Svoboda",
+    "Noah Okafor",
+    "Matt Targett",
+    "Calvin Bassey",
+    "Kenny Tete",
+    "Takehiro Tomiyasu",
+    "Frank Onyeka",
+    "Aji Alese",
+    "Abdoullah Ba"
+  ],
+  "clubs": [
+    {
+      "club": "EVERTON",
+      "clubId": "everton",
+      "expected": 21,
+      "imported": 21,
+      "exactNamesAndAssignments": true,
+      "officialRatings": 20,
+      "supportingRatings": 1,
+      "provisionalRatings": 0
+    },
+    {
+      "club": "ARSENAL",
+      "clubId": "arsenal",
+      "expected": 24,
+      "imported": 24,
+      "exactNamesAndAssignments": true,
+      "officialRatings": 23,
+      "supportingRatings": 0,
+      "provisionalRatings": 1
+    },
+    {
+      "club": "MANCHESTER CITY",
+      "clubId": "city",
+      "expected": 24,
+      "imported": 24,
+      "exactNamesAndAssignments": true,
+      "officialRatings": 22,
+      "supportingRatings": 2,
+      "provisionalRatings": 0
+    },
+    {
+      "club": "LIVERPOOL",
+      "clubId": "liverpool",
+      "expected": 31,
+      "imported": 31,
+      "exactNamesAndAssignments": true,
+      "officialRatings": 29,
+      "supportingRatings": 1,
+      "provisionalRatings": 1
+    },
+    {
+      "club": "CHELSEA",
+      "clubId": "chelsea",
+      "expected": 28,
+      "imported": 28,
+      "exactNamesAndAssignments": true,
+      "officialRatings": 27,
+      "supportingRatings": 0,
+      "provisionalRatings": 1
+    },
+    {
+      "club": "BRIGHTON",
+      "clubId": "brighton",
+      "expected": 30,
+      "imported": 30,
+      "exactNamesAndAssignments": true,
+      "officialRatings": 27,
+      "supportingRatings": 3,
+      "provisionalRatings": 0
+    },
+    {
+      "club": "TOTTENHAM",
+      "clubId": "tottenham",
+      "expected": 28,
+      "imported": 28,
+      "exactNamesAndAssignments": true,
+      "officialRatings": 26,
+      "supportingRatings": 2,
+      "provisionalRatings": 0
+    },
+    {
+      "club": "MANCHESTER UNITED",
+      "clubId": "united",
+      "expected": 29,
+      "imported": 29,
+      "exactNamesAndAssignments": true,
+      "officialRatings": 29,
+      "supportingRatings": 0,
+      "provisionalRatings": 0
+    },
+    {
+      "club": "BRENTFORD",
+      "clubId": "brentford",
+      "expected": 29,
+      "imported": 29,
+      "exactNamesAndAssignments": true,
+      "officialRatings": 29,
+      "supportingRatings": 0,
+      "provisionalRatings": 0
+    },
+    {
+      "club": "LEEDS UNITED",
+      "clubId": "leeds",
+      "expected": 24,
+      "imported": 24,
+      "exactNamesAndAssignments": true,
+      "officialRatings": 24,
+      "supportingRatings": 0,
+      "provisionalRatings": 0
+    },
+    {
+      "club": "NEWCASTLE UNITED",
+      "clubId": "newcastle",
+      "expected": 25,
+      "imported": 25,
+      "exactNamesAndAssignments": true,
+      "officialRatings": 25,
+      "supportingRatings": 0,
+      "provisionalRatings": 0
+    },
+    {
+      "club": "ASTON VILLA",
+      "clubId": "villa",
+      "expected": 28,
+      "imported": 28,
+      "exactNamesAndAssignments": true,
+      "officialRatings": 25,
+      "supportingRatings": 3,
+      "provisionalRatings": 0
+    },
+    {
+      "club": "HULL CITY",
+      "clubId": "hull",
+      "expected": 33,
+      "imported": 33,
+      "exactNamesAndAssignments": true,
+      "officialRatings": 31,
+      "supportingRatings": 2,
+      "provisionalRatings": 0
+    },
+    {
+      "club": "IPSWICH TOWN",
+      "clubId": "ipswich",
+      "expected": 28,
+      "imported": 28,
+      "exactNamesAndAssignments": true,
+      "officialRatings": 27,
+      "supportingRatings": 1,
+      "provisionalRatings": 0
+    },
+    {
+      "club": "BOURNEMOUTH",
+      "clubId": "bournemouth",
+      "expected": 28,
+      "imported": 28,
+      "exactNamesAndAssignments": true,
+      "officialRatings": 28,
+      "supportingRatings": 0,
+      "provisionalRatings": 0
+    },
+    {
+      "club": "FULHAM",
+      "clubId": "fulham",
+      "expected": 26,
+      "imported": 26,
+      "exactNamesAndAssignments": true,
+      "officialRatings": 25,
+      "supportingRatings": 1,
+      "provisionalRatings": 0
+    },
+    {
+      "club": "CRYSTAL PALACE",
+      "clubId": "palace",
+      "expected": 28,
+      "imported": 28,
+      "exactNamesAndAssignments": true,
+      "officialRatings": 26,
+      "supportingRatings": 2,
+      "provisionalRatings": 0
+    },
+    {
+      "club": "NOTTINGHAM FOREST",
+      "clubId": "forest",
+      "expected": 24,
+      "imported": 24,
+      "exactNamesAndAssignments": true,
+      "officialRatings": 23,
+      "supportingRatings": 1,
+      "provisionalRatings": 0
+    },
+    {
+      "club": "COVENTRY CITY",
+      "clubId": "coventry",
+      "expected": 29,
+      "imported": 29,
+      "exactNamesAndAssignments": true,
+      "officialRatings": 29,
+      "supportingRatings": 0,
+      "provisionalRatings": 0
+    },
+    {
+      "club": "SUNDERLAND",
+      "clubId": "sunderland",
+      "expected": 29,
+      "imported": 29,
+      "exactNamesAndAssignments": true,
+      "officialRatings": 28,
+      "supportingRatings": 1,
+      "provisionalRatings": 0
+    }
+  ],
+  "inputSubmissionSHA256": "b12f2e9a9e1243a1504b60146e37146c21590d33910f87dbdf29f2b8a41d9662",
+  "validation": {
+    "testsPassed": 75,
+    "build": "passed",
+    "mobileWidths": [
+      320,
+      375,
+      390,
+      430
+    ],
+    "deployment": "See GitHub Actions run associated with the release commit; deployment is verified separately."
+  }
+}

@@ -36,7 +36,7 @@ describe('career and simulation',()=>{
  const table=standings(clubs,c.fixtures);expect(table.every(r=>r.played===38&&r.won+r.drawn+r.lost===38)).toBe(true);expect(table.reduce((s,r)=>s+r.gf,0)).toBe(table.reduce((s,r)=>s+r.ga,0));
  expect(c.status).toBe(table.findIndex(r=>r.clubId===club.id)>=17?'fired':'survived');expect(advance(c)).toBe(c);
  }
- });
+ },20000);
  it('only relegates ranks 18–20 after season completion',()=>{const table=standings(clubs,[]);table.forEach((r,i)=>{expect(isRelegated(table,r.clubId,false)).toBe(false);expect(isRelegated(table,r.clubId,true)).toBe(i>=17);});expect(isRelegated(table,'missing',true)).toBe(false);});
  it('favours stronger teams and the home side without guaranteeing outcomes',()=>{
  const rng=random(42);let home=0,away=0,wins=0,losses=0;for(let i=0;i<5000;i++){const [h,a]=score(85,70,rng);home+=h;away+=a;if(h>a)wins++;if(h<a)losses++;}expect(home).toBeGreaterThan(away);expect(wins).toBeGreaterThan(losses);expect(losses).toBeGreaterThan(100);

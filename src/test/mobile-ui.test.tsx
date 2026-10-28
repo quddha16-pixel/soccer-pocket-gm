@@ -27,7 +27,7 @@ it('uses five primary destinations, preserves squad browsing and returns from se
  expect(screen.getByRole('heading', { name: 'Club' })).toBeTruthy();
  fireEvent.click(nav.getByRole('button', { name: 'Squad' }));
  expect(screen.getByRole('button', { name: 'Players' }).getAttribute('aria-pressed')).toBe('true');
- expect(document.querySelectorAll('.roster-card')).toHaveLength(24);
+ expect(document.querySelectorAll('.roster-card')).toHaveLength(33);
  expect(loadCareer().career).toEqual(c);
 });
 

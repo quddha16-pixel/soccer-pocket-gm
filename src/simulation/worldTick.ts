@@ -4,7 +4,7 @@ import { financeRules, inWindow, weekDate } from '../data/rules';
 import { identity, enrichPlayer, hash } from './identity';
 import { random } from './random';
 import { autoLineup, eligibleStars, valuation } from './management';
-import { askingPrice, financialSummary, finalizeSigning, payroll, repairLineup, submitOffer, wageDemand } from './economy';
+import { askingPrice, trainingExempt, financialSummary, finalizeSigning, payroll, repairLineup, submitOffer, wageDemand } from './economy';
 import { generateFixtures, standings } from './league';
 export function settleFinances(c:Career):Career{
  const world=structuredClone(c.world);world.date=weekDate(world.season,c.week);
@@ -67,7 +67,7 @@ export function rolloverSeason(c:Career):Career{
  }
  for(const club of clubs){const f=world.finances[club.id];
  const penalty=penalties[club.id];f.penalties+=penalty;f.debt=(f.debt??0)+Math.max(0,penalty-f.cash);f.cash=Math.max(0,f.cash-penalty);f.budget=(f.debt??0)>0?0:Math.min(f.cash,club.budget*1e6);f.spending=0;f.income=0;f.saleProfit=0;f.agentFees=0;f.bonuses=0;f.paidPayroll=0;f.operatingCosts=0;
- world.registration[club.id]=players.filter(p=>p.clubId===club.id).sort((a,b)=>(b.position==='GK'?1:0)-(a.position==='GK'?1:0)||b.overall-a.overall).reduce<string[]>((ids,p)=>{const senior=players.filter(x=>ids.includes(x.id)&&identity(x).birthDate<`${season-21}-01-01`),non=senior.filter(x=>identity(x).trainingYears<3);if(identity(p).birthDate>=`${season-21}-01-01`||(senior.length<25&&(identity(p).trainingYears>=3||non.length<17)))ids.push(p.id);return ids;},[]);
+ world.registration[club.id]=players.filter(p=>p.clubId===club.id).sort((a,b)=>(b.position==='GK'?1:0)-(a.position==='GK'?1:0)||b.overall-a.overall).reduce<string[]>((ids,p)=>{const senior=players.filter(x=>ids.includes(x.id)&&identity(x).birthDate<`${season-21}-01-01`),non=senior.filter(x=>identity(x).trainingYears<3&&!trainingExempt(c,x));if(identity(p).birthDate>=`${season-21}-01-01`||(senior.length<(world.customRoster?.seniorLimits[club.id]??25)&&(identity(p).trainingYears>=3||trainingExempt(c,p)||non.length<17)))ids.push(p.id);return ids;},[]);
  }
  world.staff=world.staff.map(s=>{
  if(s.controlled)return {...s,age:s.age+1,contractEnd:`${season+1}-06-30`};

@@ -1,12 +1,12 @@
 import type { Career, Formation, Player, Tactic } from '../models';
-import { coordinates, slots, positionFit } from './management';
+import { coordinates, lineupFit } from './management';
 import { staffQuality } from './staff';
 import { identity } from './identity';
 export const pairKey=(a:string,b:string)=>[a,b].sort().join('|');
 export const chemistryCategory=(score:number)=>score>=85?'Excellent':score>=70?'Strong':score>=50?'Developing':score>=30?'Weak':'Poor';
 export function partnership(c:Career,a:Player,b:Player,formation:Formation,indices:[number,number],tactic:Tactic){
  const shared=c.world.chemistry.pairs[pairKey(a.id,b.id)]??0,ia=identity(a),ib=identity(b);
- const complementary=ia.style!==ib.style,fit=(positionFit(a.position,slots[formation][indices[0]])+positionFit(b.position,slots[formation][indices[1]]))/2;
+ const complementary=ia.style!==ib.style,fit=(lineupFit(a,formation,indices[0])+lineupFit(b,formation,indices[1]))/2;
  const familiarity=((c.world.chemistry.familiarity[`${a.id}:${tactic}`]??0)+(c.world.chemistry.familiarity[`${b.id}:${tactic}`]??0))/2;
  const stable=c.world.chemistry.lastLineups[a.clubId]?.includes(a.id)&&c.world.chemistry.lastLineups[a.clubId]?.includes(b.id);
  const attributeLink=Math.max(-2,Math.min(3,(Math.max(ia.attributes.passing+ib.attributes.movement,ib.attributes.passing+ia.attributes.movement)-120)/15));

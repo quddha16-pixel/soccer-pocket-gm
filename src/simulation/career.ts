@@ -1,5 +1,5 @@
 import { clubs, clubById } from '../data/clubs';
-import { generatePlayers } from '../data/players';
+import { customStartingPlayers } from '../data/playerProfiles';
 import type { Career, Player, Reputation } from '../models';
 import { generateFixtures, isRelegated, standings } from './league';
 import { random } from './random';
@@ -14,7 +14,7 @@ export { score } from './scoring';
 export function offers(reputation:Reputation){return [...clubs].filter(c=>reputation==='unknown'?c.strength<=74:reputation==='established'?c.strength>=75&&c.strength<=81:c.strength>=82).sort((a,b)=>a.strength-b.strength).slice(0,4);}
 export function newCareer(manager:string,reputation:Reputation,clubId:string,seed=Date.now()):Career{
  if(!offers(reputation).some(c=>c.id===clubId))throw Error('This club has not offered you a job.');
- const players=generatePlayers(clubs,seed),lineup=autoLineup(players,clubId,'4-3-3');
+ const players=customStartingPlayers(),lineup=autoLineup(players,clubId,'4-3-3');
  return initializeWorld({version:3,manager:manager.trim()||'Alex Morgan',reputation,clubId,players,fixtures:generateFixtures(clubs.map(c=>c.id)),week:0,tactic:'balanced',status:'active',seed,formation:'4-3-3',lineup,starId:eligibleStars({players,lineup})[0].id,transferBudget:clubById(clubId).budget*1e6,statsStartWeek:1} as Career);
 }
 export function strength(players:Player[],clubId:string){const squad=players.filter(p=>p.clubId===clubId).sort((a,b)=>b.overall-a.overall).slice(0,11);return squad.reduce((s,p)=>s+p.overall*(.85+.15*p.fitness/100)*(.95+.05*p.morale/100),0)/squad.length;}

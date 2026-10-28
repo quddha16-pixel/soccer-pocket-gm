@@ -1,8 +1,10 @@
-# Custom roster intake and research audit
+# Historical v1.3 roster intake and research audit
+
+**Superseded by the [v1.4 playable reconciliation](roster-reconciliation.md): 546 imported, 543 sourced FC 27 ratings and 3 labelled provisional ratings.** This document preserves the original intake/research history; its zero-import statements describe v1.3. The owner subsequently corrected the reference edition to FC 27.
 
 The project owner's supplied club assignments are authoritative. The source submission is preserved verbatim in `custom-roster-submission.txt`. Structured records are in `src/data/custom-roster-draft.json`; each record retains its exact Unicode display name, assigned club, a stable draft ID, confidence/status, source list and unresolved notes.
 
-## Current research status
+## Historical research status at v1.3
 
 No identities or ratings have been independently verified. Premier League, UEFA, Transfermarkt and FBref access attempts all returned proxy HTTP 403 / CONNECT tunnel failed, with no source content retrieved. These are **access-attempt URLs, not citations supporting player data**. Source references, assessment dates, real identities, positions, attributes and ratings remain empty rather than invented.
 

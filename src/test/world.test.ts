@@ -1,3 +1,4 @@
+import {legacyCareer} from './legacyCareer';
 import {afterEach,describe,it,expect} from 'vitest';
 import {newCareer,advance,prepareWeek,commitWeek} from '../simulation/career';
 import {acceptIncoming,listPlayer,askingPrice,submitOffer,finalizeSigning,wageDemand,financialSummary,registrationStatus,canRegister,under21,releasePlayer,renewPlayer,eligiblePlayers} from '../simulation/economy';
@@ -11,7 +12,7 @@ import {teamChemistry} from '../simulation/chemistry';
 import {loadCareer,saveCareer,SAVE_KEY} from '../storage';
 import {animationFrame} from '../simulation/animation';
 import {autoLineup} from '../simulation/management';
-const fresh=()=>newCareer('Jamie','unknown','hull',1234);
+const fresh=()=>legacyCareer('Jamie','unknown','hull',1234);
 afterEach(()=>localStorage.clear());
 function target(c:ReturnType<typeof fresh>){return c.players.find(p=>p.clubId&&p.clubId!==c.clubId&&p.position==='CB'&&p.overall<=74&&askingPrice(c,p)<c.transferBudget*.6)!;}
 describe('cash transfers and player contracts',()=>{
@@ -76,7 +77,7 @@ describe('AI, migration and season integrity',()=>{
  });
  it('commits growth, familiarity and financial movements once despite replay/reload',()=>{const c=prepareWeek(fresh(),false),finished=commitWeek(c);const minutes=finished.players.reduce((s,p)=>s+identity(p).development.minutes,0);expect(minutes).toBe(20*11*90);expect(commitWeek(finished)).toBe(finished);saveCareer(finished);const loaded=loadCareer().career!;expect(loaded.players.reduce((s,p)=>s+identity(p).development.minutes,0)).toBe(minutes);expect(loaded.world.chemistry).toEqual(finished.world.chemistry);});
  it('keeps the economy, contracts, identities and registration stable through three full seasons',()=>{
- let c=newCareer('Long game','elite','liverpool',4321);const ids=c.players.map(p=>p.id);let seasons=0;
+ let c=legacyCareer('Long game','elite','liverpool',4321);const ids=c.players.map(p=>p.id);let seasons=0;
  for(let year=0;year<3;year++){for(let week=0;week<38;week++)c=advance(c);expect(c.week).toBe(38);expect(c.players.every(p=>p.overall>=30&&p.overall<=p.potential&&Number.isFinite(p.wage))).toBe(true);seasons++;if(c.status==='fired')break;const scores=c.fixtures.map(({report,...f})=>f),training=c.players.filter(p=>p.age<21&&p.clubId).map(p=>({id:p.id,years:identity(p).trainingYears}));c=rolloverSeason(c);for(const p of training)expect(identity(c.players.find(x=>x.id===p.id)!).trainingYears).toBeGreaterThanOrEqual(p.years);expect(c.world.history.at(-1)!.results).toEqual(scores);for(const club of clubs){const r=registrationStatus(c,club.id);expect(r.senior).toBeLessThanOrEqual(25);expect(r.nonHomegrown).toBeLessThanOrEqual(17);expect(eligiblePlayers(c,club.id).length).toBeGreaterThanOrEqual(11);}expect(new Set(c.players.map(p=>p.id)).size).toBe(c.players.length);}
  expect(seasons).toBe(3);expect(ids.every(id=>c.players.some(p=>p.id===id))).toBe(true);for(const f of Object.values(c.world.finances)){expect(f.cash).toBeGreaterThanOrEqual(0);expect(f.budget).toBeGreaterThanOrEqual(0);}saveCareer(c);expect(loadCareer().error).toBe('');
  },30000);

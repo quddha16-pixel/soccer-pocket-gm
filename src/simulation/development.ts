@@ -2,12 +2,14 @@ import type { Career, Player } from '../models';
 import { enrichPlayer, hash, identity, overallFromAttributes, primarySkills, skills } from './identity';
 import { random } from './random';
 import { staffQuality } from './staff';
+import { lineupFit } from './management';
 export function developPlayer(p:Player,c:Career,minutes:number,rating:number,opposition:number):Player{
  const result=enrichPlayer(p,c.world.season,c.week),a=structuredClone(identity(result)),d=a.development;
  const rng=random(hash(`${p.id}-${c.world.season}-${c.week+1}-growth`));
  d.minutes+=minutes;if(minutes)d.form=d.form*.7+rating*.3;
  const ageFactor=p.age<=18?1.45:p.age<=21?1.2:p.age<=24?.8:p.age<=27?.23:p.age<=30?.06:0;
- const headroom=Math.max(0,p.potential-p.overall),time=.23+Math.min(1,minutes/90)*.77,form=.8+Math.max(0,rating-6)*.12;
+ const suitability=p.clubId===c.clubId&&c.lineup.includes(p.id)?lineupFit(p,c.formation,c.lineup.indexOf(p.id)):1;
+ const headroom=Math.max(0,p.potential-p.overall),time=(a.injuryWeeks>0?.08:.23+Math.min(1,minutes/90)*.77*suitability),form=.8+Math.max(0,rating-6)*.12;
  const tendency=d.tendency==='early'?(p.age<=21?1.25:.8):d.tendency==='late'?(p.age>=22?1.35:.8):d.tendency==='volatile'?(rng()<.08?2.5:.75):1;
  const breakout=headroom>=8&&p.age<=24&&rng()<.06?1.8:1;
  const main=primarySkills(p);
@@ -17,7 +19,7 @@ export function developPlayer(p:Player,c:Career,minutes:number,rating:number,opp
  const coaching=.75+coach/200;
  const growth=Math.min(.26,ageFactor*d.growth*time*form*coaching*tendency*breakout*(.65+rng()*.7)*Math.min(1,headroom/5)*(main.includes(key)?1:.3)*.065*(.9+opposition/800));
  const decline=p.age>=31?(.009+(p.age-31)*.005)*(main.includes(key)?1:.4):0;
- a.attributes[key]=Math.max(30,Math.min(p.potential,a.attributes[key]+growth-decline));
+ a.attributes[key]=Math.max(p.real?1:30,Math.min(p.real?99:p.potential,a.attributes[key]+growth-decline));
  }
  // Keep a hard ceiling and derive overall from position-specific skills.
  const overall=Math.min(p.potential,overallFromAttributes(p,a.attributes));

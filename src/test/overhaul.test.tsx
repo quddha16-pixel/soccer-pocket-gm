@@ -47,7 +47,7 @@ describe('management',()=>{
 describe('dashboard and reports',()=>{
  it('uses completed fixtures and actual contributions for dashboard metrics',()=>{
  const c=advance(advance(career())),d=dashboard(c);expect(d.row.played).toBe(2);expect(d.row.won+d.row.drawn+d.row.lost).toBe(2);expect(d.recent).toHaveLength(2);
- expect(d.row.gf).toBe(d.recent.reduce((s,r)=>s+r.gf,0));expect(d.row.ga).toBe(d.recent.reduce((s,r)=>s+r.ga,0));expect(d.squad).toHaveLength(24);
+ expect(d.row.gf).toBe(d.recent.reduce((s,r)=>s+r.gf,0));expect(d.row.ga).toBe(d.recent.reduce((s,r)=>s+r.ga,0));expect(d.squad).toHaveLength(33);
  const goals=c.fixtures.flatMap(f=>f.report?.performances??[]).filter(p=>p.clubId===c.clubId).reduce((s,p)=>s+p.goals,0);expect(goals).toBe(d.row.gf);
  });
  it('calculates winning and unbeaten streaks from the actual ordered results',()=>{

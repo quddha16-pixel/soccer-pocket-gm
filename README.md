@@ -1,4 +1,4 @@
-# Pocket Football GM — v1.3
+# Pocket Football GM — v1.4
 
 Created By: Quentin Warminsky. A mobile-first football management game built with React, TypeScript and Vite in the existing `quddha16-pixel/soccer-pocket-gm` repository. No licensed club marks, photos, external portrait services or external fonts are used.
 
@@ -18,7 +18,7 @@ Open the Vite URL including `/soccer-pocket-gm/`. If the default npm cache is no
 
 ## Club data and simulation scope
 
-The authoritative project-owner-supplied 2026–27 list of 20 clubs lives in the single replaceable file `src/data/clubs.ts`. Players are generated separately in `src/data/players.ts`. Keep existing club/player IDs stable when adapting custom data. Budgets, revenue, wages, ratings, fictional nationalities, training histories and playing styles are game data, not official real-world records.
+The authoritative project-owner-supplied 2026–27 list of 20 clubs lives in the single replaceable file `src/data/clubs.ts`. New careers import the exact 546-player custom database from `src/data/custom-roster.json` through `src/data/playerProfiles.ts`. Existing saves keep their own rosters. `src/data/players.ts` remains available for legacy regression fixtures; it no longer supplies new starting squads. Budgets, revenue, valuations, wages, contracts and original trait effects are game estimates. Each real player separately identifies sourced and estimated fields.
 
 Each season has 380 fixtures, 38 per club, with one home and one away match against every opponent. Standings sort by points, goal difference and goals scored; exact ties use club ID as a display fallback. Official head-to-head/play-off tiebreakers and the real fixture calendar are not implemented.
 
@@ -35,17 +35,21 @@ Relegation still ends the user’s career. A surviving manager can start the nex
 
 Five persistent destinations replace the old navigation: Home, Squad, Market, Club and League. Secondary screens have Back navigation. Roster and fixture browsing and scroll position survive section changes. Search filters, player/staff negotiation fields and profile contract drafts use separate sessionStorage presentation keys, surviving refresh in the same tab. Saved careers remain in localStorage with the same schema and key. Modal sheets support keyboard focus trapping, Escape and focus restoration. Forms support Enter submission. Reduced-motion preferences default match playback to text. Safe-area insets are applied to headers, bottom navigation and sheets.
 
-## Custom roster research intake — not active yet
+## Playable custom roster — FC 27
 
-The exact user-supplied roster is accounted for in `src/data/custom-roster-draft.json`: **546 entries across all 20 clubs**, including the clarified separate Bournemouth players **Rayan** and **Ben Gannon-Doak**. Gabriel, Allan, Kevin, Florentino, Alysson and Costinha retain the confirmed display names. Club assignments and Unicode spellings are preserved. The original submission and every-club counts are in [the research audit](docs/roster-research-audit.md).
+All **546** submitted players across **20** custom clubs are active in new careers. Exact names, stable intake IDs and player-to-club assignments are preserved, including separate Bournemouth entries **Rayan** and **Ben Gannon-Doak**. The owner clarified that the rating reference is **FC 27** and that Newcastle’s Nico González is the Spanish midfielder born 3 January 2002.
 
-**0 independently verified identities, 0 active real-player imports, 546 explicitly unresolved profiles.** Research requests to Premier League, UEFA, Transfermarkt and FBref were blocked by the environment proxy with HTTP 403 / CONNECT tunnel failed. Source fields and ratings remain empty; these failures are not citations. A network-settings draft has been saved for user review/publication, but is not applied to the runtime.
+**523 official EA FC 27 launch overall ratings, 20 supporting FC 27 reference ratings, and 3 individually assessed provisional ratings** (Max Dowman, Jayden Danns and Mahdi Nicoll-Jazuli). Every player has a distinct attribute profile, actual primary/secondary positions, development settings, an estimated sterling value, contracts and dated source URLs. 354 have situational traits; the other 192 have an explicit rationale for no established specialist trait. Provisional values are labelled in player profiles.
 
-`src/data/customRoster.ts` defines the research intake, 15 real position codes, 19 required attributes and a validation gate that rejects incomplete profiles. This is preparation, not a playable real-roster implementation. Actual positions, calibrated weighted ratings, potential, valuations, identity deduplication and valid custom starting elevens require source-backed research and subsequent engine integration. New careers continue using the existing fictional player generator; existing saves and transactions are preserved. No guessed real-player ratings have been activated.
+The original source and v1.3 intake are preserved in `docs/custom-roster-submission.txt` and `src/data/custom-roster-draft.json`. The old `customRoster.ts` gate still protects that historical intake; playable import validation is now in `playerProfiles.ts`. The completed, individually selected research facts are in `docs/research/fc27-facts.json`. Rebuild deterministically with `python scripts/build-custom-roster.py`.
+
+See the [full import reconciliation and methodology](docs/roster-reconciliation.md) and [machine-readable club validation](docs/roster-reconciliation.json). These distinguish official references, supporting references, current potential estimates, original trait mappings, keeper-specific estimates and financial assumptions. This is a playable import, not a research-only staging file.
+
+Natural positions retain all 15 detailed codes, mapped to the six legacy engine groups for save compatibility. Side-sensitive formation suitability uses primary and secondary positions. Detailed passing, carrying, defending, finishing and goalkeeper skills influence probabilistic opportunities and conversions. Traits are bounded situational modifiers; no individual trait guarantees an outcome. Imported OVR calibration survives training instead of being flattened to three equal skills.
 
 ## Persistent portraits and player profiles
 
-`Player.identity.appearanceSeed` derives deterministically from immutable player ID, independent of club, nationality and career seed. Original local SVG portraits vary skin tone, face shape, hairstyles, hair colors, brows and facial hair. Transfers and season rollovers preserve identity. Portraits appear in the roster, lineup, market, profiles, valuable-player cards, development cards, goal commentary, animation highlights and Man of the Match.
+`Player.identity.appearanceSeed` derives deterministically from canonical identity for new real players and immutable player ID for legacy players, independent of current club and career seed. These are fictional illustrated portraits, not verified likenesses. Original local SVG portraits vary skin tone, face shape, hairstyles, hair colors, brows and facial hair. Transfers and season rollovers preserve identity. Portraits appear in the roster, lineup, market, profiles, valuable-player cards, development cards, goal commentary, animation highlights and Man of the Match.
 
 Tap a squad player, transfer card or development card for attributes, potential estimate/confidence, minutes, form, growth history and contract information. Own-player profiles support renewals, transfer listings and paid releases. Released players move to free agents rather than disappearing.
 
@@ -104,7 +108,7 @@ Assistant quality affects familiarity growth and produces partnership advice; sp
 
 `src/data/rules.ts` contains configurable season windows. The project-supplied initial windows are summer June 15–September 1, 2026 and winter January 1–February 1, 2027, inclusive. Add explicit future-season entries to `transferWindows`; otherwise year-specific projected dates are used and labeled as projections. Game time starts August 1 and advances a week per fixture round, not the official Premier League calendar.
 
-Maximum senior registration is 25, with at most 17 non-homegrown seniors. U21 exemptions use the season-specific January 1 cutoff (2005 for 2026–27). Homegrown status uses fictional qualifying training years, not nationality. Qualifying young players accumulate training history over registered seasons; mid-season arrivals receive a proportional season credit. This is a season-based history approximation rather than a full training-date ledger. Signings automatically register when eligible; aging out is handled each season. There is no manual registration-list editor. A free agent outside a window can sign only if unattached before the previous applicable deadline. More complex registration exceptions and pre-contract rules remain unfinished.
+Legacy careers retain the maximum of 25 seniors and 17 non-homegrown seniors. New custom careers grandfather each exact starting roster, with a senior cap of at least 25 or its initial senior count if higher (Hull: 29). Imported players with unverified training histories have an explicit custom-game exemption from the non-homegrown cap; they are not falsely labelled homegrown. This is a custom-universe rule rather than official league compliance. U21 exemptions use the season-specific January 1 cutoff (2005 for 2026–27). Verified/legacy qualifying training years are separate from nationality. Qualifying young players accumulate training history over registered seasons; mid-season arrivals receive a proportional season credit. This is a season-based history approximation rather than a full training-date ledger. Signings automatically register when eligible; aging out is handled each season. There is no manual registration-list editor. A free agent outside a window can sign only if unattached before the previous applicable deadline. More complex registration exceptions and pre-contract rules remain unfinished.
 
 Finances shows cash, debt, transfer budget, weekly wage capacity, player/staff payroll, spending/income, net spend, sale profit/loss, amortization, bonuses, agent fees, termination costs, paid payroll and future salary commitments. Annual revenue and payroll are allocated over 38 rounds; debt is recorded and repaid from future cash rather than silently erased. Contracts/transfers/staff actually change the accounts.
 
@@ -112,7 +116,7 @@ Finances shows cash, debt, transfer budget, weekly wage capacity, player/staff p
 
 ## Saves and compatibility
 
-The original localStorage key remains `pocket-football-gm-v1`. Schema version remains **3**; v1.3 does not change the simulation or career schema. Versions 1 and 2 migrate without changing existing IDs, names, overall/potential ratings, wages, fixtures, scores, tactic, formation or valid lineup. A raw legacy snapshot is retained under a versioned `-backup-v1` or `-backup-v2` key (large backups are losslessly compressed).
+The original localStorage key remains `pocket-football-gm-v1`. Schema version remains **3**; v1.4 adds optional real-player snapshots and explicit custom registration settings. Existing saves are not rewritten with new rosters. Versions 1 and 2 migrate without changing existing IDs, names, overall/potential ratings, wages, fixtures, scores, tactic, formation or valid lineup. A raw legacy snapshot is retained under a versioned `-backup-v1` or `-backup-v2` key (large backups are losslessly compressed).
 
 Migration adds deterministic identities, attributes, finances, staff, registration and free agents. Historical reports can establish actual 90-minute appearances, form and partnership counts. Old matches lacking reports have no invented contributions or tactical familiarity. Historical reports refer to immutable player IDs and snapshot clubs, so a later transfer does not invalidate an earlier match.
 
@@ -121,7 +125,7 @@ Large saves use the internal lossless LZW codec, with an explicit format prefix 
 ## Architecture and validation
 
 - `src/models.ts`, `worldModels.ts`: typed career, player identity, match, contract, finance and staff state.
-- `src/data/`: replaceable clubs, fictional player generation, season rules and an inactive custom-roster research intake.
+- `src/data/`: replaceable clubs, the active 546-player database, sourced profile snapshots, legacy player generation, season rules and the preserved historical intake.
 - `src/simulation/identity.ts`, `chemistry.ts`, `development.ts`: deterministic appearance, relationships and skill progression.
 - `src/simulation/economy.ts`, `recruitment.ts`, `staff.ts`, `world.ts`, `worldTick.ts`: negotiations, registration, club accounts, staff, AI and season rollover.
 - `src/simulation/career.ts`, `match.ts`, `scoring.ts`, `league.ts`, `animation.ts`: authoritative progression and its visual reconstruction.
@@ -130,7 +134,7 @@ Large saves use the internal lossless LZW codec, with an explicit format prefix 
 - `src/uiState.ts`: session-scoped presentation drafts, separate from the career save.
 - `src/test/`: existing fixture/standings/relegation tests plus identities, chemistry, progression/coaching/doctor effects, transfer/contract outcomes, staff compensation, AI, registration/windows, migration, save compression, animation and UI flows.
 
-Validation includes three full simulated seasons of ownership/finances/registration and a separate 20-year individual-development stress test. This does **not** establish that complete 20-season careers and all market behaviors have undergone extended balance testing. Long-term tuning remains ongoing.
+75 tests include exact reconciliation, all club lineups, individual ability/trait effects, source-status honesty, real-player transfers, legacy-save protection and three full simulated seasons of ownership/finances/registration and a separate 20-year individual-development stress test. This does **not** establish that complete 20-season careers and all market behaviors have undergone extended balance testing. Long-term tuning remains ongoing.
 
 ## Mobile browser QA
 
@@ -144,7 +148,7 @@ npm run dev
 node scripts/mobile-qa.cjs
 ```
 
-For external tooling installations, set `PLAYWRIGHT_MODULE` to the Playwright module path and optionally `CHROMIUM_PATH` to a Chromium executable. `BASE_URL` and `QA_ARTIFACTS` override the dev URL and screenshot directory. This script imports Vite development modules to create deterministic disposable fixtures; it is not a production-site test. Browser emulation does not replace physical iPhone/Safari and on-device keyboard testing. See [v1.3 QA notes](docs/v1.3-qa.md) for recorded results and limits.
+For external tooling installations, set `PLAYWRIGHT_MODULE` to the Playwright module path and optionally `CHROMIUM_PATH` to a Chromium executable. `BASE_URL` and `QA_ARTIFACTS` override the dev URL and screenshot directory. This script imports Vite development modules to create deterministic disposable fixtures; it is not a production-site test. Browser emulation does not replace physical iPhone/Safari and on-device keyboard testing. All four widths pass for v1.4, including 32-field goalkeeper profiles and U21 negotiations with an oversized custom squad. See [the v1.4 reconciliation](docs/roster-reconciliation.md); [v1.3 QA notes](docs/v1.3-qa.md) remain as historical evidence.
 
 ## GitHub Pages
 

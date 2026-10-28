@@ -721,3 +721,23 @@ td { padding: 15px 9px; text-align: center; border-bottom: 1px solid #263647; co
 @media (prefers-reduced-motion:reduce) {
  *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
 }
+:root { --trait-ink: #244d3c; }
+.player-traits { display: flex; flex-wrap: wrap; gap: 5px; margin: 9px 0 3px; max-width: 100%; }
+.trait-pill { display: inline-flex; padding: 4px 7px; border-radius: 6px; color: var(--trait-ink); background: #eaf3ed; font-size: 11px; line-height: 1.35; font-weight: 650; white-space: normal; text-align: left; }
+.trait-pill.specialist { color: #684b12; background: #fff0c7; }
+.no-traits { font-size: 11px; color: #a1afbf; font-weight: 400; }
+.rating-reference { margin: 12px 0 18px; color: #accdb8; font-size: 12px; }
+.rating-reference.provisional { color: #f1ce74; }
+.roster-identity { min-width: 0; }
+.roster-identity h3 { overflow-wrap: anywhere; }
+.roster-card .player-avatar { width: 62px; height: 68px; flex-shrink: 0; }
+.player-market-card > .player-traits { min-height: 26px; margin-bottom: 12px; }
+.profile-modal .attribute-list > div { grid-template-columns: minmax(115px, 1.5fr) minmax(55px, 1fr) 32px; }
+.research-note { margin-top: 22px; }
+.research-note a { color: #bdf47a; text-decoration: underline; overflow-wrap: anywhere; }
+.research-note li { margin: 8px 0; }
+@media (max-width: 380px) {
+ .roster-card { gap: 8px; }
+ .roster-card .player-avatar { width: 48px; height: 56px; }
+ .roster-card .trait-pill { font-size: 10px; padding: 3px 5px; }
+}
