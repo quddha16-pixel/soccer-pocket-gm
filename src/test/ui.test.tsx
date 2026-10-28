@@ -11,7 +11,7 @@ it('creates a career, advances, displays results, persists, navigates, and reset
  await user.click(screen.getByRole('button',{name:/Start career/i}));
  await user.clear(screen.getByLabelText('Manager name'));await user.type(screen.getByLabelText('Manager name'),'Jamie Test');
  await user.click(screen.getByRole('button',{name:/Find job offers/}));
- expect(screen.getAllByRole('button',{name:/Accept offer/})).toHaveLength(4);
+ expect(screen.getAllByRole('button',{name:/Accept offer/})).toHaveLength(offers('unknown').length);
  await user.click(screen.getAllByRole('button',{name:/Accept offer/})[0]);
  expect(screen.getByRole('heading',{name:'Hull City'})).toBeTruthy();
  await user.click(screen.getByRole('button',{name:'Play Next Match'}));

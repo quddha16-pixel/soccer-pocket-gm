@@ -1,3 +1,4 @@
+import { coachedPattern } from './managerStyles';
 import type { Career, Fixture, Formation, MatchEvent, Performance, Player, Tactic } from '../models';
 import { eligiblePlayers } from './economy';
 import { teamChemistry } from './chemistry';
@@ -24,18 +25,18 @@ export function resolveMatch(f:Fixture,c:Career,rng:()=>number):Fixture{
  };
  const events:MatchEvent[]=[];
  for(const [team,opponent,clubId] of [[home,away,f.homeId],[away,home,f.awayId]] as const){
- const otherId=clubId===f.homeId?f.awayId:f.homeId,ownTactic=tactic(clubId),otherTactic=tactic(otherId),keeper=opponent[0];
- const defence=opponent.filter(p=>['CB','FB','CM'].includes(p.position)).reduce((n,p)=>n+defenceQuality(p),0)/Math.max(1,opponent.filter(p=>['CB','FB','CM'].includes(p.position)).length);
- const creators=team.filter(p=>['CM','WG','FB'].includes(p.position)),creation=creators.reduce((n,p)=>n+creationQuality(p),0)/Math.max(1,creators.length)+(meanSkill(team[0],'distribution','kicking')-70)*.08+trait(team[0],'long-distribution');
- const carriers=team.filter(p=>['WG','ST'].includes(p.position)),carrying=carriers.reduce((n,p)=>n+carryingQuality(p),0)/Math.max(1,carriers.length);
- const intensity=(ownTactic==='attacking'?1.18:ownTactic==='defensive'?.8:1)*(otherTactic==='attacking'?1.15:otherTactic==='defensive'?.85:1);
+ const otherId=clubId===f.homeId?f.awayId:f.homeId,ownTactic=tactic(clubId),otherTactic=tactic(otherId),keeper=opponent[0],pattern=coachedPattern(c,clubId),otherPattern=coachedPattern(c,otherId);
+ const defence=opponent.filter(p=>['CB','FB','CM'].includes(p.position)).reduce((n,p)=>n+defenceQuality(p),0)/Math.max(1,opponent.filter(p=>['CB','FB','CM'].includes(p.position)).length)+otherPattern.defence;
+ const creators=team.filter(p=>['CM','WG','FB'].includes(p.position)),creation=creators.reduce((n,p)=>n+creationQuality(p),0)/Math.max(1,creators.length)+(meanSkill(team[0],'distribution','kicking')-70)*.08+trait(team[0],'long-distribution')+pattern.creation;
+ const carriers=team.filter(p=>['WG','ST'].includes(p.position)),carrying=carriers.reduce((n,p)=>n+carryingQuality(p),0)/Math.max(1,carriers.length)+pattern.carrying;
+ const intensity=(ownTactic==='attacking'?1.18:ownTactic==='defensive'?.8:1)*(otherTactic==='attacking'?1.15:otherTactic==='defensive'?.85:1)*pattern.intensity;
  const quality=Math.exp((effective(team,clubId)-effective(opponent,otherId))/95)*(1+(creation+carrying-2*defence)/500);
  const shots=Math.max(4,Math.min(22,Math.round((8+rng()*6)*quality*intensity*(clubId===f.homeId?1.08:.95))));
  for(let i=0;i<shots;i++){
  const player=pick(team.filter(p=>p.position!=='GK'),p=>attackWeight(p,c.starId,ownTactic)*lineupFit(p,formation(clubId),team.indexOf(p)),rng);
  const creator=rng()<.78?pick(team.filter(p=>p.id!==player.id&&p.position!=='GK'),p=>Math.max(1,creationQuality(p)/25)*(['CM','WG','FB'].includes(p.position)?2:1),rng):undefined;
  const typeRoll=rng(),chance:ChanceType=typeRoll<.15?'aerial':typeRoll<.3?'distance':typeRoll<.43?'one-on-one':'close';
- const xG=Math.max(.015,Math.min(.48,conversionProbability(player,keeper,defence,chance,lineupFit(player,formation(clubId),team.indexOf(player)))*(creator?.real?(.9+creationQuality(creator)/750):1)));
+ const xG=Math.max(.015,Math.min(.48,conversionProbability(player,keeper,defence,chance,lineupFit(player,formation(clubId),team.indexOf(player)))*(creator?.real?(.9+creationQuality(creator)/750):1)*(chance==='one-on-one'?pattern.oneOnOne:1)));
  const goal=rng()<xG,assist=goal?creator:undefined;
  events.push({id:`${f.id}-${clubId}-${i}`,minute:1+Math.floor(rng()*90),clubId,playerId:player.id,type:goal?'goal':'shot',assistId:assist?.id,creatorId:creator?.id,onTarget:goal||rng()<.38,chanceType:chance,xG});
  }

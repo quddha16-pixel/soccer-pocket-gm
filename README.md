@@ -1,4 +1,4 @@
-# Pocket Football GM — v1.5
+# Pocket Football GM — v1.6
 
 Created By: Quentin Warminsky. A mobile-first football management game built with React, TypeScript and Vite in the existing `quddha16-pixel/soccer-pocket-gm` repository. No licensed club marks, photos, external portrait services or external fonts are used.
 
@@ -18,7 +18,7 @@ Open the Vite URL including `/soccer-pocket-gm/`. If the default npm cache is no
 
 ## Club data and simulation scope
 
-The authoritative project-owner-supplied 2026–27 list of 20 clubs lives in the single replaceable file `src/data/clubs.ts`. New careers import the exact 546-player custom database from `src/data/custom-roster.json` through `src/data/playerProfiles.ts`. Existing saves keep their own rosters. `src/data/players.ts` remains available for legacy regression fixtures; it no longer supplies new starting squads. Budgets, revenue, valuations, wages, contracts and original trait effects are game estimates. Each real player separately identifies sourced and estimated fields.
+The authoritative project-owner-supplied 2026–27 list of 20 clubs lives in the single replaceable file `src/data/clubs.ts`. New careers import the exact 546-player custom database from `src/data/custom-roster.json` through `src/data/playerProfiles.ts`, plus a separate 50-player real free-agent pool. Existing saves keep their own rosters. `src/data/players.ts` remains available for legacy regression fixtures; it no longer supplies new starting squads. Budgets, revenue, valuations, wages, contracts and original trait effects are game estimates. Each real player separately identifies sourced and estimated fields.
 
 Each season has 380 fixtures, 38 per club, with one home and one away match against every opponent. Standings sort by points, goal difference and goals scored; exact ties use club ID as a display fallback. Official head-to-head/play-off tiebreakers and the real fixture calendar are not implemented.
 
@@ -26,10 +26,10 @@ Relegation still ends the user’s career. A surviving manager can start the nex
 
 ## Play and manage the club
 
-1. Start a career, choose reputation and accept an appropriate offer. Continue restores a saved career or pending matchday.
+1. Start a career, choose reputation and one of three managerial specialties, then browse all 20 clubs. Unknown coaches receive six highlighted offers; Established and Elite coaches can choose any club, including smaller ones. Continue restores a saved career or pending matchday.
 2. **Home** shows your club, league position, points, recent form, next opponent and **Play Next Match**. Detailed season metrics and squad leaders are a secondary view.
 3. **Squad** contains Lineup, Players and Progress. Choose 4-3-3, 4-4-2 or 4-2-3-1; tap a starter, choose a replacement and confirm. Selecting another starter swaps slots. Toggle chemistry or open a complete profile. Match approach remains a separate screen.
-4. **Market** contains player/free-agent search, negotiations, incoming offers, history and shortlist. Search/filter opens a sheet; contract and scouting details expand on each card. **Club** links to Staff & contracts, Finances and performance. **League** contains Table, Fixtures, Stats and EFL pool, including previous-season scores and the latest promotion/relegation changes.
+4. **Market** contains player/free-agent search, negotiations, incoming offers, history and shortlist. Search/filter opens a sheet; contract and scouting details expand on each card. **Club** links to Staff & contracts, Finances and performance. **League** contains Table, Fixtures, Stats, EFL pool, Awards and Records, including previous-season scores, head coaches and promotion/relegation changes.
 5. Choose Balanced, Attack, Defensive or Feed Your Star. Ability, opposition, fitness, morale and chemistry still affect strength; no approach guarantees success.
 6. Play Next Match opens **Watch Match** or **Quick Sim**. Both resolve the same engine. Watch can pause/resume, use 1×/2×/4×, switch to text, expand the pitch, or skip to full time. Finish the matchweek to commit all ten matches, finances, familiarity and development once. Refresh, skipping and speed changes cannot reroll or duplicate this round.
 
@@ -54,6 +54,22 @@ Natural positions retain all 15 detailed codes, mapped to the six legacy engine 
 Overall, identity, positions, preferred foot, summary skills and referenced PlayStyles come from dated EA team references. Detailed attributes, potential, development, contracts, values and wages are explicitly labelled game estimates. There is no claim that these are fully researched FC 27 subattributes. Rebuild with `python scripts/build-championship-pool.py`; selected facts and URLs are in `docs/research/championship-facts.json`. See [pool reconciliation and scope](docs/championship-pool.md).
 
 Existing saves adopt the pool at their next season rollover without replacing their current players or fixtures. Off-league clubs keep their accounts and squads; annual aging, contracts and existing youth replenishment continue. They do not receive simulated Championship matches, weekly performance development or weekly league revenue/payroll settlements. The existing future youth-intake system remains separate from the real first-entry squads.
+
+## v1.6: specialties, contracts, colors, awards and records
+
+New career creation offers **Developer**, **Negotiator** and **Football genius**. Developer multiplies your club’s positive attribute growth by 1.2 before existing caps. Negotiator reduces buying asks by 10%, base wage demands by 12%, the extra star ambition premium, signing bonuses and renewal demands. Registration, cash, wages, squad costs and positional cover still apply; repeated renewals cannot compound discounts below their reference wage. Football genius receives neither bonus and instead unlocks Positional mastery, Coordinated counterpress and Disguised transitions in Match approach. These change actual chance/defensive probabilities and fitness costs. They never guarantee a result. Existing careers with no chosen specialty remain neutral; temporary AI negotiation contexts cannot borrow the user’s perks.
+
+All 20 starting clubs are shown in a compact contract grid. Available clubs have a highlighted border and active Accept offer button; locked clubs remain named and visible. Established and Elite users have unrestricted club choice. Club reputation and expectations continue to affect the challenge.
+
+All 44 club home palettes now use recognizable real-world primary/secondary colors. Original crests, club headers and managed-club accents use the palette; text accents are lightened for dark-mode readability. Animated player numbers switch ink colors, with contrast separation when two home palettes clash. These are game sRGB choices rather than licensed brand specifications. Colors and research links live in `src/data/clubThemes.ts`.
+
+The 20 researched head-coach names are in `docs/research/managers-2026.json` and appear in new-career staff roles, including the selected club. Your entered name remains your career identity. League → Table → Head coaches lists the current 20 names. Staff ages, salaries, ratings and contracts remain estimates. AI replacements clear the original reference label. Existing staff histories are preserved.
+
+The new **50 real free agents** have dated identity and reported availability references. One selected FC 27 profile is source-rated; **49 ratings and detailed profiles are explicitly provisional game assessments**. No generic random-player replacement is used in new careers. An older active save can explicitly add the pool through Market; existing ownership, retired records, IDs and contracts win over the reference snapshot. See [v1.6 research and validation](docs/v1.6-release.md) for the full roster, methodology and excluded outdated candidates.
+
+At season end, the game presents Ballon d’Or, Player of the Season, Golden Boot, Playmaker, Golden Glove, Yashin, Kopa and Chance Creator awards. These are **in-game honors for the simulated league**, not real worldwide voting or unplayed international competitions. Selection uses committed performances and meaningful positional contributions rather than player OVR or fame. Counting awards share ties. Reviews and awards persist at rollover.
+
+League → Records includes season/all-time goals, assists, saves, chances created, appearances, shots, tackles, goalkeeper clean sheets and Player of the Match awards; individual best matches; club win/unbeaten streaks, highest team score, largest winning margin and season points. Chance creation counts a recorded pass leading to a shot, including assists. Player profiles show recorded career totals. Team streaks can span consecutive seasons; relegation interrupts them. Older score-only archives support team records but cannot recreate discarded individual contributions. Coverage is displayed explicitly.
 
 ## Persistent portraits and player profiles
 
@@ -106,7 +122,7 @@ Installments, contingent transfer add-ons, player-plus-cash swaps, loans/loan-to
 
 ## Staff
 
-Each club has seven primary role slots: Manager, Assistant Manager, Shooting Coach, Dribbling Coach, Defensive Coach, Scout and Team Doctor. Vacancies are explicit. The user’s manager is linked to the career and cannot be duplicated, traded, hired or dismissed through the staff market.
+Each club has seven primary role slots: Manager, Assistant Manager, Shooting Coach, Dribbling Coach, Defensive Coach, Scout and Team Doctor. Vacancies are explicit. The selected club’s head coach is linked to the career and cannot be duplicated, traded, hired or dismissed through the staff market.
 
 Staff cards show identity, role, age, nationality, rating/specialism, reputation, philosophy, salary and contract. Current Staff, Staff Market, Contracts and Performance support free-agent hiring, compensated recruitment from other clubs, renewals and paid releases. Replacements pay the outgoing termination cost. Staff can reject wages, contract security or club ambition. Affordability and weekly wage capacity are checked. Their salaries are paid through the club accounts. Contract expiry creates vacancies; AI clubs recruit into them.
 
@@ -124,7 +140,7 @@ Finances shows cash, debt, transfer budget, weekly wage capacity, player/staff p
 
 ## Saves and compatibility
 
-The original localStorage key remains `pocket-football-gm-v1`. Schema version remains **3**; v1.4 added optional real-player snapshots and explicit custom registration settings, and v1.5 adds optional per-career league/pool membership and archived season movements. Existing saves are not rewritten with new rosters. Versions 1 and 2 migrate without changing existing IDs, names, overall/potential ratings, wages, fixtures, scores, tactic, formation or valid lineup. A raw legacy snapshot is retained under a versioned `-backup-v1` or `-backup-v2` key (large backups are losslessly compressed).
+The original localStorage key remains `pocket-football-gm-v1`. Schema version remains **3**; v1.4 added optional real-player snapshots and explicit custom registration settings, and v1.5 added optional per-career league/pool membership and archived season movements; v1.6 adds optional specialties, archived player reviews/awards and a one-time free-agent import marker. Existing saves are not rewritten with new rosters. Versions 1 and 2 migrate without changing existing IDs, names, overall/potential ratings, wages, fixtures, scores, tactic, formation or valid lineup. A raw legacy snapshot is retained under a versioned `-backup-v1` or `-backup-v2` key (large backups are losslessly compressed).
 
 Migration adds deterministic identities, attributes, finances, staff, registration and free agents. Historical reports can establish actual 90-minute appearances, form and partnership counts. Old matches lacking reports have no invented contributions or tactical familiarity. Historical reports refer to immutable player IDs and snapshot clubs, so a later transfer does not invalidate an earlier match.
 
@@ -142,7 +158,7 @@ Large saves use the internal lossless LZW codec, with an explicit format prefix 
 - `src/uiState.ts`: session-scoped presentation drafts, separate from the career save.
 - `src/test/`: existing fixture/standings/relegation tests plus identities, chemistry, progression/coaching/doctor effects, transfer/contract outcomes, staff compensation, AI, registration/windows, migration, save compression, animation and UI flows.
 
-91 tests include exact reconciliation, all club lineups, individual ability/trait effects, source-status honesty, real-player transfers, legacy-save protection and three full simulated seasons of ownership/finances/registration a separate 20-year individual-development stress test, and six season-boundary promotion/save checks. This does **not** establish that complete 20-season careers and all market behaviors have undergone extended balance testing. Long-term tuning remains ongoing.
+114 tests include exact reconciliation, all club lineups, individual ability/trait effects, source-status honesty, real-player transfers, legacy-save protection and three full simulated seasons of ownership/finances/registration a separate 20-year individual-development stress test, and six season-boundary promotion/save checks. This does **not** establish that complete 20-season careers and all market behaviors have undergone extended balance testing. Long-term tuning remains ongoing.
 
 ## Mobile browser QA
 
@@ -156,7 +172,7 @@ npm run dev
 node scripts/mobile-qa.cjs
 ```
 
-For external tooling installations, set `PLAYWRIGHT_MODULE` to the Playwright module path and optionally `CHROMIUM_PATH` to a Chromium executable. `BASE_URL` and `QA_ARTIFACTS` override the dev URL and screenshot directory. This script imports Vite development modules to create deterministic disposable fixtures; it is not a production-site test. Browser emulation does not replace physical iPhone/Safari and on-device keyboard testing. All four widths pass for v1.5, including 32-field goalkeeper profiles and U21 negotiations with an oversized custom squad. See [the v1.4 reconciliation](docs/roster-reconciliation.md); [v1.3 QA notes](docs/v1.3-qa.md) remain as historical evidence.
+For external tooling installations, set `PLAYWRIGHT_MODULE` to the Playwright module path and optionally `CHROMIUM_PATH` to a Chromium executable. `BASE_URL` and `QA_ARTIFACTS` override the dev URL and screenshot directory. This script imports Vite development modules to create deterministic disposable fixtures; it is not a production-site test. Browser emulation does not replace physical iPhone/Safari and on-device keyboard testing. All four widths pass for v1.6, including 32-field goalkeeper profiles and U21 negotiations with an oversized custom squad. `scripts/expansion-qa.cjs` additionally checks all-club offers, specialty selection, coach names, free agents, themed screens, a full simulated season, awards, archived records and refresh after rollover. See [v1.6 release notes](docs/v1.6-release.md). See [the v1.4 reconciliation](docs/roster-reconciliation.md); [v1.3 QA notes](docs/v1.3-qa.md) remain as historical evidence.
 
 ## GitHub Pages
 

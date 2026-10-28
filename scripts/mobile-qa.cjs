@@ -21,7 +21,11 @@ fs.mkdirSync(artifacts, { recursive: true });
     await page.evaluate(async () => {
      const { newCareer } = await import('./src/simulation/career.ts');
      const { saveCareer } = await import('./src/storage.ts');
-     localStorage.clear(); sessionStorage.clear(); saveCareer(newCareer('Mobile QA', 'unknown', 'hull', 1234));
+     localStorage.clear(); sessionStorage.clear(); const c=newCareer('Mobile QA', 'unknown', 'hull', 1234);
+     // Disposable contract-expiry fixture: exercise U21 negotiation with a real
+     // young player while leaving the production roster and senior cap intact.
+     const p=c.players.find(p=>p.clubId&&p.clubId!=='hull'&&p.age<=20&&p.overall<=65);
+     c.world.registration[p.clubId]=c.world.registration[p.clubId].filter(id=>id!==p.id);p.clubId='';p.contractYears=0;p.identity.freeSince='2026-06-30';p.identity.contractEnd='2026-06-30';saveCareer(c);
     });
     await page.reload(); await page.getByRole('button', { name: 'Continue career', exact: true }).click();
    }

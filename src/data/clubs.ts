@@ -1,3 +1,4 @@
+import { clubTheme } from './clubThemes';
 import type { Career, Club } from '../models';
 import { championshipClubs } from './championship';
 // Authoritative 2026–27 membership supplied by the project owner.
@@ -18,7 +19,7 @@ const rows: [string,string,string,string,number,number][] = [
  ['sunderland','Sunderland','SUN','#e7686e',70,22],['tottenham','Tottenham Hotspur','TOT','#d8e2f0',80,85],
  ['hull','Hull City','HUL','#efb649',68,18],['ipswich','Ipswich Town','IPS','#608def',70,22]
 ];
-export const clubs:Club[]=rows.map(([id,name,short,color,strength,budget])=>({id,name,short,color,strength,budget,expectation:strength>=85?'Challenge for the title':strength>=80?'Qualify for Europe':strength>=75?'Secure a mid-table finish':'Avoid relegation'}));
+export const clubs:Club[]=rows.map(([id,name,short,color,strength,budget])=>({id,name,short,color:clubTheme(id).primary,strength,budget,expectation:strength>=85?'Challenge for the title':strength>=80?'Qualify for Europe':strength>=75?'Secure a mid-table finish':'Avoid relegation'}));
 // The starting 20 remain immutable. Every career stores its own current league.
 export const allClubs:Club[]=[...clubs,...championshipClubs];
 export const clubById=(id:string)=>allClubs.find(c=>c.id===id)!;

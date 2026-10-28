@@ -1,0 +1,4173 @@
+[
+  {
+    "id": "free-agent-ea-165153",
+    "eaId": "165153",
+    "canonicalIdentityId": "ea-165153",
+    "name": "Karim Benzema",
+    "birthDate": "1987-12-19",
+    "nationality": "France",
+    "foot": "right",
+    "positions": [
+      "ST"
+    ],
+    "overall": 82,
+    "potential": 82,
+    "attributes": {
+      "acceleration": 72,
+      "sprintSpeed": 66,
+      "finishing": 82,
+      "shotPower": 83,
+      "longShots": 79,
+      "positioning": 85,
+      "shortPassing": 85,
+      "longPassing": 76,
+      "vision": 85,
+      "crossing": 75,
+      "dribbling": 81,
+      "ballControl": 86,
+      "agility": 71,
+      "balance": 72,
+      "composure": 84,
+      "stamina": 65,
+      "strength": 78,
+      "aggression": 62,
+      "interceptions": 39,
+      "marking": 43,
+      "standingTackle": 23,
+      "slidingTackle": 17,
+      "heading": 81,
+      "jumping": 80
+    },
+    "traits": [
+      {
+        "id": "clinical-finisher",
+        "level": 1
+      },
+      {
+        "id": "through-ball-specialist",
+        "level": 1
+      },
+      {
+        "id": "aerial-threat",
+        "level": 1
+      }
+    ],
+    "styles": [
+      {
+        "name": "Finesse Shot",
+        "plus": false
+      },
+      {
+        "name": "Precision Header",
+        "plus": false
+      },
+      {
+        "name": "Low Driven Shot",
+        "plus": false
+      },
+      {
+        "name": "Gamechanger",
+        "plus": false
+      },
+      {
+        "name": "Incisive Pass",
+        "plus": false
+      },
+      {
+        "name": "First Touch",
+        "plus": false
+      }
+    ],
+    "traitRationale": "Original labels mapped from individual shooting, passing and heading references.",
+    "rationale": "FC 27 reference overall and skills. Availability follows the dated football report; finances and potential are game estimates.",
+    "identitySource": "https://www.ea.com/games/ea-sports-fc/ratings/player-ratings/karim-benzema/165153",
+    "valueGBP": 2500000,
+    "wageGBP": 65000,
+    "ratingVerified": true,
+    "sources": [
+      {
+        "url": "https://www.ea.com/games/ea-sports-fc/ratings/player-ratings/karim-benzema/165153",
+        "retrievedDate": "2026-10-28",
+        "kind": "EA FC 27 individual reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "overall",
+          "attributes",
+          "primaryPosition",
+          "preferredFoot",
+          "playStyles"
+        ]
+      },
+      {
+        "url": "https://www.skysports.com/football/news/11661/13580813/free-agents-jadon-sancho-paul-pogba-and-dele-alli-among-players-available-on-free-transfer-after-summer-window-shuts",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "free-agent-tm-59561",
+    "name": "Dani Parejo",
+    "birthDate": "1989-04-16",
+    "nationality": "Spain",
+    "foot": "right",
+    "positions": [
+      "CM"
+    ],
+    "overall": 79,
+    "potential": 79,
+    "attributes": {
+      "acceleration": 29,
+      "sprintSpeed": 30,
+      "finishing": 71,
+      "shotPower": 78,
+      "longShots": 76,
+      "positioning": 75,
+      "shortPassing": 87,
+      "longPassing": 88,
+      "vision": 88,
+      "crossing": 79,
+      "dribbling": 77,
+      "ballControl": 79,
+      "agility": 78,
+      "balance": 74,
+      "composure": 86,
+      "stamina": 61,
+      "strength": 51,
+      "aggression": 51,
+      "interceptions": 62,
+      "marking": 63,
+      "standingTackle": 61,
+      "slidingTackle": 62,
+      "heading": 45,
+      "jumping": 56
+    },
+    "summaryAssessment": {
+      "pace": 31,
+      "shooting": 74,
+      "passing": 86,
+      "dribbling": 76,
+      "defending": 65,
+      "physical": 55
+    },
+    "traits": [
+      {
+        "id": "playmaker",
+        "level": 1
+      },
+      {
+        "id": "long-pass-specialist",
+        "level": 1
+      },
+      {
+        "id": "set-piece-specialist",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Deep tempo setter with exceptional distribution and dead-ball technique; limited running power requires positional protection.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Deep tempo setter with exceptional distribution and dead-ball technique; limited running power requires positional protection.",
+    "identitySource": "https://www.transfermarkt.com/dani-parejo/profil/spieler/59561",
+    "valueGBP": 2920000,
+    "wageGBP": 25400,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.com/dani-parejo/profil/spieler/59561",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.com/dani-parejo/profil/spieler/59561",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-68863",
+    "name": "Mauro Icardi",
+    "birthDate": "1993-02-19",
+    "nationality": "Argentina",
+    "foot": "right",
+    "positions": [
+      "ST"
+    ],
+    "overall": 79,
+    "potential": 79,
+    "attributes": {
+      "acceleration": 55,
+      "sprintSpeed": 52,
+      "finishing": 86,
+      "shotPower": 85,
+      "longShots": 76,
+      "positioning": 85,
+      "shortPassing": 60,
+      "longPassing": 54,
+      "vision": 55,
+      "crossing": 42,
+      "dribbling": 70,
+      "ballControl": 72,
+      "agility": 71,
+      "balance": 67,
+      "composure": 82,
+      "stamina": 55,
+      "strength": 74,
+      "aggression": 65,
+      "interceptions": 23,
+      "marking": 24,
+      "standingTackle": 22,
+      "slidingTackle": 23,
+      "heading": 84,
+      "jumping": 70
+    },
+    "summaryAssessment": {
+      "pace": 53,
+      "shooting": 81,
+      "passing": 57,
+      "dribbling": 69,
+      "defending": 26,
+      "physical": 69
+    },
+    "traits": [
+      {
+        "id": "clinical-finisher",
+        "level": 1
+      },
+      {
+        "id": "poacher",
+        "level": 1
+      },
+      {
+        "id": "aerial-threat",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Penalty-area specialist with intelligent positioning, quick finishing and heading; build-up involvement and recovery speed are more limited.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Penalty-area specialist with intelligent positioning, quick finishing and heading; build-up involvement and recovery speed are more limited.",
+    "identitySource": "https://www.transfermarkt.com/mauro-icardi/profil/spieler/68863",
+    "valueGBP": 5730000,
+    "wageGBP": 40700,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.com/mauro-icardi/profil/spieler/68863",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.com/mauro-icardi/profil/spieler/68863",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-294808",
+    "name": "Franck Kessié",
+    "birthDate": "1996-12-19",
+    "nationality": "Ivory Coast",
+    "foot": "right",
+    "positions": [
+      "CM",
+      "CDM"
+    ],
+    "overall": 79,
+    "potential": 79,
+    "attributes": {
+      "acceleration": 65,
+      "sprintSpeed": 62,
+      "finishing": 66,
+      "shotPower": 78,
+      "longShots": 71,
+      "positioning": 75,
+      "shortPassing": 75,
+      "longPassing": 69,
+      "vision": 70,
+      "crossing": 65,
+      "dribbling": 74,
+      "ballControl": 76,
+      "agility": 75,
+      "balance": 71,
+      "composure": 82,
+      "stamina": 85,
+      "strength": 86,
+      "aggression": 79,
+      "interceptions": 72,
+      "marking": 73,
+      "standingTackle": 78,
+      "slidingTackle": 72,
+      "heading": 74,
+      "jumping": 85
+    },
+    "summaryAssessment": {
+      "pace": 63,
+      "shooting": 69,
+      "passing": 72,
+      "dribbling": 73,
+      "defending": 75,
+      "physical": 84
+    },
+    "traits": [
+      {
+        "id": "ball-winner",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Powerful two-way midfielder with ball-winning, endurance and penalty-area support; invention is more restrained than physical influence.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Powerful two-way midfielder with ball-winning, endurance and penalty-area support; invention is more restrained than physical influence.",
+    "identitySource": "https://www.transfermarkt.com/franck-kessie/profil/spieler/294808",
+    "valueGBP": 10430000,
+    "wageGBP": 40700,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.com/franck-kessie/profil/spieler/294808",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.com/franck-kessie/profil/spieler/294808",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-170986",
+    "name": "Raphaël Guerreiro",
+    "birthDate": "1993-12-22",
+    "nationality": "Portugal",
+    "foot": "left",
+    "positions": [
+      "LB",
+      "CM",
+      "LM"
+    ],
+    "overall": 78,
+    "potential": 78,
+    "attributes": {
+      "acceleration": 60,
+      "sprintSpeed": 57,
+      "finishing": 61,
+      "shotPower": 75,
+      "longShots": 66,
+      "positioning": 57,
+      "shortPassing": 85,
+      "longPassing": 80,
+      "vision": 84,
+      "crossing": 83,
+      "dribbling": 83,
+      "ballControl": 85,
+      "agility": 84,
+      "balance": 80,
+      "composure": 82,
+      "stamina": 48,
+      "strength": 39,
+      "aggression": 52,
+      "interceptions": 65,
+      "marking": 66,
+      "standingTackle": 70,
+      "slidingTackle": 65,
+      "heading": 39,
+      "jumping": 50
+    },
+    "summaryAssessment": {
+      "pace": 58,
+      "shooting": 71,
+      "passing": 83,
+      "dribbling": 82,
+      "defending": 68,
+      "physical": 49
+    },
+    "traits": [
+      {
+        "id": "playmaker",
+        "level": 1
+      },
+      {
+        "id": "precision-crosser",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Technical left-back and midfielder with refined passing and delivery; aerial power and recovery speed are weaker.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Technical left-back and midfielder with refined passing and delivery; aerial power and recovery speed are weaker.",
+    "identitySource": "https://www.transfermarkt.co.uk/raphael-guerreiro/profil/spieler/170986",
+    "valueGBP": 5200000,
+    "wageGBP": 24000,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.co.uk/raphael-guerreiro/profil/spieler/170986",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.co.uk/raphael-guerreiro/profil/spieler/170986",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-131075",
+    "name": "Francesco Acerbi",
+    "birthDate": "1988-02-10",
+    "nationality": "Italy",
+    "foot": "left",
+    "positions": [
+      "CB"
+    ],
+    "overall": 78,
+    "potential": 78,
+    "attributes": {
+      "acceleration": 42,
+      "sprintSpeed": 39,
+      "finishing": 31,
+      "shotPower": 45,
+      "longShots": 36,
+      "positioning": 57,
+      "shortPassing": 69,
+      "longPassing": 63,
+      "vision": 56,
+      "crossing": 59,
+      "dribbling": 58,
+      "ballControl": 60,
+      "agility": 59,
+      "balance": 55,
+      "composure": 82,
+      "stamina": 75,
+      "strength": 81,
+      "aggression": 79,
+      "interceptions": 84,
+      "marking": 85,
+      "standingTackle": 83,
+      "slidingTackle": 79,
+      "heading": 82,
+      "jumping": 77
+    },
+    "summaryAssessment": {
+      "pace": 40,
+      "shooting": 41,
+      "passing": 66,
+      "dribbling": 57,
+      "defending": 82,
+      "physical": 76
+    },
+    "traits": [
+      {
+        "id": "aerial-defender",
+        "level": 1
+      },
+      {
+        "id": "interceptor",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Positionally disciplined central defender and strong aerial organizer; acceleration limits aggressive high-line defending.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Positionally disciplined central defender and strong aerial organizer; acceleration limits aggressive high-line defending.",
+    "identitySource": "https://www.transfermarkt.co.uk/francesco-acerbi/profil/spieler/131075",
+    "valueGBP": 2650000,
+    "wageGBP": 24000,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.co.uk/francesco-acerbi/profil/spieler/131075",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.co.uk/francesco-acerbi/profil/spieler/131075",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-88103",
+    "name": "James Rodríguez",
+    "birthDate": "1991-07-12",
+    "nationality": "Colombia",
+    "foot": "left",
+    "positions": [
+      "CAM"
+    ],
+    "overall": 77,
+    "potential": 77,
+    "attributes": {
+      "acceleration": 45,
+      "sprintSpeed": 42,
+      "finishing": 73,
+      "shotPower": 80,
+      "longShots": 80,
+      "positioning": 73,
+      "shortPassing": 87,
+      "longPassing": 85,
+      "vision": 86,
+      "crossing": 83,
+      "dribbling": 79,
+      "ballControl": 81,
+      "agility": 80,
+      "balance": 76,
+      "composure": 80,
+      "stamina": 52,
+      "strength": 50,
+      "aggression": 50,
+      "interceptions": 40,
+      "marking": 41,
+      "standingTackle": 39,
+      "slidingTackle": 40,
+      "heading": 44,
+      "jumping": 55
+    },
+    "summaryAssessment": {
+      "pace": 43,
+      "shooting": 76,
+      "passing": 84,
+      "dribbling": 78,
+      "defending": 43,
+      "physical": 54
+    },
+    "traits": [
+      {
+        "id": "playmaker",
+        "level": 1
+      },
+      {
+        "id": "through-ball-specialist",
+        "level": 1
+      },
+      {
+        "id": "set-piece-specialist",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Left-footed chance creator with set-piece delivery and passing range; mobility and defensive coverage are limited.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Left-footed chance creator with set-piece delivery and passing range; mobility and defensive coverage are limited.",
+    "identitySource": "https://www.transfermarkt.us/james-rodriguez/profil/spieler/88103",
+    "valueGBP": 4690000,
+    "wageGBP": 22500,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.us/james-rodriguez/profil/spieler/88103",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.us/james-rodriguez/profil/spieler/88103",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-sergioramos",
+    "name": "Sergio Ramos",
+    "birthDate": "1986-03-30",
+    "nationality": "Spain",
+    "foot": "right",
+    "positions": [
+      "CB"
+    ],
+    "overall": 76,
+    "potential": 76,
+    "attributes": {
+      "acceleration": 50,
+      "sprintSpeed": 47,
+      "finishing": 55,
+      "shotPower": 69,
+      "longShots": 60,
+      "positioning": 55,
+      "shortPassing": 72,
+      "longPassing": 66,
+      "vision": 59,
+      "crossing": 62,
+      "dribbling": 65,
+      "ballControl": 67,
+      "agility": 66,
+      "balance": 62,
+      "composure": 84,
+      "stamina": 51,
+      "strength": 83,
+      "aggression": 88,
+      "interceptions": 77,
+      "marking": 83,
+      "standingTackle": 82,
+      "slidingTackle": 77,
+      "heading": 84,
+      "jumping": 82
+    },
+    "summaryAssessment": {
+      "pace": 48,
+      "shooting": 65,
+      "passing": 69,
+      "dribbling": 64,
+      "defending": 80,
+      "physical": 78
+    },
+    "traits": [
+      {
+        "id": "aerial-defender",
+        "level": 1
+      },
+      {
+        "id": "aerial-threat",
+        "level": 1
+      },
+      {
+        "id": "strong-tackler",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Veteran aerial defender and penalty-area threat; anticipation and aggression remain strengths, while recovery pace and repeated running have declined.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Veteran aerial defender and penalty-area threat; anticipation and aggression remain strengths, while recovery pace and repeated running have declined.",
+    "identitySource": "https://www.realmadrid.com/en-US/the-club/history/football-legends/sergio-ramos-garcia",
+    "valueGBP": 2150000,
+    "wageGBP": 33800,
+    "sources": [
+      {
+        "url": "https://www.realmadrid.com/en-US/the-club/history/football-legends/sergio-ramos-garcia",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://mercatoindex.com/svincolati/difensore-centrale/",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-401173",
+    "name": "Jadon Sancho",
+    "birthDate": "2000-03-25",
+    "nationality": "England",
+    "foot": "right",
+    "positions": [
+      "LW",
+      "RW",
+      "LM",
+      "RM"
+    ],
+    "overall": 76,
+    "potential": 77,
+    "attributes": {
+      "acceleration": 74,
+      "sprintSpeed": 71,
+      "finishing": 62,
+      "shotPower": 69,
+      "longShots": 60,
+      "positioning": 72,
+      "shortPassing": 79,
+      "longPassing": 73,
+      "vision": 79,
+      "crossing": 79,
+      "dribbling": 85,
+      "ballControl": 84,
+      "agility": 84,
+      "balance": 80,
+      "composure": 79,
+      "stamina": 55,
+      "strength": 39,
+      "aggression": 44,
+      "interceptions": 32,
+      "marking": 33,
+      "standingTackle": 31,
+      "slidingTackle": 32,
+      "heading": 38,
+      "jumping": 49
+    },
+    "summaryAssessment": {
+      "pace": 72,
+      "shooting": 65,
+      "passing": 76,
+      "dribbling": 82,
+      "defending": 35,
+      "physical": 48
+    },
+    "traits": [
+      {
+        "id": "technical-dribbler",
+        "level": 1
+      },
+      {
+        "id": "playmaker",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Combination winger emphasizing close control and short creation rather than dominant straight-line speed or defensive power.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Combination winger emphasizing close control and short creation rather than dominant straight-line speed or defensive power.",
+    "identitySource": "https://www.transfermarkt.us/jadon-sancho/profil/spieler/401173",
+    "valueGBP": 7680000,
+    "wageGBP": 33800,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.us/jadon-sancho/profil/spieler/401173",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.us/jadon-sancho/profil/spieler/401173",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-203853",
+    "name": "Oleksandr Zinchenko",
+    "birthDate": "1996-12-15",
+    "nationality": "Ukraine",
+    "foot": "left",
+    "positions": [
+      "LB",
+      "CM"
+    ],
+    "overall": 75,
+    "potential": 75,
+    "attributes": {
+      "acceleration": 66,
+      "sprintSpeed": 63,
+      "finishing": 48,
+      "shotPower": 62,
+      "longShots": 53,
+      "positioning": 54,
+      "shortPassing": 82,
+      "longPassing": 79,
+      "vision": 81,
+      "crossing": 82,
+      "dribbling": 78,
+      "ballControl": 80,
+      "agility": 79,
+      "balance": 75,
+      "composure": 78,
+      "stamina": 55,
+      "strength": 48,
+      "aggression": 60,
+      "interceptions": 68,
+      "marking": 69,
+      "standingTackle": 73,
+      "slidingTackle": 68,
+      "heading": 47,
+      "jumping": 58
+    },
+    "summaryAssessment": {
+      "pace": 64,
+      "shooting": 58,
+      "passing": 79,
+      "dribbling": 77,
+      "defending": 71,
+      "physical": 57
+    },
+    "traits": [
+      {
+        "id": "press-resistant-distributor",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Technical inverted fullback with midfield combinations and progression; physical duels and sustained availability constrain his present assessment.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Technical inverted fullback with midfield combinations and progression; physical duels and sustained availability constrain his present assessment.",
+    "identitySource": "https://www.transfermarkt.com/oleksandr-zinchenko/profil/spieler/203853",
+    "valueGBP": 6890000,
+    "wageGBP": 19800,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.com/oleksandr-zinchenko/profil/spieler/203853",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.com/oleksandr-zinchenko/profil/spieler/203853",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-145988",
+    "name": "Wilfried Zaha",
+    "birthDate": "1992-11-10",
+    "nationality": "Ivory Coast",
+    "foot": "right",
+    "positions": [
+      "LW"
+    ],
+    "overall": 75,
+    "potential": 75,
+    "attributes": {
+      "acceleration": 80,
+      "sprintSpeed": 77,
+      "finishing": 72,
+      "shotPower": 76,
+      "longShots": 67,
+      "positioning": 71,
+      "shortPassing": 71,
+      "longPassing": 65,
+      "vision": 66,
+      "crossing": 63,
+      "dribbling": 83,
+      "ballControl": 82,
+      "agility": 81,
+      "balance": 77,
+      "composure": 78,
+      "stamina": 65,
+      "strength": 62,
+      "aggression": 72,
+      "interceptions": 28,
+      "marking": 29,
+      "standingTackle": 27,
+      "slidingTackle": 28,
+      "heading": 56,
+      "jumping": 67
+    },
+    "summaryAssessment": {
+      "pace": 78,
+      "shooting": 72,
+      "passing": 68,
+      "dribbling": 79,
+      "defending": 31,
+      "physical": 66
+    },
+    "traits": [
+      {
+        "id": "technical-dribbler",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Direct one-on-one winger who carries and draws challenges; individual dribbling is stronger than defensive or orchestration work.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Direct one-on-one winger who carries and draws challenges; individual dribbling is stronger than defensive or orchestration work.",
+    "identitySource": "https://www.transfermarkt.com/wilfried-zaha/profil/spieler/145988",
+    "valueGBP": 3790000,
+    "wageGBP": 19800,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.com/wilfried-zaha/profil/spieler/145988",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.com/wilfried-zaha/profil/spieler/145988",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-450936",
+    "name": "Tanguy Ndombele",
+    "birthDate": "1996-12-28",
+    "nationality": "France",
+    "foot": "right",
+    "positions": [
+      "CM",
+      "CDM"
+    ],
+    "overall": 75,
+    "potential": 75,
+    "attributes": {
+      "acceleration": 59,
+      "sprintSpeed": 56,
+      "finishing": 59,
+      "shotPower": 66,
+      "longShots": 64,
+      "positioning": 71,
+      "shortPassing": 80,
+      "longPassing": 73,
+      "vision": 74,
+      "crossing": 69,
+      "dribbling": 85,
+      "ballControl": 85,
+      "agility": 84,
+      "balance": 80,
+      "composure": 78,
+      "stamina": 46,
+      "strength": 73,
+      "aggression": 59,
+      "interceptions": 55,
+      "marking": 56,
+      "standingTackle": 54,
+      "slidingTackle": 55,
+      "heading": 53,
+      "jumping": 64
+    },
+    "summaryAssessment": {
+      "pace": 57,
+      "shooting": 62,
+      "passing": 76,
+      "dribbling": 82,
+      "defending": 58,
+      "physical": 63
+    },
+    "traits": [
+      {
+        "id": "technical-dribbler",
+        "level": 1
+      },
+      {
+        "id": "press-resistant-distributor",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Press-resistant midfielder with close control and line-breaking carries; sustained intensity and defensive coverage remain limitations.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Press-resistant midfielder with close control and line-breaking carries; sustained intensity and defensive coverage remain limitations.",
+    "identitySource": "https://www.transfermarkt.com/tanguy-ndombele/profil/spieler/450936/",
+    "valueGBP": 6890000,
+    "wageGBP": 19800,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.com/tanguy-ndombele/profil/spieler/450936/",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.com/tanguy-ndombele/profil/spieler/450936/",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-122153",
+    "name": "Paul Pogba",
+    "birthDate": "1993-03-15",
+    "nationality": "France",
+    "foot": "right",
+    "positions": [
+      "CM"
+    ],
+    "overall": 74,
+    "potential": 74,
+    "attributes": {
+      "acceleration": 56,
+      "sprintSpeed": 53,
+      "finishing": 70,
+      "shotPower": 82,
+      "longShots": 75,
+      "positioning": 70,
+      "shortPassing": 83,
+      "longPassing": 85,
+      "vision": 83,
+      "crossing": 73,
+      "dribbling": 80,
+      "ballControl": 83,
+      "agility": 81,
+      "balance": 77,
+      "composure": 77,
+      "stamina": 48,
+      "strength": 63,
+      "aggression": 63,
+      "interceptions": 58,
+      "marking": 59,
+      "standingTackle": 57,
+      "slidingTackle": 58,
+      "heading": 57,
+      "jumping": 68
+    },
+    "summaryAssessment": {
+      "pace": 54,
+      "shooting": 73,
+      "passing": 80,
+      "dribbling": 79,
+      "defending": 61,
+      "physical": 67
+    },
+    "traits": [
+      {
+        "id": "long-pass-specialist",
+        "level": 1
+      },
+      {
+        "id": "flair-player",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Long passing, invention and ball protection remain distinctive; extremely limited recent minutes reduce present consistency and endurance.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Long passing, invention and ball protection remain distinctive; extremely limited recent minutes reduce present consistency and endurance.",
+    "identitySource": "https://www.transfermarkt.com/paul-pogba/profil/spieler/122153/",
+    "valueGBP": 3380000,
+    "wageGBP": 29600,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.com/paul-pogba/profil/spieler/122153/",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.com/paul-pogba/profil/spieler/122153/",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-134425",
+    "name": "Raheem Sterling",
+    "birthDate": "1994-12-08",
+    "nationality": "England",
+    "foot": "right",
+    "positions": [
+      "RW",
+      "LW"
+    ],
+    "overall": 74,
+    "potential": 74,
+    "attributes": {
+      "acceleration": 82,
+      "sprintSpeed": 77,
+      "finishing": 66,
+      "shotPower": 73,
+      "longShots": 64,
+      "positioning": 79,
+      "shortPassing": 72,
+      "longPassing": 66,
+      "vision": 67,
+      "crossing": 72,
+      "dribbling": 77,
+      "ballControl": 79,
+      "agility": 81,
+      "balance": 74,
+      "composure": 77,
+      "stamina": 55,
+      "strength": 47,
+      "aggression": 52,
+      "interceptions": 39,
+      "marking": 40,
+      "standingTackle": 38,
+      "slidingTackle": 39,
+      "heading": 46,
+      "jumping": 57
+    },
+    "summaryAssessment": {
+      "pace": 78,
+      "shooting": 69,
+      "passing": 69,
+      "dribbling": 76,
+      "defending": 42,
+      "physical": 56
+    },
+    "traits": [
+      {
+        "id": "intelligent-runner",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Winger with sharp short movement and penalty-area runs; recent scoring output and confidence are below his peak.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Winger with sharp short movement and penalty-area runs; recent scoring output and confidence are below his peak.",
+    "identitySource": "https://www.transfermarkt.co.uk/raheem-sterling/profil/spieler/134425/",
+    "valueGBP": 6150000,
+    "wageGBP": 29600,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.co.uk/raheem-sterling/profil/spieler/134425/",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.co.uk/raheem-sterling/profil/spieler/134425/",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-215876",
+    "name": "Ricardo Pereira",
+    "birthDate": "1993-10-06",
+    "nationality": "Portugal",
+    "foot": "right",
+    "positions": [
+      "RB",
+      "LB",
+      "RW"
+    ],
+    "overall": 74,
+    "potential": 74,
+    "attributes": {
+      "acceleration": 70,
+      "sprintSpeed": 67,
+      "finishing": 45,
+      "shotPower": 59,
+      "longShots": 50,
+      "positioning": 53,
+      "shortPassing": 73,
+      "longPassing": 67,
+      "vision": 60,
+      "crossing": 73,
+      "dribbling": 75,
+      "ballControl": 76,
+      "agility": 75,
+      "balance": 71,
+      "composure": 77,
+      "stamina": 57,
+      "strength": 56,
+      "aggression": 63,
+      "interceptions": 76,
+      "marking": 72,
+      "standingTackle": 79,
+      "slidingTackle": 71,
+      "heading": 50,
+      "jumping": 61
+    },
+    "summaryAssessment": {
+      "pace": 68,
+      "shooting": 55,
+      "passing": 70,
+      "dribbling": 73,
+      "defending": 74,
+      "physical": 60
+    },
+    "traits": [
+      {
+        "id": "strong-tackler",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Two-way fullback whose tackling, close control and versatility remain useful; repeated injuries reduce endurance and explosiveness.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Two-way fullback whose tackling, close control and versatility remain useful; repeated injuries reduce endurance and explosiveness.",
+    "identitySource": "https://www.transfermarkt.com/ricardo-pereira/profil/spieler/215876",
+    "valueGBP": 3380000,
+    "wageGBP": 18500,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.com/ricardo-pereira/profil/spieler/215876",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.com/ricardo-pereira/profil/spieler/215876",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-sofianeboufal",
+    "name": "Sofiane Boufal",
+    "birthDate": "1993-09-17",
+    "nationality": "Morocco",
+    "foot": "right",
+    "positions": [
+      "LW",
+      "CAM"
+    ],
+    "overall": 74,
+    "potential": 74,
+    "attributes": {
+      "acceleration": 70,
+      "sprintSpeed": 67,
+      "finishing": 59,
+      "shotPower": 67,
+      "longShots": 58,
+      "positioning": 70,
+      "shortPassing": 73,
+      "longPassing": 67,
+      "vision": 74,
+      "crossing": 73,
+      "dribbling": 86,
+      "ballControl": 85,
+      "agility": 85,
+      "balance": 82,
+      "composure": 77,
+      "stamina": 47,
+      "strength": 44,
+      "aggression": 44,
+      "interceptions": 31,
+      "marking": 32,
+      "standingTackle": 30,
+      "slidingTackle": 31,
+      "heading": 38,
+      "jumping": 49
+    },
+    "summaryAssessment": {
+      "pace": 68,
+      "shooting": 63,
+      "passing": 70,
+      "dribbling": 82,
+      "defending": 34,
+      "physical": 48
+    },
+    "traits": [
+      {
+        "id": "technical-dribbler",
+        "level": 1
+      },
+      {
+        "id": "flair-player",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Creative dribbler with tight-space control and improvisation; efficiency in front of goal and physical durability are weaker.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Creative dribbler with tight-space control and improvisation; efficiency in front of goal and physical durability are weaker.",
+    "identitySource": "https://www.rotowire.com/soccer/player/sofiane-boufal-20071",
+    "valueGBP": 3380000,
+    "wageGBP": 18500,
+    "sources": [
+      {
+        "url": "https://www.rotowire.com/soccer/player/sofiane-boufal-20071",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.rotowire.com/soccer/player/sofiane-boufal-20071",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-182877",
+    "name": "Anthony Martial",
+    "birthDate": "1995-12-05",
+    "nationality": "France",
+    "foot": "right",
+    "positions": [
+      "ST",
+      "LW"
+    ],
+    "overall": 73,
+    "potential": 73,
+    "attributes": {
+      "acceleration": 73,
+      "sprintSpeed": 70,
+      "finishing": 77,
+      "shotPower": 78,
+      "longShots": 69,
+      "positioning": 77,
+      "shortPassing": 67,
+      "longPassing": 61,
+      "vision": 62,
+      "crossing": 49,
+      "dribbling": 79,
+      "ballControl": 80,
+      "agility": 80,
+      "balance": 76,
+      "composure": 75,
+      "stamina": 45,
+      "strength": 59,
+      "aggression": 50,
+      "interceptions": 25,
+      "marking": 26,
+      "standingTackle": 24,
+      "slidingTackle": 25,
+      "heading": 56,
+      "jumping": 55
+    },
+    "summaryAssessment": {
+      "pace": 71,
+      "shooting": 74,
+      "passing": 64,
+      "dribbling": 78,
+      "defending": 28,
+      "physical": 54
+    },
+    "traits": [
+      {
+        "id": "technical-dribbler",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Technical forward comfortable linking and finishing inside the box; recent availability and repeated intensity temper current ability.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Technical forward comfortable linking and finishing inside the box; recent availability and repeated intensity temper current ability.",
+    "identitySource": "https://www.transfermarkt.co.uk/anthony-martial/profil/spieler/182877",
+    "valueGBP": 5470000,
+    "wageGBP": 17200,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.co.uk/anthony-martial/profil/spieler/182877",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.co.uk/anthony-martial/profil/spieler/182877",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-103427",
+    "name": "Chris Smalling",
+    "birthDate": "1989-11-22",
+    "nationality": "England",
+    "foot": "right",
+    "positions": [
+      "CB"
+    ],
+    "overall": 73,
+    "potential": 73,
+    "attributes": {
+      "acceleration": 49,
+      "sprintSpeed": 46,
+      "finishing": 22,
+      "shotPower": 36,
+      "longShots": 27,
+      "positioning": 52,
+      "shortPassing": 56,
+      "longPassing": 47,
+      "vision": 40,
+      "crossing": 43,
+      "dribbling": 47,
+      "ballControl": 49,
+      "agility": 48,
+      "balance": 44,
+      "composure": 76,
+      "stamina": 75,
+      "strength": 82,
+      "aggression": 79,
+      "interceptions": 74,
+      "marking": 79,
+      "standingTackle": 79,
+      "slidingTackle": 74,
+      "heading": 82,
+      "jumping": 80
+    },
+    "summaryAssessment": {
+      "pace": 47,
+      "shooting": 32,
+      "passing": 50,
+      "dribbling": 46,
+      "defending": 77,
+      "physical": 76
+    },
+    "traits": [
+      {
+        "id": "aerial-defender",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Experienced box defender with aerial reach and marking; build-up variety and recovery speed are relative weaknesses.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Experienced box defender with aerial reach and marking; build-up variety and recovery speed are relative weaknesses.",
+    "identitySource": "https://www.transfermarkt.com/chris-smalling/profil/spieler/103427",
+    "valueGBP": 1530000,
+    "wageGBP": 17200,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.com/chris-smalling/profil/spieler/103427",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.com/chris-smalling/profil/spieler/103427",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-224088",
+    "name": "Olivier Ntcham",
+    "birthDate": "1996-02-09",
+    "nationality": "Cameroon",
+    "foot": "right",
+    "positions": [
+      "CM",
+      "CAM",
+      "CDM"
+    ],
+    "overall": 73,
+    "potential": 73,
+    "attributes": {
+      "acceleration": 62,
+      "sprintSpeed": 59,
+      "finishing": 70,
+      "shotPower": 83,
+      "longShots": 78,
+      "positioning": 69,
+      "shortPassing": 76,
+      "longPassing": 71,
+      "vision": 72,
+      "crossing": 67,
+      "dribbling": 74,
+      "ballControl": 76,
+      "agility": 75,
+      "balance": 71,
+      "composure": 76,
+      "stamina": 75,
+      "strength": 75,
+      "aggression": 65,
+      "interceptions": 56,
+      "marking": 57,
+      "standingTackle": 55,
+      "slidingTackle": 56,
+      "heading": 59,
+      "jumping": 70
+    },
+    "summaryAssessment": {
+      "pace": 60,
+      "shooting": 73,
+      "passing": 74,
+      "dribbling": 73,
+      "defending": 59,
+      "physical": 69
+    },
+    "traits": [
+      {
+        "id": "power-shooter",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Powerful central midfielder with firm distribution and shooting from range; consistency and defensive reading are less exceptional.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Powerful central midfielder with firm distribution and shooting from range; consistency and defensive reading are less exceptional.",
+    "identitySource": "https://www.transfermarkt.co.uk/olivier-ntcham/profil/spieler/224088",
+    "valueGBP": 5470000,
+    "wageGBP": 17200,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.co.uk/olivier-ntcham/profil/spieler/224088",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.co.uk/olivier-ntcham/profil/spieler/224088",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-207302",
+    "name": "Sergio Rico",
+    "birthDate": "1993-09-01",
+    "nationality": "Spain",
+    "foot": "right",
+    "positions": [
+      "GK"
+    ],
+    "overall": 73,
+    "potential": 73,
+    "attributes": {
+      "acceleration": 38,
+      "sprintSpeed": 40,
+      "finishing": 15,
+      "shotPower": 53,
+      "longShots": 12,
+      "positioning": 17,
+      "shortPassing": 53,
+      "longPassing": 66,
+      "vision": 46,
+      "crossing": 13,
+      "dribbling": 18,
+      "ballControl": 35,
+      "agility": 50,
+      "balance": 47,
+      "composure": 68,
+      "stamina": 42,
+      "strength": 73,
+      "aggression": 32,
+      "interceptions": 18,
+      "marking": 15,
+      "standingTackle": 17,
+      "slidingTackle": 13,
+      "heading": 20,
+      "jumping": 74,
+      "diving": 75,
+      "handling": 71,
+      "kicking": 66,
+      "reflexes": 76,
+      "gkPositioning": 72
+    },
+    "summaryAssessment": {
+      "pace": 75,
+      "shooting": 71,
+      "passing": 66,
+      "dribbling": 76,
+      "defending": 38,
+      "physical": 72
+    },
+    "traits": [
+      {
+        "id": "reflex-specialist",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Tall shot stopper with reactions and reach; distribution and modern sweeping are less established strengths.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Tall shot stopper with reactions and reach; distribution and modern sweeping are less established strengths.",
+    "identitySource": "https://www.transfermarkt.co.uk/sergio-rico/profil/spieler/207302/1000/",
+    "valueGBP": 3010000,
+    "wageGBP": 17200,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.co.uk/sergio-rico/profil/spieler/207302/1000/",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.co.uk/sergio-rico/profil/spieler/207302/1000/",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-212847",
+    "name": "Adam Webster",
+    "birthDate": "1995-01-04",
+    "nationality": "England",
+    "foot": "right",
+    "positions": [
+      "CB",
+      "RB"
+    ],
+    "overall": 73,
+    "potential": 73,
+    "attributes": {
+      "acceleration": 55,
+      "sprintSpeed": 52,
+      "finishing": 22,
+      "shotPower": 36,
+      "longShots": 27,
+      "positioning": 52,
+      "shortPassing": 72,
+      "longPassing": 73,
+      "vision": 56,
+      "crossing": 59,
+      "dribbling": 59,
+      "ballControl": 61,
+      "agility": 60,
+      "balance": 56,
+      "composure": 76,
+      "stamina": 72,
+      "strength": 79,
+      "aggression": 76,
+      "interceptions": 72,
+      "marking": 78,
+      "standingTackle": 77,
+      "slidingTackle": 72,
+      "heading": 75,
+      "jumping": 74
+    },
+    "summaryAssessment": {
+      "pace": 53,
+      "shooting": 32,
+      "passing": 66,
+      "dribbling": 58,
+      "defending": 75,
+      "physical": 73
+    },
+    "traits": [
+      {
+        "id": "long-pass-specialist",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Ball-playing centre-back capable of progressing possession; injury history and repeated recovery runs constrain his assessment.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Ball-playing centre-back capable of progressing possession; injury history and repeated recovery runs constrain his assessment.",
+    "identitySource": "https://www.transfermarkt.co.uk/adam-webster/profil/spieler/212847",
+    "valueGBP": 5470000,
+    "wageGBP": 17200,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.co.uk/adam-webster/profil/spieler/212847",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.co.uk/adam-webster/profil/spieler/212847",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-209212",
+    "name": "Solly March",
+    "birthDate": "1994-07-20",
+    "nationality": "England",
+    "foot": "left",
+    "positions": [
+      "RW",
+      "LM",
+      "RM"
+    ],
+    "overall": 73,
+    "potential": 73,
+    "attributes": {
+      "acceleration": 68,
+      "sprintSpeed": 65,
+      "finishing": 62,
+      "shotPower": 69,
+      "longShots": 60,
+      "positioning": 69,
+      "shortPassing": 76,
+      "longPassing": 70,
+      "vision": 75,
+      "crossing": 78,
+      "dribbling": 75,
+      "ballControl": 77,
+      "agility": 76,
+      "balance": 72,
+      "composure": 76,
+      "stamina": 47,
+      "strength": 48,
+      "aggression": 48,
+      "interceptions": 50,
+      "marking": 51,
+      "standingTackle": 49,
+      "slidingTackle": 50,
+      "heading": 42,
+      "jumping": 53
+    },
+    "summaryAssessment": {
+      "pace": 66,
+      "shooting": 65,
+      "passing": 73,
+      "dribbling": 74,
+      "defending": 53,
+      "physical": 52
+    },
+    "traits": [
+      {
+        "id": "precision-crosser",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Left-footed wide creator with delivery and combinations; major knee setbacks constrain explosive output and endurance.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Left-footed wide creator with delivery and combinations; major knee setbacks constrain explosive output and endurance.",
+    "identitySource": "https://www.transfermarkt.com/solly-march/profil/spieler/209212",
+    "valueGBP": 3010000,
+    "wageGBP": 17200,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.com/solly-march/profil/spieler/209212",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.com/solly-march/profil/spieler/209212",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-175988",
+    "name": "Anthony Nwakaeme",
+    "birthDate": "1989-03-21",
+    "nationality": "Nigeria",
+    "foot": "right",
+    "positions": [
+      "LW",
+      "ST"
+    ],
+    "overall": 72,
+    "potential": 72,
+    "attributes": {
+      "acceleration": 48,
+      "sprintSpeed": 49,
+      "finishing": 67,
+      "shotPower": 74,
+      "longShots": 65,
+      "positioning": 68,
+      "shortPassing": 78,
+      "longPassing": 72,
+      "vision": 79,
+      "crossing": 78,
+      "dribbling": 81,
+      "ballControl": 82,
+      "agility": 81,
+      "balance": 77,
+      "composure": 75,
+      "stamina": 66,
+      "strength": 78,
+      "aggression": 63,
+      "interceptions": 23,
+      "marking": 24,
+      "standingTackle": 22,
+      "slidingTackle": 23,
+      "heading": 57,
+      "jumping": 68
+    },
+    "summaryAssessment": {
+      "pace": 50,
+      "shooting": 70,
+      "passing": 75,
+      "dribbling": 79,
+      "defending": 26,
+      "physical": 67
+    },
+    "traits": [
+      {
+        "id": "technical-dribbler",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Experienced wide creator who protects the ball and combines cleverly; age reduces explosive running and coverage.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Experienced wide creator who protects the ball and combines cleverly; age reduces explosive running and coverage.",
+    "identitySource": "https://www.transfermarkt.co.uk/anthony-nwakaeme/profil/spieler/175988",
+    "valueGBP": 1350000,
+    "wageGBP": 16000,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.co.uk/anthony-nwakaeme/profil/spieler/175988",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.co.uk/anthony-nwakaeme/profil/spieler/175988",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-142310",
+    "name": "Willy Boly",
+    "birthDate": "1991-02-03",
+    "nationality": "Ivory Coast",
+    "foot": "right",
+    "positions": [
+      "CB"
+    ],
+    "overall": 71,
+    "potential": 71,
+    "attributes": {
+      "acceleration": 35,
+      "sprintSpeed": 38,
+      "finishing": 22,
+      "shotPower": 36,
+      "longShots": 27,
+      "positioning": 50,
+      "shortPassing": 50,
+      "longPassing": 44,
+      "vision": 37,
+      "crossing": 40,
+      "dribbling": 43,
+      "ballControl": 45,
+      "agility": 44,
+      "balance": 40,
+      "composure": 74,
+      "stamina": 76,
+      "strength": 86,
+      "aggression": 80,
+      "interceptions": 76,
+      "marking": 78,
+      "standingTackle": 77,
+      "slidingTackle": 72,
+      "heading": 79,
+      "jumping": 78
+    },
+    "summaryAssessment": {
+      "pace": 39,
+      "shooting": 32,
+      "passing": 47,
+      "dribbling": 42,
+      "defending": 75,
+      "physical": 77
+    },
+    "traits": [
+      {
+        "id": "aerial-defender",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Powerful aerial centre-back whose size and duels exceed ball carrying and recovery pace.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Powerful aerial centre-back whose size and duels exceed ball carrying and recovery pace.",
+    "identitySource": "https://www.transfermarkt.com/willy-boly/profil/spieler/142310",
+    "valueGBP": 2340000,
+    "wageGBP": 14900,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.com/willy-boly/profil/spieler/142310",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.com/willy-boly/profil/spieler/142310",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-286949",
+    "name": "Adam Masina",
+    "birthDate": "1994-01-02",
+    "nationality": "Morocco",
+    "foot": "left",
+    "positions": [
+      "CB",
+      "LB"
+    ],
+    "overall": 71,
+    "potential": 71,
+    "attributes": {
+      "acceleration": 50,
+      "sprintSpeed": 47,
+      "finishing": 33,
+      "shotPower": 47,
+      "longShots": 38,
+      "positioning": 50,
+      "shortPassing": 61,
+      "longPassing": 55,
+      "vision": 48,
+      "crossing": 62,
+      "dribbling": 55,
+      "ballControl": 57,
+      "agility": 56,
+      "balance": 52,
+      "composure": 74,
+      "stamina": 71,
+      "strength": 78,
+      "aggression": 75,
+      "interceptions": 70,
+      "marking": 74,
+      "standingTackle": 75,
+      "slidingTackle": 70,
+      "heading": 76,
+      "jumping": 73
+    },
+    "summaryAssessment": {
+      "pace": 48,
+      "shooting": 43,
+      "passing": 58,
+      "dribbling": 54,
+      "defending": 73,
+      "physical": 72
+    },
+    "traits": [
+      {
+        "id": "aerial-defender",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Left-footed defender comfortable centrally or on the left; size and positioning outweigh acceleration and attacking invention.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Left-footed defender comfortable centrally or on the left; size and positioning outweigh acceleration and attacking invention.",
+    "identitySource": "https://www.transfermarkt.us/adam-masina/profil/spieler/286949",
+    "valueGBP": 2340000,
+    "wageGBP": 14900,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.us/adam-masina/profil/spieler/286949",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.us/adam-masina/profil/spieler/286949",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-468198",
+    "name": "Joe Aribo",
+    "birthDate": "1996-07-21",
+    "nationality": "Nigeria",
+    "foot": "right",
+    "positions": [
+      "CM",
+      "CAM",
+      "RM"
+    ],
+    "overall": 71,
+    "potential": 71,
+    "attributes": {
+      "acceleration": 60,
+      "sprintSpeed": 57,
+      "finishing": 66,
+      "shotPower": 65,
+      "longShots": 63,
+      "positioning": 67,
+      "shortPassing": 69,
+      "longPassing": 63,
+      "vision": 64,
+      "crossing": 59,
+      "dribbling": 77,
+      "ballControl": 78,
+      "agility": 76,
+      "balance": 72,
+      "composure": 74,
+      "stamina": 72,
+      "strength": 73,
+      "aggression": 62,
+      "interceptions": 54,
+      "marking": 55,
+      "standingTackle": 53,
+      "slidingTackle": 54,
+      "heading": 56,
+      "jumping": 67
+    },
+    "summaryAssessment": {
+      "pace": 58,
+      "shooting": 61,
+      "passing": 66,
+      "dribbling": 74,
+      "defending": 57,
+      "physical": 66
+    },
+    "traits": [
+      {
+        "id": "technical-dribbler",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Tall technical midfielder who receives and carries through pressure; defensive intensity and long distribution are less developed.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Tall technical midfielder who receives and carries through pressure; defensive intensity and long distribution are less developed.",
+    "identitySource": "https://www.transfermarkt.com/joe-aribo/profil/spieler/468198",
+    "valueGBP": 4260000,
+    "wageGBP": 14900,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.com/joe-aribo/profil/spieler/468198",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.com/joe-aribo/profil/spieler/468198",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-222977",
+    "name": "Casper Højer",
+    "birthDate": "1994-11-20",
+    "nationality": "Denmark",
+    "foot": "left",
+    "positions": [
+      "LB"
+    ],
+    "overall": 71,
+    "potential": 71,
+    "attributes": {
+      "acceleration": 61,
+      "sprintSpeed": 58,
+      "finishing": 42,
+      "shotPower": 56,
+      "longShots": 47,
+      "positioning": 50,
+      "shortPassing": 73,
+      "longPassing": 71,
+      "vision": 60,
+      "crossing": 76,
+      "dribbling": 63,
+      "ballControl": 65,
+      "agility": 64,
+      "balance": 60,
+      "composure": 74,
+      "stamina": 65,
+      "strength": 59,
+      "aggression": 66,
+      "interceptions": 63,
+      "marking": 64,
+      "standingTackle": 68,
+      "slidingTackle": 63,
+      "heading": 53,
+      "jumping": 64
+    },
+    "summaryAssessment": {
+      "pace": 59,
+      "shooting": 52,
+      "passing": 70,
+      "dribbling": 62,
+      "defending": 66,
+      "physical": 63
+    },
+    "traits": [
+      {
+        "id": "precision-crosser",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Left-sided fullback whose delivery and passing support progression; one-on-one explosiveness is more modest.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Left-sided fullback whose delivery and passing support progression; one-on-one explosiveness is more modest.",
+    "identitySource": "https://www.transfermarkt.co.uk/casper-hojer/profil/spieler/222977",
+    "valueGBP": 4260000,
+    "wageGBP": 14900,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.co.uk/casper-hojer/profil/spieler/222977",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.co.uk/casper-hojer/profil/spieler/222977",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-95142",
+    "name": "Renan Ribeiro",
+    "birthDate": "1990-03-23",
+    "nationality": "Brazil",
+    "foot": "right",
+    "positions": [
+      "GK"
+    ],
+    "overall": 70,
+    "potential": 70,
+    "attributes": {
+      "acceleration": 35,
+      "sprintSpeed": 37,
+      "finishing": 15,
+      "shotPower": 51,
+      "longShots": 12,
+      "positioning": 17,
+      "shortPassing": 51,
+      "longPassing": 64,
+      "vision": 45,
+      "crossing": 13,
+      "dribbling": 18,
+      "ballControl": 35,
+      "agility": 47,
+      "balance": 47,
+      "composure": 65,
+      "stamina": 42,
+      "strength": 72,
+      "aggression": 32,
+      "interceptions": 18,
+      "marking": 15,
+      "standingTackle": 17,
+      "slidingTackle": 13,
+      "heading": 20,
+      "jumping": 68,
+      "diving": 71,
+      "handling": 69,
+      "kicking": 64,
+      "reflexes": 73,
+      "gkPositioning": 70
+    },
+    "summaryAssessment": {
+      "pace": 71,
+      "shooting": 69,
+      "passing": 64,
+      "dribbling": 73,
+      "defending": 35,
+      "physical": 70
+    },
+    "traits": [
+      {
+        "id": "reflex-specialist",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Experienced goalkeeper with a shot-stopping profile; distribution is functional rather than a specialist playmaking strength.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Experienced goalkeeper with a shot-stopping profile; distribution is functional rather than a specialist playmaking strength.",
+    "identitySource": "https://www.transfermarkt.com/renan-ribeiro/profil/spieler/95142",
+    "valueGBP": 1040000,
+    "wageGBP": 13800,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.com/renan-ribeiro/profil/spieler/95142",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.com/renan-ribeiro/profil/spieler/95142",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-161204",
+    "name": "Julian Green",
+    "birthDate": "1995-06-06",
+    "nationality": "United States",
+    "foot": "right",
+    "positions": [
+      "CM",
+      "CAM"
+    ],
+    "overall": 70,
+    "potential": 70,
+    "attributes": {
+      "acceleration": 63,
+      "sprintSpeed": 60,
+      "finishing": 64,
+      "shotPower": 71,
+      "longShots": 73,
+      "positioning": 66,
+      "shortPassing": 73,
+      "longPassing": 69,
+      "vision": 74,
+      "crossing": 65,
+      "dribbling": 72,
+      "ballControl": 74,
+      "agility": 73,
+      "balance": 69,
+      "composure": 73,
+      "stamina": 61,
+      "strength": 48,
+      "aggression": 51,
+      "interceptions": 48,
+      "marking": 49,
+      "standingTackle": 47,
+      "slidingTackle": 48,
+      "heading": 45,
+      "jumping": 56
+    },
+    "summaryAssessment": {
+      "pace": 61,
+      "shooting": 67,
+      "passing": 72,
+      "dribbling": 71,
+      "defending": 51,
+      "physical": 55
+    },
+    "traits": [
+      {
+        "id": "set-piece-specialist",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Technical midfielder with distance shooting and creative passing; not a physically dominant ball winner.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Technical midfielder with distance shooting and creative passing; not a physically dominant ball winner.",
+    "identitySource": "https://www.transfermarkt.co.uk/julian-green/profil/spieler/161204",
+    "valueGBP": 3730000,
+    "wageGBP": 13800,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.co.uk/julian-green/profil/spieler/161204",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.co.uk/julian-green/profil/spieler/161204",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-95795",
+    "name": "Václav Hladký",
+    "birthDate": "1990-11-14",
+    "nationality": "Czech Republic",
+    "foot": "right",
+    "positions": [
+      "GK"
+    ],
+    "overall": 70,
+    "potential": 70,
+    "attributes": {
+      "acceleration": 38,
+      "sprintSpeed": 40,
+      "finishing": 15,
+      "shotPower": 60,
+      "longShots": 12,
+      "positioning": 17,
+      "shortPassing": 59,
+      "longPassing": 64,
+      "vision": 52,
+      "crossing": 13,
+      "dribbling": 18,
+      "ballControl": 35,
+      "agility": 50,
+      "balance": 47,
+      "composure": 68,
+      "stamina": 42,
+      "strength": 61,
+      "aggression": 32,
+      "interceptions": 18,
+      "marking": 15,
+      "standingTackle": 17,
+      "slidingTackle": 13,
+      "heading": 20,
+      "jumping": 60,
+      "diving": 68,
+      "handling": 67,
+      "kicking": 75,
+      "reflexes": 70,
+      "gkPositioning": 71
+    },
+    "summaryAssessment": {
+      "pace": 68,
+      "shooting": 67,
+      "passing": 75,
+      "dribbling": 70,
+      "defending": 38,
+      "physical": 71
+    },
+    "traits": [
+      {
+        "id": "long-distribution",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Goalkeeper comfortable contributing to possession and longer distribution, with more modest pure shot-stopping reach.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Goalkeeper comfortable contributing to possession and longer distribution, with more modest pure shot-stopping reach.",
+    "identitySource": "https://www.transfermarkt.co.uk/vaclav-hladky/profil/spieler/95795",
+    "valueGBP": 2050000,
+    "wageGBP": 13800,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.co.uk/vaclav-hladky/profil/spieler/95795",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.co.uk/vaclav-hladky/profil/spieler/95795",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-85177",
+    "name": "Nathaniel Clyne",
+    "birthDate": "1991-04-05",
+    "nationality": "England",
+    "foot": "right",
+    "positions": [
+      "RB"
+    ],
+    "overall": 70,
+    "potential": 70,
+    "attributes": {
+      "acceleration": 64,
+      "sprintSpeed": 61,
+      "finishing": 32,
+      "shotPower": 46,
+      "longShots": 37,
+      "positioning": 49,
+      "shortPassing": 61,
+      "longPassing": 55,
+      "vision": 48,
+      "crossing": 61,
+      "dribbling": 62,
+      "ballControl": 64,
+      "agility": 63,
+      "balance": 59,
+      "composure": 73,
+      "stamina": 51,
+      "strength": 53,
+      "aggression": 60,
+      "interceptions": 69,
+      "marking": 73,
+      "standingTackle": 75,
+      "slidingTackle": 69,
+      "heading": 47,
+      "jumping": 58
+    },
+    "summaryAssessment": {
+      "pace": 62,
+      "shooting": 42,
+      "passing": 58,
+      "dribbling": 61,
+      "defending": 72,
+      "physical": 57
+    },
+    "traits": [],
+    "traitRationale": "No established specialist trait asserted. Conservative experienced fullback with defensive positioning; limited recent attacking output does not justify a specialist attacking trait.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Conservative experienced fullback with defensive positioning; limited recent attacking output does not justify a specialist attacking trait.",
+    "identitySource": "https://www.transfermarkt.co.uk/nathaniel-clyne/profil/spieler/85177",
+    "valueGBP": 2050000,
+    "wageGBP": 13800,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.co.uk/nathaniel-clyne/profil/spieler/85177",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://footballfragmento.wordpress.com/2026/10/01/free-agents-oct-2026/",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-183318",
+    "name": "Jamaal Lascelles",
+    "birthDate": "1993-11-11",
+    "nationality": "England",
+    "foot": "right",
+    "positions": [
+      "CB"
+    ],
+    "overall": 70,
+    "potential": 70,
+    "attributes": {
+      "acceleration": 44,
+      "sprintSpeed": 41,
+      "finishing": 20,
+      "shotPower": 34,
+      "longShots": 25,
+      "positioning": 49,
+      "shortPassing": 49,
+      "longPassing": 43,
+      "vision": 36,
+      "crossing": 39,
+      "dribbling": 42,
+      "ballControl": 44,
+      "agility": 43,
+      "balance": 39,
+      "composure": 73,
+      "stamina": 53,
+      "strength": 83,
+      "aggression": 78,
+      "interceptions": 70,
+      "marking": 75,
+      "standingTackle": 75,
+      "slidingTackle": 70,
+      "heading": 77,
+      "jumping": 76
+    },
+    "summaryAssessment": {
+      "pace": 42,
+      "shooting": 30,
+      "passing": 46,
+      "dribbling": 41,
+      "defending": 73,
+      "physical": 75
+    },
+    "traits": [
+      {
+        "id": "aerial-defender",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Physical central defender with aerial presence and defensive leadership; limited recent minutes and passing range lower the current ceiling.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Physical central defender with aerial presence and defensive leadership; limited recent minutes and passing range lower the current ceiling.",
+    "identitySource": "https://www.transfermarkt.us/jamaal-lascelles/profil/spieler/183318",
+    "valueGBP": 2050000,
+    "wageGBP": 13800,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.us/jamaal-lascelles/profil/spieler/183318",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.us/jamaal-lascelles/profil/spieler/183318",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-203961",
+    "name": "Glenn Bijl",
+    "birthDate": "1995-07-13",
+    "nationality": "Netherlands",
+    "foot": "right",
+    "positions": [
+      "RB",
+      "CDM"
+    ],
+    "overall": 70,
+    "potential": 70,
+    "attributes": {
+      "acceleration": 59,
+      "sprintSpeed": 56,
+      "finishing": 38,
+      "shotPower": 52,
+      "longShots": 43,
+      "positioning": 49,
+      "shortPassing": 69,
+      "longPassing": 73,
+      "vision": 56,
+      "crossing": 69,
+      "dribbling": 60,
+      "ballControl": 62,
+      "agility": 61,
+      "balance": 57,
+      "composure": 73,
+      "stamina": 64,
+      "strength": 69,
+      "aggression": 68,
+      "interceptions": 66,
+      "marking": 67,
+      "standingTackle": 72,
+      "slidingTackle": 66,
+      "heading": 55,
+      "jumping": 66
+    },
+    "summaryAssessment": {
+      "pace": 57,
+      "shooting": 48,
+      "passing": 66,
+      "dribbling": 59,
+      "defending": 69,
+      "physical": 65
+    },
+    "traits": [
+      {
+        "id": "long-pass-specialist",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Versatile defender with measured distribution and solid tackling; top-end acceleration and attacking dribbling are secondary.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Versatile defender with measured distribution and solid tackling; top-end acceleration and attacking dribbling are secondary.",
+    "identitySource": "https://www.transfermarkt.us/glenn-bijl/profil/spieler/203961",
+    "valueGBP": 3730000,
+    "wageGBP": 13800,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.us/glenn-bijl/profil/spieler/203961",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.us/glenn-bijl/profil/spieler/203961",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-217863",
+    "name": "Guilherme Haubert Sityá",
+    "birthDate": "1990-04-01",
+    "nationality": "Brazil",
+    "foot": "left",
+    "positions": [
+      "LB"
+    ],
+    "overall": 70,
+    "potential": 70,
+    "attributes": {
+      "acceleration": 52,
+      "sprintSpeed": 49,
+      "finishing": 45,
+      "shotPower": 59,
+      "longShots": 50,
+      "positioning": 49,
+      "shortPassing": 76,
+      "longPassing": 74,
+      "vision": 71,
+      "crossing": 79,
+      "dribbling": 67,
+      "ballControl": 69,
+      "agility": 68,
+      "balance": 64,
+      "composure": 73,
+      "stamina": 56,
+      "strength": 51,
+      "aggression": 58,
+      "interceptions": 60,
+      "marking": 61,
+      "standingTackle": 65,
+      "slidingTackle": 60,
+      "heading": 45,
+      "jumping": 56
+    },
+    "summaryAssessment": {
+      "pace": 50,
+      "shooting": 55,
+      "passing": 73,
+      "dribbling": 66,
+      "defending": 63,
+      "physical": 55
+    },
+    "traits": [
+      {
+        "id": "precision-crosser",
+        "level": 1
+      },
+      {
+        "id": "set-piece-specialist",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Experienced left-footed fullback offering delivery and set-piece service; athletic recovery and physical power are weaker.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Experienced left-footed fullback offering delivery and set-piece service; athletic recovery and physical power are weaker.",
+    "identitySource": "https://www.transfermarkt.com/guilherme/profil/spieler/217863",
+    "valueGBP": 1040000,
+    "wageGBP": 13800,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.com/guilherme/profil/spieler/217863",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.com/guilherme/profil/spieler/217863",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-82070",
+    "name": "Diego Demme",
+    "birthDate": "1991-11-21",
+    "nationality": "Germany",
+    "foot": "right",
+    "positions": [
+      "CDM"
+    ],
+    "overall": 69,
+    "potential": 69,
+    "attributes": {
+      "acceleration": 50,
+      "sprintSpeed": 47,
+      "finishing": 38,
+      "shotPower": 45,
+      "longShots": 43,
+      "positioning": 65,
+      "shortPassing": 70,
+      "longPassing": 68,
+      "vision": 64,
+      "crossing": 59,
+      "dribbling": 65,
+      "ballControl": 67,
+      "agility": 66,
+      "balance": 62,
+      "composure": 72,
+      "stamina": 54,
+      "strength": 57,
+      "aggression": 64,
+      "interceptions": 75,
+      "marking": 69,
+      "standingTackle": 73,
+      "slidingTackle": 68,
+      "heading": 51,
+      "jumping": 62
+    },
+    "summaryAssessment": {
+      "pace": 48,
+      "shooting": 41,
+      "passing": 66,
+      "dribbling": 64,
+      "defending": 71,
+      "physical": 61
+    },
+    "traits": [
+      {
+        "id": "interceptor",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Compact holding midfielder prioritizing ball recovery and secure circulation; recent playing time and attacking output are limited.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Compact holding midfielder prioritizing ball recovery and secure circulation; recent playing time and attacking output are limited.",
+    "identitySource": "https://www.transfermarkt.com/diego-demme/profil/spieler/82070",
+    "valueGBP": 1780000,
+    "wageGBP": 12700,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.com/diego-demme/profil/spieler/82070",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.com/diego-demme/profil/spieler/82070",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-119269",
+    "name": "Shane Duffy",
+    "birthDate": "1992-01-01",
+    "nationality": "Republic of Ireland",
+    "foot": "right",
+    "positions": [
+      "CB"
+    ],
+    "overall": 69,
+    "potential": 69,
+    "attributes": {
+      "acceleration": 29,
+      "sprintSpeed": 32,
+      "finishing": 22,
+      "shotPower": 36,
+      "longShots": 27,
+      "positioning": 48,
+      "shortPassing": 46,
+      "longPassing": 40,
+      "vision": 33,
+      "crossing": 36,
+      "dribbling": 40,
+      "ballControl": 42,
+      "agility": 41,
+      "balance": 37,
+      "composure": 72,
+      "stamina": 79,
+      "strength": 87,
+      "aggression": 83,
+      "interceptions": 69,
+      "marking": 75,
+      "standingTackle": 74,
+      "slidingTackle": 69,
+      "heading": 84,
+      "jumping": 76
+    },
+    "summaryAssessment": {
+      "pace": 33,
+      "shooting": 32,
+      "passing": 43,
+      "dribbling": 39,
+      "defending": 72,
+      "physical": 80
+    },
+    "traits": [
+      {
+        "id": "aerial-defender",
+        "level": 1
+      },
+      {
+        "id": "aerial-threat",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Specialist aerial defender and set-piece target; very limited mobility and progressive distribution require protection.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Specialist aerial defender and set-piece target; very limited mobility and progressive distribution require protection.",
+    "identitySource": "https://www.transfermarkt.com/shane-duffy/profil/spieler/119269",
+    "valueGBP": 1780000,
+    "wageGBP": 12700,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.com/shane-duffy/profil/spieler/119269",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.com/shane-duffy/profil/spieler/119269",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-68390",
+    "name": "Séamus Coleman",
+    "birthDate": "1988-10-11",
+    "nationality": "Republic of Ireland",
+    "foot": "right",
+    "positions": [
+      "RB",
+      "RM"
+    ],
+    "overall": 69,
+    "potential": 69,
+    "attributes": {
+      "acceleration": 51,
+      "sprintSpeed": 48,
+      "finishing": 40,
+      "shotPower": 54,
+      "longShots": 45,
+      "positioning": 48,
+      "shortPassing": 64,
+      "longPassing": 58,
+      "vision": 51,
+      "crossing": 64,
+      "dribbling": 60,
+      "ballControl": 62,
+      "agility": 61,
+      "balance": 57,
+      "composure": 75,
+      "stamina": 46,
+      "strength": 51,
+      "aggression": 58,
+      "interceptions": 74,
+      "marking": 70,
+      "standingTackle": 76,
+      "slidingTackle": 69,
+      "heading": 45,
+      "jumping": 56
+    },
+    "summaryAssessment": {
+      "pace": 49,
+      "shooting": 50,
+      "passing": 61,
+      "dribbling": 59,
+      "defending": 72,
+      "physical": 55
+    },
+    "traits": [
+      {
+        "id": "strong-tackler",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Veteran fullback with timing, tackling and leadership; repeated running and recovery speed have declined substantially.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Veteran fullback with timing, tackling and leadership; repeated running and recovery speed have declined substantially.",
+    "identitySource": "https://www.transfermarkt.com/seamus-coleman/profil/spieler/68390",
+    "valueGBP": 910000,
+    "wageGBP": 12700,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.com/seamus-coleman/profil/spieler/68390",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.com/seamus-coleman/profil/spieler/68390",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-157506",
+    "name": "Jeffrey Schlupp",
+    "birthDate": "1992-12-23",
+    "nationality": "Ghana",
+    "foot": "left",
+    "positions": [
+      "LM",
+      "LB",
+      "CM"
+    ],
+    "overall": 69,
+    "potential": 69,
+    "attributes": {
+      "acceleration": 70,
+      "sprintSpeed": 67,
+      "finishing": 54,
+      "shotPower": 61,
+      "longShots": 52,
+      "positioning": 65,
+      "shortPassing": 61,
+      "longPassing": 55,
+      "vision": 56,
+      "crossing": 61,
+      "dribbling": 68,
+      "ballControl": 68,
+      "agility": 67,
+      "balance": 63,
+      "composure": 72,
+      "stamina": 64,
+      "strength": 75,
+      "aggression": 65,
+      "interceptions": 57,
+      "marking": 58,
+      "standingTackle": 63,
+      "slidingTackle": 57,
+      "heading": 59,
+      "jumping": 70
+    },
+    "summaryAssessment": {
+      "pace": 68,
+      "shooting": 57,
+      "passing": 58,
+      "dribbling": 65,
+      "defending": 60,
+      "physical": 69
+    },
+    "traits": [],
+    "traitRationale": "No established specialist trait asserted. Versatile left-sided runner and midfield carrier with useful power; no elite specialist category is sufficiently supported.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Versatile left-sided runner and midfield carrier with useful power; no elite specialist category is sufficiently supported.",
+    "identitySource": "https://www.transfermarkt.co.uk/jeffrey-schlupp/profil/spieler/157506/",
+    "valueGBP": 1780000,
+    "wageGBP": 12700,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.co.uk/jeffrey-schlupp/profil/spieler/157506/",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.co.uk/jeffrey-schlupp/profil/spieler/157506/",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-399369",
+    "name": "Beni Baningime",
+    "birthDate": "1998-09-09",
+    "nationality": "DR Congo",
+    "foot": "right",
+    "positions": [
+      "CDM",
+      "CM"
+    ],
+    "overall": 69,
+    "potential": 70,
+    "attributes": {
+      "acceleration": 56,
+      "sprintSpeed": 53,
+      "finishing": 30,
+      "shotPower": 37,
+      "longShots": 35,
+      "positioning": 65,
+      "shortPassing": 67,
+      "longPassing": 63,
+      "vision": 59,
+      "crossing": 54,
+      "dribbling": 65,
+      "ballControl": 67,
+      "agility": 66,
+      "balance": 62,
+      "composure": 72,
+      "stamina": 63,
+      "strength": 62,
+      "aggression": 69,
+      "interceptions": 75,
+      "marking": 68,
+      "standingTackle": 73,
+      "slidingTackle": 67,
+      "heading": 56,
+      "jumping": 67
+    },
+    "summaryAssessment": {
+      "pace": 54,
+      "shooting": 33,
+      "passing": 61,
+      "dribbling": 64,
+      "defending": 70,
+      "physical": 66
+    },
+    "traits": [
+      {
+        "id": "interceptor",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Holding midfielder focused on recovery and secure short passing rather than final-third production.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Holding midfielder focused on recovery and secure short passing rather than final-third production.",
+    "identitySource": "https://www.transfermarkt.com/beni-baningime/profil/spieler/399369",
+    "valueGBP": 3240000,
+    "wageGBP": 12700,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.com/beni-baningime/profil/spieler/399369",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.com/beni-baningime/profil/spieler/399369",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-86916",
+    "name": "Toni Leistner",
+    "birthDate": "1990-08-19",
+    "nationality": "Germany",
+    "foot": "right",
+    "positions": [
+      "CB"
+    ],
+    "overall": 69,
+    "potential": 69,
+    "attributes": {
+      "acceleration": 29,
+      "sprintSpeed": 30,
+      "finishing": 21,
+      "shotPower": 35,
+      "longShots": 26,
+      "positioning": 48,
+      "shortPassing": 47,
+      "longPassing": 41,
+      "vision": 34,
+      "crossing": 37,
+      "dribbling": 39,
+      "ballControl": 41,
+      "agility": 40,
+      "balance": 36,
+      "composure": 72,
+      "stamina": 79,
+      "strength": 88,
+      "aggression": 83,
+      "interceptions": 69,
+      "marking": 74,
+      "standingTackle": 74,
+      "slidingTackle": 69,
+      "heading": 79,
+      "jumping": 81
+    },
+    "summaryAssessment": {
+      "pace": 31,
+      "shooting": 31,
+      "passing": 44,
+      "dribbling": 38,
+      "defending": 72,
+      "physical": 80
+    },
+    "traits": [
+      {
+        "id": "aerial-defender",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Physical centre-back suited to defending the box and duels; pace and progressive passing are clear limitations.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Physical centre-back suited to defending the box and duels; pace and progressive passing are clear limitations.",
+    "identitySource": "https://www.transfermarkt.com/toni-leistner/profil/spieler/86916",
+    "valueGBP": 1780000,
+    "wageGBP": 12700,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.com/toni-leistner/profil/spieler/86916",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.com/toni-leistner/profil/spieler/86916",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-128229",
+    "name": "Robbie Brady",
+    "birthDate": "1992-01-14",
+    "nationality": "Republic of Ireland",
+    "foot": "left",
+    "positions": [
+      "LM",
+      "LB"
+    ],
+    "overall": 68,
+    "potential": 68,
+    "attributes": {
+      "acceleration": 50,
+      "sprintSpeed": 47,
+      "finishing": 53,
+      "shotPower": 60,
+      "longShots": 51,
+      "positioning": 64,
+      "shortPassing": 76,
+      "longPassing": 74,
+      "vision": 72,
+      "crossing": 78,
+      "dribbling": 66,
+      "ballControl": 68,
+      "agility": 67,
+      "balance": 63,
+      "composure": 71,
+      "stamina": 48,
+      "strength": 44,
+      "aggression": 44,
+      "interceptions": 50,
+      "marking": 51,
+      "standingTackle": 49,
+      "slidingTackle": 50,
+      "heading": 38,
+      "jumping": 49
+    },
+    "summaryAssessment": {
+      "pace": 48,
+      "shooting": 56,
+      "passing": 73,
+      "dribbling": 65,
+      "defending": 53,
+      "physical": 48
+    },
+    "traits": [
+      {
+        "id": "set-piece-specialist",
+        "level": 1
+      },
+      {
+        "id": "precision-crosser",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Left-footed delivery and dead-ball specialist whose technique exceeds present running and physical duel capacity.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Left-footed delivery and dead-ball specialist whose technique exceeds present running and physical duel capacity.",
+    "identitySource": "https://www.transfermarkt.co.uk/robbie-brady/profil/spieler/128229",
+    "valueGBP": 1540000,
+    "wageGBP": 11600,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.co.uk/robbie-brady/profil/spieler/128229",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.co.uk/robbie-brady/profil/spieler/128229",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-thibaultvargas",
+    "name": "Thibault Vargas",
+    "birthDate": "2000-05-22",
+    "nationality": "France",
+    "foot": "both",
+    "positions": [
+      "RB"
+    ],
+    "overall": 68,
+    "potential": 69,
+    "attributes": {
+      "acceleration": 68,
+      "sprintSpeed": 65,
+      "finishing": 32,
+      "shotPower": 46,
+      "longShots": 37,
+      "positioning": 47,
+      "shortPassing": 66,
+      "longPassing": 59,
+      "vision": 52,
+      "crossing": 66,
+      "dribbling": 64,
+      "ballControl": 66,
+      "agility": 65,
+      "balance": 61,
+      "composure": 71,
+      "stamina": 69,
+      "strength": 56,
+      "aggression": 63,
+      "interceptions": 61,
+      "marking": 62,
+      "standingTackle": 68,
+      "slidingTackle": 61,
+      "heading": 50,
+      "jumping": 61
+    },
+    "summaryAssessment": {
+      "pace": 66,
+      "shooting": 42,
+      "passing": 62,
+      "dribbling": 63,
+      "defending": 64,
+      "physical": 60
+    },
+    "traits": [],
+    "traitRationale": "No established specialist trait asserted. Mobile right-sided defender and wide midfielder with balanced passing and tackling, without an established elite specialist claim.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Mobile right-sided defender and wide midfielder with balanced passing and tackling, without an established elite specialist claim.",
+    "identitySource": "https://m.aiscore.com/en/player-thibault-vargas/63kv9i4oy6gsg7e",
+    "valueGBP": 2800000,
+    "wageGBP": 11600,
+    "sources": [
+      {
+        "url": "https://m.aiscore.com/en/player-thibault-vargas/63kv9i4oy6gsg7e",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://footballfragmento.wordpress.com/2026/10/01/free-agents-oct-2026/",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-369267",
+    "name": "Maximiliano Caufriez",
+    "birthDate": "1997-02-16",
+    "nationality": "Belgium",
+    "foot": "right",
+    "positions": [
+      "CB"
+    ],
+    "overall": 68,
+    "potential": 68,
+    "attributes": {
+      "acceleration": 52,
+      "sprintSpeed": 49,
+      "finishing": 15,
+      "shotPower": 29,
+      "longShots": 20,
+      "positioning": 47,
+      "shortPassing": 53,
+      "longPassing": 44,
+      "vision": 37,
+      "crossing": 40,
+      "dribbling": 41,
+      "ballControl": 43,
+      "agility": 42,
+      "balance": 38,
+      "composure": 71,
+      "stamina": 72,
+      "strength": 80,
+      "aggression": 76,
+      "interceptions": 66,
+      "marking": 70,
+      "standingTackle": 72,
+      "slidingTackle": 66,
+      "heading": 75,
+      "jumping": 74
+    },
+    "summaryAssessment": {
+      "pace": 50,
+      "shooting": 25,
+      "passing": 47,
+      "dribbling": 40,
+      "defending": 69,
+      "physical": 73
+    },
+    "traits": [],
+    "traitRationale": "No established specialist trait asserted. Physical central defender prioritizing duels and defending space; limited ball progression does not justify a specialist trait.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Physical central defender prioritizing duels and defending space; limited ball progression does not justify a specialist trait.",
+    "identitySource": "https://www.transfermarkt.com/maximiliano-caufriez/transfers/spieler/369267",
+    "valueGBP": 2800000,
+    "wageGBP": 11600,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.com/maximiliano-caufriez/transfers/spieler/369267",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.com/maximiliano-caufriez/transfers/spieler/369267",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-antoninbobichon",
+    "name": "Antonin Bobichon",
+    "birthDate": "1995-09-14",
+    "nationality": "France",
+    "foot": "right",
+    "positions": [
+      "CAM",
+      "RW"
+    ],
+    "overall": 68,
+    "potential": 68,
+    "attributes": {
+      "acceleration": 56,
+      "sprintSpeed": 53,
+      "finishing": 61,
+      "shotPower": 68,
+      "longShots": 70,
+      "positioning": 64,
+      "shortPassing": 72,
+      "longPassing": 71,
+      "vision": 73,
+      "crossing": 62,
+      "dribbling": 69,
+      "ballControl": 71,
+      "agility": 70,
+      "balance": 66,
+      "composure": 71,
+      "stamina": 56,
+      "strength": 46,
+      "aggression": 46,
+      "interceptions": 40,
+      "marking": 41,
+      "standingTackle": 39,
+      "slidingTackle": 40,
+      "heading": 40,
+      "jumping": 51
+    },
+    "summaryAssessment": {
+      "pace": 54,
+      "shooting": 64,
+      "passing": 69,
+      "dribbling": 68,
+      "defending": 43,
+      "physical": 50
+    },
+    "traits": [
+      {
+        "id": "set-piece-specialist",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Creative midfielder and wide option with shooting and set-piece delivery; defensive duels and speed are less convincing.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Creative midfielder and wide option with shooting and set-piece delivery; defensive duels and speed are less convincing.",
+    "identitySource": "https://en.wikipedia.org/wiki/Antonin_Bobichon",
+    "valueGBP": 2800000,
+    "wageGBP": 11600,
+    "sources": [
+      {
+        "url": "https://en.wikipedia.org/wiki/Antonin_Bobichon",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://footballfragmento.wordpress.com/2026/10/01/free-agents-oct-2026/",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-92572",
+    "name": "Joel Ward",
+    "birthDate": "1989-10-29",
+    "nationality": "England",
+    "foot": "right",
+    "positions": [
+      "RB",
+      "LB",
+      "RM"
+    ],
+    "overall": 67,
+    "potential": 67,
+    "attributes": {
+      "acceleration": 44,
+      "sprintSpeed": 41,
+      "finishing": 24,
+      "shotPower": 38,
+      "longShots": 29,
+      "positioning": 46,
+      "shortPassing": 55,
+      "longPassing": 49,
+      "vision": 42,
+      "crossing": 55,
+      "dribbling": 49,
+      "ballControl": 51,
+      "agility": 50,
+      "balance": 46,
+      "composure": 70,
+      "stamina": 49,
+      "strength": 58,
+      "aggression": 65,
+      "interceptions": 68,
+      "marking": 74,
+      "standingTackle": 72,
+      "slidingTackle": 68,
+      "heading": 52,
+      "jumping": 63
+    },
+    "summaryAssessment": {
+      "pace": 42,
+      "shooting": 34,
+      "passing": 52,
+      "dribbling": 48,
+      "defending": 71,
+      "physical": 62
+    },
+    "traits": [],
+    "traitRationale": "No established specialist trait asserted. Experienced defensive fullback offering positioning and versatility; attacking output and pace no longer support an established specialist trait.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Experienced defensive fullback offering positioning and versatility; attacking output and pace no longer support an established specialist trait.",
+    "identitySource": "https://www.transfermarkt.co.uk/joel-ward/profil/spieler/92572",
+    "valueGBP": 670000,
+    "wageGBP": 10600,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.co.uk/joel-ward/profil/spieler/92572",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.co.uk/joel-ward/profil/spieler/92572",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-286007",
+    "name": "Benoit Nyssen",
+    "birthDate": "1997-09-12",
+    "nationality": "Belgium",
+    "foot": "right",
+    "positions": [
+      "RB"
+    ],
+    "overall": 67,
+    "potential": 67,
+    "attributes": {
+      "acceleration": 64,
+      "sprintSpeed": 61,
+      "finishing": 24,
+      "shotPower": 38,
+      "longShots": 29,
+      "positioning": 46,
+      "shortPassing": 61,
+      "longPassing": 53,
+      "vision": 46,
+      "crossing": 59,
+      "dribbling": 60,
+      "ballControl": 62,
+      "agility": 61,
+      "balance": 57,
+      "composure": 70,
+      "stamina": 70,
+      "strength": 67,
+      "aggression": 68,
+      "interceptions": 62,
+      "marking": 63,
+      "standingTackle": 69,
+      "slidingTackle": 62,
+      "heading": 55,
+      "jumping": 66
+    },
+    "summaryAssessment": {
+      "pace": 62,
+      "shooting": 34,
+      "passing": 56,
+      "dribbling": 59,
+      "defending": 65,
+      "physical": 65
+    },
+    "traits": [],
+    "traitRationale": "No established specialist trait asserted. Workmanlike right-back with defensive balance and carrying support; limited attacking evidence warrants no specialist trait.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Workmanlike right-back with defensive balance and carrying support; limited attacking evidence warrants no specialist trait.",
+    "identitySource": "https://www.transfermarkt.com/benoit-nyssen/profil/spieler/286007",
+    "valueGBP": 2400000,
+    "wageGBP": 10600,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.com/benoit-nyssen/profil/spieler/286007",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.com/benoit-nyssen/profil/spieler/286007",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-54846",
+    "name": "Fabian Holland",
+    "birthDate": "1990-07-11",
+    "nationality": "Germany",
+    "foot": "left",
+    "positions": [
+      "LB",
+      "LM",
+      "CDM"
+    ],
+    "overall": 66,
+    "potential": 66,
+    "attributes": {
+      "acceleration": 41,
+      "sprintSpeed": 38,
+      "finishing": 29,
+      "shotPower": 43,
+      "longShots": 34,
+      "positioning": 45,
+      "shortPassing": 66,
+      "longPassing": 58,
+      "vision": 51,
+      "crossing": 64,
+      "dribbling": 52,
+      "ballControl": 54,
+      "agility": 53,
+      "balance": 49,
+      "composure": 68,
+      "stamina": 49,
+      "strength": 51,
+      "aggression": 58,
+      "interceptions": 70,
+      "marking": 64,
+      "standingTackle": 68,
+      "slidingTackle": 63,
+      "heading": 45,
+      "jumping": 56
+    },
+    "summaryAssessment": {
+      "pace": 39,
+      "shooting": 39,
+      "passing": 61,
+      "dribbling": 51,
+      "defending": 66,
+      "physical": 55
+    },
+    "traits": [
+      {
+        "id": "interceptor",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Experienced left-back and holding option relying on positioning and circulation; injury and age reduce mobility.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Experienced left-back and holding option relying on positioning and circulation; injury and age reduce mobility.",
+    "identitySource": "https://www.transfermarkt.com/fabian-holland/profil/spieler/54846",
+    "valueGBP": 570000,
+    "wageGBP": 9700,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.com/fabian-holland/profil/spieler/54846",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.com/fabian-holland/profil/spieler/54846",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-207929",
+    "name": "Dele Alli",
+    "birthDate": "1996-04-11",
+    "nationality": "England",
+    "foot": "right",
+    "positions": [
+      "CAM"
+    ],
+    "overall": 65,
+    "potential": 65,
+    "attributes": {
+      "acceleration": 61,
+      "sprintSpeed": 58,
+      "finishing": 68,
+      "shotPower": 69,
+      "longShots": 67,
+      "positioning": 73,
+      "shortPassing": 65,
+      "longPassing": 59,
+      "vision": 65,
+      "crossing": 55,
+      "dribbling": 67,
+      "ballControl": 69,
+      "agility": 68,
+      "balance": 64,
+      "composure": 62,
+      "stamina": 42,
+      "strength": 50,
+      "aggression": 50,
+      "interceptions": 40,
+      "marking": 41,
+      "standingTackle": 39,
+      "slidingTackle": 40,
+      "heading": 44,
+      "jumping": 55
+    },
+    "summaryAssessment": {
+      "pace": 59,
+      "shooting": 65,
+      "passing": 62,
+      "dribbling": 66,
+      "defending": 43,
+      "physical": 54
+    },
+    "traits": [
+      {
+        "id": "intelligent-runner",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Late penalty-area movement and instinctive combinations distinguish him; prolonged absence from competitive football produces substantial uncertainty.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Late penalty-area movement and instinctive combinations distinguish him; prolonged absence from competitive football produces substantial uncertainty.",
+    "identitySource": "https://www.transfermarkt.us/dele-alli/profil/spieler/207929",
+    "valueGBP": 1720000,
+    "wageGBP": 8800,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.us/dele-alli/profil/spieler/207929",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.us/dele-alli/profil/spieler/207929",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-67283",
+    "name": "Ben Hamer",
+    "birthDate": "1987-11-20",
+    "nationality": "England",
+    "foot": "right",
+    "positions": [
+      "GK"
+    ],
+    "overall": 65,
+    "potential": 65,
+    "attributes": {
+      "acceleration": 28,
+      "sprintSpeed": 30,
+      "finishing": 15,
+      "shotPower": 50,
+      "longShots": 12,
+      "positioning": 17,
+      "shortPassing": 50,
+      "longPassing": 62,
+      "vision": 43,
+      "crossing": 13,
+      "dribbling": 18,
+      "ballControl": 35,
+      "agility": 40,
+      "balance": 47,
+      "composure": 60,
+      "stamina": 42,
+      "strength": 68,
+      "aggression": 32,
+      "interceptions": 18,
+      "marking": 15,
+      "standingTackle": 17,
+      "slidingTackle": 13,
+      "heading": 20,
+      "jumping": 62,
+      "diving": 64,
+      "handling": 66,
+      "kicking": 62,
+      "reflexes": 66,
+      "gkPositioning": 67
+    },
+    "summaryAssessment": {
+      "pace": 64,
+      "shooting": 66,
+      "passing": 62,
+      "dribbling": 66,
+      "defending": 28,
+      "physical": 67
+    },
+    "traits": [],
+    "traitRationale": "No established specialist trait asserted. Experienced reserve goalkeeper with handling and positioning ahead of athletic reach; no established specialist trait asserted.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Experienced reserve goalkeeper with handling and positioning ahead of athletic reach; no established specialist trait asserted.",
+    "identitySource": "https://www.transfermarkt.com/ben-hamer/profil/spieler/67283",
+    "valueGBP": 480000,
+    "wageGBP": 8800,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.com/ben-hamer/profil/spieler/67283",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.com/ben-hamer/profil/spieler/67283",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  },
+  {
+    "id": "free-agent-tm-463601",
+    "name": "Guillaume Dietsch",
+    "birthDate": "2001-04-17",
+    "nationality": "France",
+    "foot": "right",
+    "positions": [
+      "GK"
+    ],
+    "overall": 65,
+    "potential": 66,
+    "attributes": {
+      "acceleration": 33,
+      "sprintSpeed": 35,
+      "finishing": 15,
+      "shotPower": 48,
+      "longShots": 12,
+      "positioning": 17,
+      "shortPassing": 48,
+      "longPassing": 60,
+      "vision": 42,
+      "crossing": 13,
+      "dribbling": 18,
+      "ballControl": 35,
+      "agility": 45,
+      "balance": 47,
+      "composure": 60,
+      "stamina": 42,
+      "strength": 60,
+      "aggression": 32,
+      "interceptions": 18,
+      "marking": 15,
+      "standingTackle": 17,
+      "slidingTackle": 13,
+      "heading": 20,
+      "jumping": 63,
+      "diving": 66,
+      "handling": 62,
+      "kicking": 60,
+      "reflexes": 68,
+      "gkPositioning": 64
+    },
+    "summaryAssessment": {
+      "pace": 66,
+      "shooting": 62,
+      "passing": 60,
+      "dribbling": 68,
+      "defending": 33,
+      "physical": 64
+    },
+    "traits": [
+      {
+        "id": "reflex-specialist",
+        "level": 1
+      }
+    ],
+    "traitRationale": "Provisional original trait assessment: Goalkeeper with reactions and recent senior experience; aerial command and distribution remain less established at top-flight level.",
+    "rationale": "Provisional Pocket Football GM assessment, not a verified FC 27 rating. Goalkeeper with reactions and recent senior experience; aerial command and distribution remain less established at top-flight level.",
+    "identitySource": "https://www.transfermarkt.com/guillaume-dietsch/profil/spieler/463601",
+    "valueGBP": 1720000,
+    "wageGBP": 8800,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.com/guillaume-dietsch/profil/spieler/463601",
+        "retrievedDate": "2026-10-28",
+        "kind": "Football identity and positional reference",
+        "fields": [
+          "identity",
+          "birthDate",
+          "primaryPosition"
+        ]
+      },
+      {
+        "url": "https://www.transfermarkt.com/guillaume-dietsch/profil/spieler/463601",
+        "retrievedDate": "2026-10-28",
+        "kind": "Reported free-agent availability",
+        "fields": [
+          "reportedUnattachedStatus"
+        ]
+      }
+    ],
+    "additionalEstimates": [
+      "preferredFoot",
+      "secondaryPositions"
+    ]
+  }
+]

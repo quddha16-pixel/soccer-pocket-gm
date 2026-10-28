@@ -1,0 +1,40 @@
+import { useMemo, useState } from 'react';
+import { Trophy } from 'lucide-react';
+import type { Career } from '../models';
+import { clubById } from '../data/clubs';
+import { allTimePlayers, averageRating, clubRecords, completedReviews, reviewFor, seasonReview, statLabels } from '../simulation/records';
+import type { StatKey, PlayerSeason } from '../simulation/records';
+import { PlayerAvatar } from './PlayerAvatar';
+
+export function SeasonAwards({career:c,season=c.world.season,onProfile}:{career:Career;season?:number;onProfile:(id:string)=>void}){
+ const review=useMemo(()=>reviewFor(c,season),[c,season]);
+ return <section className="panel awards-panel"><div className="section-heading"><h2><Trophy size={23}/> Season awards</h2><span className="tag">{season}–{String(season+1).slice(-2)}</span></div>
+ <p className="muted">Awards from your simulated league. Ballon d’Or, Yashin and Kopa are in-game honors; competitions outside this career are not evaluated.</p>
+ {!review?<p className="empty-state">Detailed player reports from this older season were not retained. No winners have been invented.</p>:!review.complete?<p className="empty-state">The ceremony opens after all 38 matchweeks. Play the season to decide the winners.</p>:<>
+ {review.reportedMatches<review.matches&&<p className="notice">Based on {review.reportedMatches} of {review.matches} matches with recorded player performances. Older results without reports cannot contribute individual statistics.</p>}
+ <div className="award-grid">{review.awards.map(award=><article className={`award-card ${award.id==='ballon-dor'?'premier-award':''}`} key={award.id}><Trophy size={25}/><h3>{award.title}</h3>{award.winners.map(id=>{const p=c.players.find(p=>p.id===id),s=review.players.find(p=>p.playerId===id)!;return <button className="award-winner" key={id} onClick={()=>onProfile(id)}>{p&&<PlayerAvatar player={p}/>}<span><strong>{s.name}</strong><small>{s.clubs.map(id=>clubById(id)?.name??id).join(' / ')}</small><small>{s.goals} goals · {s.assists} assists · {averageRating(s).toFixed(2)} average rating</small></span></button>;})}<p className="small muted">{award.reason}</p>{['golden-boot','playmaker','golden-glove','creator'].includes(award.id)&&<strong className="award-result">{award.score} {award.id==='golden-boot'?'goals':award.id==='playmaker'?'assists':award.id==='golden-glove'?'clean sheets':'chances created'}</strong>}</article>)}</div>
+ {!review.awards.length&&<p className="empty-state">No qualifying player performances were recorded this season.</p>}
+ <details className="disclosure"><summary>How winners are chosen</summary><p>Ballon d’Or and Kopa weigh sustained ratings, role-specific contributions, appearances and team points. Defenders earn credit for tackles and clean sheets; goalkeepers for saves and clean sheets. Average-rating awards require appearances in at least 45% of the covered matchweeks. Counting awards share ties. Other equal scores use appearances, then stable player identity, for a reproducible result. Overall ratings and real-world fame do not decide winners.</p></details></>}
+ </section>;
+}
+
+export function AwardsArchive({career:c,onProfile}:{career:Career;onProfile:(id:string)=>void}){
+ const [year,setYear]=useState(c.world.season);return <><label className="archive-label">Award season<select value={year} onChange={e=>setYear(+e.target.value)}><option value={c.world.season}>{c.world.season}–{String(c.world.season+1).slice(-2)} · Current</option>{c.world.history.map(h=><option key={h.season} value={h.season}>{h.season}–{String(h.season+1).slice(-2)}</option>)}</select></label><SeasonAwards career={c} season={year} onProfile={onProfile}/></>;
+}
+
+export function RecordBook({career:c,onProfile}:{career:Career;onProfile:(id:string)=>void}){
+ const [scope,setScope]=useState('all'),[metric,setMetric]=useState<StatKey>('goals'),[kind,setKind]=useState('totals');
+ const current=useMemo(()=>seasonReview(c),[c]),archived=completedReviews(c),year=scope==='all'?undefined:+scope;
+ const stats=useMemo(()=>year===undefined?allTimePlayers(c):year===c.world.season?current.players:reviewFor(c,year)?.players??[],[c,current,year]);
+ const clubs=useMemo(()=>clubRecords(c,year),[c,year]);
+ const leader=(key:'wins'|'unbeaten'|'goalsGame'|'biggestWin'|'pointsSeason')=>[...clubs].sort((a,b)=>b[key]-a[key]||a.clubId.localeCompare(b.clubId))[0];
+ const leaders=[...stats].filter(p=>metric!=='saves'&&metric!=='cleanSheets'||p.position==='GK').sort((a,b)=>b[metric]-a[metric]||a.playerId.localeCompare(b.playerId)).filter(p=>p[metric]>0).slice(0,20);
+ const bestGames=(key:'goals'|'assists'|'saves'|'chances')=>stats.filter(p=>p.best[key]).sort((a,b)=>b.best[key]!.value-a.best[key]!.value||a.playerId.localeCompare(b.playerId)).slice(0,5);
+ function playerButton(p:PlayerSeason,detail:string){const actual=c.players.find(x=>x.id===p.playerId);return <button className="record-player" onClick={()=>onProfile(p.playerId)}>{actual&&<PlayerAvatar player={actual}/>}<span><strong>{p.name}</strong><small>{detail}</small></span></button>;}
+ return <><section className="panel records-intro"><h2>Record book</h2><p className="muted">Records belong to this career, starting with its first recorded match. Real-world historical records are not mixed into your game.</p><label>Record period<select value={scope} onChange={e=>setScope(e.target.value)}><option value="all">All time</option><option value={c.world.season}>{c.world.season}–{String(c.world.season+1).slice(-2)} · Current</option>{c.world.history.map(h=><option key={h.season} value={h.season}>{h.season}–{String(h.season+1).slice(-2)}</option>)}</select></label><p className="small muted">Player coverage: {year===undefined?archived.reduce((n,r)=>n+r.reportedMatches,0)+current.reportedMatches:reviewFor(c,year)?.reportedMatches??0} match reports. Older archives without reports retain team results only. Chances created count recorded passes leading directly to shots, including assists.</p></section>
+ <div className="segmented" role="group" aria-label="Record types">{[['totals','Player totals'],['games','Single match'],['clubs','Club records']].map(([id,label])=><button key={id} aria-pressed={kind===id} onClick={()=>setKind(id)}>{label}</button>)}</div>
+ {kind==='totals'&&<section className="panel"><label>Player record<select value={metric} onChange={e=>setMetric(e.target.value as StatKey)}>{Object.entries(statLabels).map(([key,label])=><option key={key} value={key}>{label}</option>)}</select></label><h3>Most {statLabels[metric].toLowerCase()}</h3><div className="record-list">{leaders.map((p,i)=><div className="record-row" key={p.playerId}><span>{i+1}</span>{playerButton(p,`${p.appearances} appearances · ${p.clubs.map(id=>clubById(id)?.short??id).join(' / ')}`)}<strong>{p[metric]}</strong></div>)}</div>{!leaders.length&&<p className="empty-state">No recorded {statLabels[metric].toLowerCase()} in this period.</p>}</section>}
+ {kind==='games'&&(['goals','assists','saves','chances'] as const).map(key=><section className="panel" key={key}><h3>Most {statLabels[key].toLowerCase()} in a match</h3>{bestGames(key).map(p=>{const game=p.best[key]!;return <div className="record-row" key={p.playerId}>{playerButton(p,`${game.season} · Week ${game.week} · vs ${clubById(game.opponentId)?.name??game.opponentId}`)}<strong>{game.value}</strong></div>;})}{!bestGames(key).length&&<p className="empty-state">No qualifying performances yet.</p>}</section>)}
+ {kind==='clubs'&&<div className="club-record-grid">{([['wins','Longest win streak'],['unbeaten','Longest unbeaten streak'],['goalsGame','Most team goals in a match'],['biggestWin','Biggest winning margin'],['pointsSeason','Most points in a season']] as const).map(([key,label])=>{const row=leader(key);return <section className="panel club-record" key={key}><h3>{label}</h3>{row&&row[key]>0?<><strong>{row[key]}</strong><p>{clubs.filter(r=>r[key]===row[key]).map(r=>clubById(r.clubId)?.name??r.clubId).join(' · ')}</p>{key==='pointsSeason'&&<small>{row.pointsYear} season</small>}</>:<p>No record yet.</p>}</section>;})}</div>}
+ </>;
+}

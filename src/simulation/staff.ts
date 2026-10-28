@@ -1,14 +1,16 @@
+import managerReferences from '../../docs/research/managers-2026.json';
 import type { Career, Club } from '../models';
 import type { Staff, StaffRole } from '../worldModels';
 import { clubs, clubById } from '../data/clubs';
 import { hash } from './identity';
 import { random } from './random';
 export const staffRoles:StaffRole[]=['Manager','Assistant Manager','Shooting Coach','Dribbling Coach','Defensive Coach','Scout','Team Doctor'];
-export function generateStaff(season:number,userClub:string,manager:string,teams:Club[]=clubs,includeFreeAgents=true):Staff[]{
+export function generateStaff(season:number,userClub:string,manager:string,teams:Club[]=clubs,includeFreeAgents=true,useRealManagers=true):Staff[]{
  const staff:Staff[]=[];
  for(const [ci,club] of teams.entries())for(const [ri,role] of staffRoles.entries()){
+ const reference=useRealManagers&&role==='Manager'?managerReferences.find(m=>m.clubId===club.id):undefined;
  const rng=random(hash(`${club.id}-${role}`)),rating=Math.min(95,Math.max(35,club.strength-15+Math.floor(rng()*20)));
- staff.push({id:`staff-${club.id}-${ri}`,name:club.id===userClub&&role==='Manager'?manager:`${['Marco','James','Luis','Pierre','Daniel','Ali','Jonas'][ri]} ${['Walker','Moretti','Sanchez','Berg','Parker','Silva','Dubois'][ci%7]}`,age:35+Math.floor(rng()*26),role,nationality:['England','Spain','Italy','France'][ci%4],rating,specialism:Math.min(99,rating+3),reputation:rating,philosophy:ri%3===0?'attacking':ri%3===1?'balanced':'defensive',clubId:club.id,wage:Math.round((rating*rating)*(role==='Manager'?3.5:.5)/100)*100,contractEnd:`${season+2}-06-30`,appointedSeason:season,appointedWeek:0,controlled:club.id===userClub&&role==='Manager'});
+ staff.push({id:`staff-${club.id}-${ri}`,reference:reference?{source:reference.source,checked:reference.checked}:undefined,name:reference?.name??(club.id===userClub&&role==='Manager'?manager:`${['Marco','James','Luis','Pierre','Daniel','Ali','Jonas'][ri]} ${['Walker','Moretti','Sanchez','Berg','Parker','Silva','Dubois'][ci%7]}`),age:35+Math.floor(rng()*26),role,nationality:reference?.nationality??['England','Spain','Italy','France'][ci%4],rating,specialism:Math.min(99,rating+3),reputation:rating,philosophy:ri%3===0?'attacking':ri%3===1?'balanced':'defensive',clubId:club.id,wage:Math.round((rating*rating)*(role==='Manager'?3.5:.5)/100)*100,contractEnd:`${season+2}-06-30`,appointedSeason:season,appointedWeek:0,controlled:club.id===userClub&&role==='Manager'});
  }
  for(let i=0;includeFreeAgents&&i<18;i++){const role=staffRoles[1+i%6];staff.push({id:`staff-free-${season}-${i}`,name:`${['Adrian','Sofia','Chris','Elena','Nathan','Amelia'][i%6]} ${['Cole','Marin','Watts'][Math.floor(i/6)]}`,age:32+i,role,nationality:i%2?'England':'Portugal',rating:48+(i*7)%43,specialism:60+(i*3)%35,reputation:50+(i*5)%40,philosophy:'balanced',clubId:'',wage:1000+i*350,contractEnd:`${season+2}-06-30`,appointedSeason:season,appointedWeek:0});}
  return staff;

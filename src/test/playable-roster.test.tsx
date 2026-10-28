@@ -22,7 +22,7 @@ const profile=(name:string)=>customStartingPlayers().find(p=>p.name===name)!;
 describe('complete playable custom roster',()=>{
  it('reconciles all 546 original entries, exact Unicode names/order, IDs and assignments in every new career',()=>{
   expect(validatePlayableRoster()).toEqual([]);
-  const c=newCareer('Quentin','elite','liverpool',27),actual=c.players.filter(p=>p.real);
+  const c=newCareer('Quentin','elite','liverpool',27),actual=c.players.filter(p=>p.real&&p.real.origin!=='free-agent');
   expect(actual).toHaveLength(546);expect(new Set(actual.map(p=>p.id)).size).toBe(546);
   for(const club of customRosterDraft.clubs){
    expect(actual.filter(p=>p.clubId===club.clubId).map(p=>p.name)).toEqual(club.players.map(p=>p.displayName));
@@ -33,7 +33,7 @@ describe('complete playable custom roster',()=>{
   expect(actual.find(p=>p.name==='Bruno Guimarães')!.clubId).toBe('arsenal');
   expect(actual.find(p=>p.name==='Erling Haaland')!.clubId).toBe('city');
   // Generated free agents remain a separate legacy game system, never replacements.
-  expect(c.players.filter(p=>!p.real).every(p=>p.clubId==='')).toBe(true);
+  expect(c.players.filter(p=>p.real?.origin==='free-agent')).toHaveLength(50);expect(c.players.filter(p=>!p.real)).toHaveLength(0);
  });
  it('has unique individual skill profiles, coherent ceilings, dated citations and justified specialist choices',()=>{
   expect(new Set(startingProfiles.map(p=>outfieldAttributes.map(k=>p.attributes[k]).join(','))).size).toBe(546);

@@ -1,3 +1,4 @@
+import { clubTheme } from './clubThemes';
 import type { Club } from '../models';
 
 // 2026/27 Championship clubs, checked 28 October 2026. Strengths and budgets are
@@ -30,4 +31,4 @@ const rows:[string,string,string,string,number,number][]=[
  ['wolves','Wolverhampton Wanderers','WOL','#edbc5f',74,28],
  ['wrexham','Wrexham','WRE','#e27d80',68,17]
 ];
-export const championshipClubs:Club[]=rows.map(([id,name,short,color,strength,budget])=>({id,name,short,color,strength,budget,expectation:'Establish a place in the Premier League'}));
+export const championshipClubs:Club[]=rows.map(([id,name,short,color,strength,budget])=>({id,name,short,color:clubTheme(id).primary,strength,budget,expectation:'Establish a place in the Premier League'}));

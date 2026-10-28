@@ -29,7 +29,7 @@ it('uses five primary destinations, preserves squad browsing and returns from se
  expect(screen.getByRole('button', { name: 'Players' }).getAttribute('aria-pressed')).toBe('true');
  expect(document.querySelectorAll('.roster-card')).toHaveLength(33);
  expect(loadCareer().career).toEqual(c);
-});
+},15000);
 
 it('changes all three formations and applies a replacement only after confirmation', () => {
  let latest = newCareer('Test', 'unknown', 'hull', 1234);

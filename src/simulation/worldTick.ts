@@ -1,3 +1,4 @@
+import { archiveSeasonReview } from './records';
 import type { Career, Player, Position } from '../models';
 import { clubById, leagueClubs, managedClubs } from '../data/clubs';
 import { promotionDraw } from './promotion';
@@ -50,6 +51,7 @@ function intake(clubId:string,position:Position,season:number,index:number):Play
 }
 export function rolloverSeason(c:Career):Career{
  if(c.pending||c.week!==38||c.status!=='survived')return c;
+ c=archiveSeasonReview(c);
  const clubs=managedClubs(c),current=leagueClubs(c),movement=promotionDraw(c);
  const penalties=Object.fromEntries(clubs.map(club=>[club.id,Math.max(0,-financialSummary(c,club.id).headroom)*financeRules.excessPenaltyRate]));
  const world=structuredClone(c.world),oldSeason=world.season,season=oldSeason+1,table=standings(current,c.fixtures),rank=table.findIndex(r=>r.clubId===c.clubId)+1;
@@ -91,7 +93,7 @@ export function rolloverSeason(c:Career):Career{
  });
  // AI fills vacancies using the same seven role slots and compensates contracted moves through the staff market in user play.
  for(const club of clubs)if(club.id!==c.clubId){for(const role of ['Assistant Manager','Shooting Coach','Dribbling Coach','Defensive Coach','Scout','Team Doctor'] as const){if(!world.staff.some(s=>s.clubId===club.id&&s.role===role)){const candidate=world.staff.filter(s=>!s.clubId&&s.role===role).sort((a,b)=>b.rating-a.rating)[0];if(candidate&&candidate.wage<world.finances[club.id].wageCap*.1){candidate.clubId=club.id;candidate.appointedSeason=season;candidate.appointedWeek=0;candidate.contractEnd=`${season+2}-06-30`;}}}
- const manager=world.staff.find(s=>s.clubId===club.id&&s.role==='Manager');if(manager&&table.findIndex(r=>r.clubId===club.id)>=17){world.news.unshift({id:`manager-${season}-${club.id}`,date:world.date,text:`${club.name} replaces its manager after a disappointing season.`});const replacement={...manager,id:`manager-${season}-${club.id}`,name:`${['Alex','Rafael','Ben'][season%3]} ${['Foster','Moreno','Scott'][clubs.indexOf(club)%3]}`,rating:Math.max(50,club.strength-6),appointedSeason:season,appointedWeek:0,contractEnd:`${season+2}-06-30`};const termination=Math.max(0,(Date.parse(manager.contractEnd)-Date.parse(world.date))/(7*864e5))*manager.wage*.5;world.finances[club.id].cash=Math.max(0,world.finances[club.id].cash-termination);world.finances[club.id].operatingCosts+=termination;manager.clubId='';world.staff.push(replacement);}
+ const manager=world.staff.find(s=>s.clubId===club.id&&s.role==='Manager');if(manager&&table.findIndex(r=>r.clubId===club.id)>=17){world.news.unshift({id:`manager-${season}-${club.id}`,date:world.date,text:`${club.name} replaces its manager after a disappointing season.`});const replacement={...manager,reference:undefined,id:`manager-${season}-${club.id}`,name:`${['Alex','Rafael','Ben'][season%3]} ${['Foster','Moreno','Scott'][clubs.indexOf(club)%3]}`,rating:Math.max(50,club.strength-6),appointedSeason:season,appointedWeek:0,contractEnd:`${season+2}-06-30`};const termination=Math.max(0,(Date.parse(manager.contractEnd)-Date.parse(world.date))/(7*864e5))*manager.wage*.5;world.finances[club.id].cash=Math.max(0,world.finances[club.id].cash-termination);world.finances[club.id].operatingCosts+=termination;manager.clubId='';world.staff.push(replacement);}
  }
  world.offers=world.offers.filter(o=>o.status==='completed').slice(0,80);world.news.unshift({id:`promotion-${season}`,date:world.date,text:`Promoted: ${movement.promoted.map(id=>clubById(id).name).join(', ')}. Relegated: ${movement.relegated.map(id=>clubById(id).name).join(', ')}.`});world.news.unshift({id:`season-${season}`,date:world.date,text:`${season}–${String(season+1).slice(-2)} begins. Three clubs promoted from the Championship pool; three relegated.`});world.news=world.news.slice(0,150);
  const base={...c,players,world,week:0,status:'active' as const,fixtures:generateFixtures(movement.leagueClubIds),statsStartWeek:1,transferBudget:world.finances[c.clubId].budget};

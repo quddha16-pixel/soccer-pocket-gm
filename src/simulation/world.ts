@@ -22,7 +22,7 @@ export function initializeWorld(c:Career,addFreeAgents=true):Career{
  }
  const registration=Object.fromEntries(clubs.map(club=>[club.id,players.filter(p=>p.clubId===club.id).map(p=>p.id)]));
  const customRoster=players.some(p=>p.real)?{seniorLimits:Object.fromEntries(clubs.map(club=>[club.id,Math.max(25,players.filter(p=>p.clubId===club.id&&identity(p).birthDate<'2005-01-01').length)])),unverifiedTrainingExempt:true}:undefined;
- return {...c,version:3,players,world:{customRoster,season,date:weekDate(season,c.week),chemistry,staff:generateStaff(season,c.clubId,c.manager),finances,offers:[],news:[],shortlist:[],scouting:{},registration,history:[]}};
+ return {...c,version:3,players,world:{freeAgentPoolVersion:players.some(p=>p.real?.origin==='free-agent')?1:undefined,customRoster,season,date:weekDate(season,c.week),chemistry,staff:generateStaff(season,c.clubId,c.manager,clubs,true,players.some(p=>p.real)),finances,offers:[],news:[],shortlist:[],scouting:{},registration,history:[]}};
 }
 
 export function initializeClubFinance(club:Club,players:Player[],budget=club.budget*1e6):Finance {

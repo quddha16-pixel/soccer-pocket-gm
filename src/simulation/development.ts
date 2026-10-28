@@ -1,3 +1,4 @@
+import { developmentMultiplier } from './managerStyles';
 import type { Career, Player } from '../models';
 import { enrichPlayer, hash, identity, overallFromAttributes, primarySkills, skills } from './identity';
 import { random } from './random';
@@ -17,7 +18,7 @@ export function developPlayer(p:Player,c:Career,minutes:number,rating:number,opp
  const role=['finishing','movement'].includes(key)?'Shooting Coach':['control','passing'].includes(key)?'Dribbling Coach':'Defensive Coach';
  const coach=p.clubId?staffQuality(c,p.clubId,role):20;
  const coaching=.75+coach/200;
- const growth=Math.min(.26,ageFactor*d.growth*time*form*coaching*tendency*breakout*(.65+rng()*.7)*Math.min(1,headroom/5)*(main.includes(key)?1:.3)*.065*(.9+opposition/800));
+ const growth=Math.min(.26,ageFactor*d.growth*time*form*coaching*tendency*breakout*developmentMultiplier(c,p.clubId)*(.65+rng()*.7)*Math.min(1,headroom/5)*(main.includes(key)?1:.3)*.065*(.9+opposition/800));
  const decline=p.age>=31?(.009+(p.age-31)*.005)*(main.includes(key)?1:.4):0;
  a.attributes[key]=Math.max(p.real?1:30,Math.min(p.real?99:p.potential,a.attributes[key]+growth-decline));
  }

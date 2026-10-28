@@ -59,8 +59,9 @@ describe('dashboard and reports',()=>{
  expect(selectMotm([p('home','a',8.3),{...p('away-keeper','b',9.1),saves:9}])).toBe('away-keeper');
  expect(selectMotm([p('home','a',9.5),p('away','b',7)])).toBe('home');
  const c=advance(career());const sides=new Set<string>();let losingAwards=0;
+ const base=career(),fixture=base.fixtures.find(f=>[f.homeId,f.awayId].includes(base.clubId))!;
  for(let seed=0;seed<120;seed++){
-  const base=career(),fixture=base.fixtures.find(f=>[f.homeId,f.awayId].includes(base.clubId))!,f=resolveMatch(fixture,base,random(seed));
+  const f=resolveMatch(fixture,base,random(seed));
   const winner=f.report!.performances.find(p=>p.playerId===f.report!.motmId)!;sides.add(winner.clubId);
   if((winner.clubId===f.homeId&&f.homeGoals!<f.awayGoals!)||(winner.clubId===f.awayId&&f.awayGoals!<f.homeGoals!))losingAwards++;
  }

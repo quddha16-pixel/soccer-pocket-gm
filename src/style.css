@@ -750,3 +750,53 @@ td { padding: 15px 9px; text-align: center; border-bottom: 1px solid #263647; co
 .pool-club small { display: block; color: var(--muted); margin-top: 3px; }
 .promotion-summary { padding: 16px; margin: 16px 0 22px; border: 1px solid #527d3c; border-radius: 14px; }
 .promotion-summary p { margin-top: 8px; }
+/* All clubs remain visible when choosing a first contract. */
+.offer-available { border-color: var(--green); box-shadow: inset 0 3px 0 var(--green); }
+.offer-locked { border-style: dashed; background: #101b28; }
+.offer-status { display: block; min-height: 36px; font-size: 13px; margin-bottom: 12px; color: var(--muted); }
+.offer-status.positive { color: var(--green); }
+.offer-locked > .crest { opacity: .6; }
+.offer-card button:disabled { opacity: .65; cursor: not-allowed; }
+/* Club-specific home palette; the accent is adjusted for legibility on dark surfaces. */
+.app-shell[style] .topbar { border-bottom: 3px solid var(--team-primary); box-shadow: 0 1px 0 var(--team-secondary); }
+.app-shell[style] .home-club { border-left: 4px solid var(--team-primary); padding-left: 14px; }
+.app-shell[style] .primary { color: #172510; }
+.app-shell[style] .side-link.active, .app-shell[style] .mobile-nav button.active { color: var(--green); background: color-mix(in srgb,var(--green) 10%,transparent); }
+.app-shell[style] .next-fixture-card { background: linear-gradient(135deg,color-mix(in srgb,var(--team-primary) 20%,#17212d),#152130 75%); }
+.app-shell[style] .overall-badge { color: var(--green); border-color: color-mix(in srgb,var(--green) 50%,#263449); }
+.awards-panel h2 { display: flex; align-items: center; gap: 10px; }
+.award-grid, .club-record-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,280px),1fr)); gap: 16px; margin-top: 24px; }
+.award-card { min-width: 0; padding: 20px; border: 1px solid var(--line); border-radius: 18px; background: #101d2a; }
+.award-card > svg { color: #e5c16c; }
+.award-card h3 { margin: 12px 0 16px; }
+.premier-award { border-color: #a68943; background: linear-gradient(145deg,#3a3020,#14202e 75%); }
+.award-winner, .record-player { display: flex; align-items: center; gap: 12px; background: transparent; color: inherit; text-align: left; min-width: 0; padding: 8px 0; }
+.award-winner > span, .record-player > span { min-width: 0; overflow-wrap: anywhere; }
+.award-winner small, .record-player small { display: block; color: var(--muted); font-size: 13px; margin-top: 5px; }
+.award-winner strong, .record-player strong { font-size: 16px; }
+.award-winner .player-avatar, .record-player .player-avatar { width: 48px; height: 54px; flex-basis: 48px; }
+.award-card .small { margin: 14px 0; }
+.award-result { color: #f0d790; }
+.records-intro label { margin-top: 20px; }
+.record-row { display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--line); padding: 10px 0; }
+.record-row > .record-player { flex: 1; }
+.record-row > strong { font-size: 24px; font-variant-numeric: tabular-nums; flex-shrink: 0; }
+.record-list { margin-top: 12px; }
+.club-record > strong { display: block; font-size: 40px; margin: 14px 0; color: var(--green); }
+.club-record p, .club-record small { color: var(--muted); overflow-wrap: anywhere; }
+.offers-grid { grid-template-columns: repeat(auto-fit,minmax(min(100%,180px),1fr)); gap: 14px; }
+.offer-card { display: flex; flex-direction: column; min-width: 0; }
+.offer-card h2 { font-size: 20px; overflow-wrap: anywhere; }
+.offer-card > p { font-size: 14px; min-height: 42px; }
+.offer-card > .crest { width: 54px; height: 62px; flex-basis: 62px; margin-bottom: 14px; }
+.offer-stats { gap: 10px; margin: 14px 0; padding: 14px 0; }
+.offer-stats dd { font-size: 20px; }
+.offer-stats dt, .offer-stats small { font-size: 12px; }
+.offer-card > button { margin-top: auto; }
+@media(max-width: 600px){ .offers-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; } .offer-card { padding: 14px 10px; } .offer-card h2 { font-size: 16px; } .offer-card > button { padding: 9px; font-size: 14px; } .offer-card > button svg { display: none; } .offer-status { font-size: 11px; min-height: 32px; } }
+.coach-directory { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,230px),1fr)); gap: 12px; padding: 16px 0; }
+.coach-directory > div { display: flex; gap: 12px; align-items: center; min-width: 0; }
+.coach-directory small { display: block; color: var(--muted); margin-top: 4px; }
+.coach-directory strong { font-size: 14px; }
+.manager-style-options { margin-top: 28px; }
+.style-benefit { color: var(--green); border-left: 3px solid var(--green); padding: 12px 14px; margin: 16px 0; background: color-mix(in srgb,var(--green) 6%,transparent); line-height: 1.55; font-size: 14px; }

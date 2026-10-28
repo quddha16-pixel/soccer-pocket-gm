@@ -1,3 +1,6 @@
+import { coachedPattern, type ManagerStyle } from './managerStyles';
+import { researchedFreeAgents } from '../data/freeAgents';
+import { archiveSeasonReview } from './records';
 import { clubs, clubById, leagueClubs } from '../data/clubs';
 import { customStartingPlayers } from '../data/playerProfiles';
 import type { Career, Player, Reputation } from '../models';
@@ -11,11 +14,11 @@ import { repairLineup, eligiblePlayers } from './economy';
 import { initializeWorld } from './world';
 import { resolveMatch } from './match';
 export { score } from './scoring';
-export function offers(reputation:Reputation){return [...clubs].filter(c=>reputation==='unknown'?c.strength<=74:reputation==='established'?c.strength>=75&&c.strength<=81:c.strength>=82).sort((a,b)=>a.strength-b.strength).slice(0,4);}
-export function newCareer(manager:string,reputation:Reputation,clubId:string,seed=Date.now()):Career{
+export function offers(reputation:Reputation){return [...clubs].filter(c=>reputation==='unknown'?c.strength<=74:true).sort((a,b)=>a.strength-b.strength);}
+export function newCareer(manager:string,reputation:Reputation,clubId:string,seed=Date.now(),managerStyle?:ManagerStyle):Career{
  if(!offers(reputation).some(c=>c.id===clubId))throw Error('This club has not offered you a job.');
- const players=customStartingPlayers(),lineup=autoLineup(players,clubId,'4-3-3');
- return initializeWorld({version:3,manager:manager.trim()||'Alex Morgan',reputation,clubId,players,fixtures:generateFixtures(clubs.map(c=>c.id)),week:0,tactic:'balanced',status:'active',seed,formation:'4-3-3',lineup,starId:eligibleStars({players,lineup})[0].id,transferBudget:clubById(clubId).budget*1e6,statsStartWeek:1} as Career);
+ const custom=customStartingPlayers(),players=[...custom,...researchedFreeAgents(2026,custom)],lineup=autoLineup(players,clubId,'4-3-3');
+ return initializeWorld({version:3,managerStyle,geniusPlaystyle:managerStyle==='genius'?'positional':undefined,manager:manager.trim()||'Alex Morgan',reputation,clubId,players,fixtures:generateFixtures(clubs.map(c=>c.id)),week:0,tactic:'balanced',status:'active',seed,formation:'4-3-3',lineup,starId:eligibleStars({players,lineup})[0].id,transferBudget:clubById(clubId).budget*1e6,statsStartWeek:1} as Career);
 }
 export function strength(players:Player[],clubId:string){const squad=players.filter(p=>p.clubId===clubId).sort((a,b)=>b.overall-a.overall).slice(0,11);return squad.reduce((s,p)=>s+p.overall*(.85+.15*p.fitness/100)*(.95+.05*p.morale/100),0)/squad.length;}
 export function prepareWeek(c:Career,watch=true):Career{
@@ -30,10 +33,12 @@ export function commitWeek(c:Career,expectedWeek=c.pending?.week):Career{
  const week=c.pending.week,finished=new Map(c.pending.fixtures.map(f=>[f.id,f]));
  const fixtures=c.fixtures.map(f=>finished.get(f.id)??f),rng=random(c.seed+(c.world.season-2026)*3271+week*3571);
  const grown=developRound(c);
- const players=grown.map(p=>({...p,fitness:Math.min(100,Math.max(75,p.fitness+Math.floor(rng()*7)-3)),morale:Math.min(100,Math.max(25,p.morale+Math.floor(rng()*7)-3))}));
+ const played=new Set(c.pending.fixtures.flatMap(f=>f.report?.performances.map(p=>p.playerId)??[]));
+ const players=grown.map(p=>({...p,fitness:Math.min(100,Math.max(75,p.fitness+Math.floor(rng()*7)-3-(played.has(p.id)?coachedPattern(c,p.clubId).fitnessCost:0))),morale:Math.min(100,Math.max(25,p.morale+Math.floor(rng()*7)-3))}));
  const world={...c.world,chemistry:buildFamiliarity(c)};
  const updated={...c,world,fixtures,players,week,pending:undefined,status:week===38?(isRelegated(standings(leagueClubs(c),fixtures),c.clubId,true)?'fired' as const:'survived' as const):'active' as const};
- return repairLineup(aiTransfers(settleFinances(updated)));
+ const committed=repairLineup(aiTransfers(settleFinances(updated)));
+ return week===38?archiveSeasonReview(committed):committed;
 }
 // Headless quick simulation retains the original API for full-season tests and tooling.
 export function advance(c:Career):Career{const prepared=prepareWeek(c,false);return prepared.pending?commitWeek({...prepared,pending:{...prepared.pending,minute:90}}):prepared;}

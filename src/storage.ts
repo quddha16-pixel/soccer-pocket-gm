@@ -1,3 +1,4 @@
+import { managerStyles, geniusPlaystyles } from './simulation/managerStyles';
 import { encodeSave, decodeSave } from './simulation/codec';
 import { initializeWorld } from './simulation/world';
 import type { Career } from './models';
@@ -21,6 +22,8 @@ export function loadCareer():{career:Career|null;error:string}{
  if(!Array.isArray(currentIds)||currentIds.length!==20||new Set(currentIds).size!==20||currentIds.some(id=>!ids.has(id))||!currentIds.includes(c.clubId))throw Error();
  if(c.world?.championshipClubIds!==undefined){const pool=c.world.championshipClubIds;if(!Array.isArray(pool)||pool.length!==allClubs.length-20||new Set(pool).size!==pool.length||pool.some(id=>!ids.has(id)||currentIds.includes(id)))throw Error();}
  if((c.world?.leagueClubIds===undefined)!==(c.world?.championshipClubIds===undefined))throw Error();
+ if(c.managerStyle!==undefined&&!managerStyles.some(s=>s.id===c.managerStyle))throw Error();
+ if(c.geniusPlaystyle!==undefined&&(c.managerStyle!=='genius'||!geniusPlaystyles.some(s=>s.id===c.geniusPlaystyle)))throw Error();
  const expected=generateFixtures(currentIds);
  if(c.version!==3||!ids.has(c.clubId)||typeof c.manager!=='string'||!['unknown','established','elite'].includes(c.reputation)||!['balanced','attacking','defensive','feed-star'].includes(c.tactic)||!['active','survived','fired'].includes(c.status)||!Number.isInteger(c.week)||c.week<0||c.week>38||!Number.isFinite(c.seed)||!Array.isArray(c.fixtures)||c.fixtures.length!==380||!Array.isArray(c.players)||c.players.length<220)throw Error();
  if(c.fixtures.some((f,i)=>f.id!==expected[i].id||f.homeId!==expected[i].homeId||f.awayId!==expected[i].awayId||f.week!==expected[i].week||(f.week<=c.week? !Number.isInteger(f.homeGoals)||!Number.isInteger(f.awayGoals)||f.homeGoals!<0||f.awayGoals!<0:f.homeGoals!==undefined||f.awayGoals!==undefined)))throw Error();
