@@ -1,3 +1,5 @@
+import { copyLiveWorld } from './worldCopy';
+import { archiveBoxScores } from './boxScore';
 import { settleLegacySeason, startLegacySeason, legacyState } from './legacy';
 import { archiveSeasonReview } from './records';
 import type { Career, Player, Position } from '../models';
@@ -14,7 +16,7 @@ import { askingPrice, trainingExempt, financialSummary, finalizeSigning, payroll
 import { generateFixtures, standings } from './league';
 import { aiBidLimit, transferDecision, transferContext } from './transferPolicy';
 export function settleFinances(c:Career):Career{
- const world=structuredClone(c.world);world.date=weekDate(world.season,c.week);
+ const world=copyLiveWorld(c.world);world.date=weekDate(world.season,c.week);
  for(const club of leagueClubs(c)){const f=world.finances[club.id],w=payroll(c,club.id),income=f.revenue/38,expense=(w.players+w.staff)*52/38;const after=f.cash+income-expense;
  const debt=(f.debt??0)+Math.max(0,-after),repayment=Math.min(debt,Math.max(0,after));f.cash=Math.max(0,after)-repayment;f.debt=debt-repayment;f.paidPayroll+=expense;
  if(f.debt>0)f.budget=0;else f.budget=Math.min(f.budget,f.cash);
@@ -36,7 +38,7 @@ export function aiTransfers(c:Career):Career{
  const targets=result.players.filter(p=>p.clubId!==club.id&&p.clubId!==c.clubId&&!identity(p).retired&&p.position===weakest.position&&p.overall>weakest.rating+1).filter(p=>{const decision=transferDecision(temp,p,club.id,context),price=askingPrice(temp,p,decision);return decision.available&&price<budget*.6&&price<=aiBidLimit(temp,p,club.id,valuation(p));}).sort((a,b)=>(b.overall+(b.age<24?3:0))-(a.overall+(a.age<24?3:0)));
  const listed=result.players.filter(p=>p.clubId===c.clubId&&result.world.listed?.[p.id]!==undefined&&p.position===weakest.position&&p.overall>weakest.rating+1&&result.world.listed[p.id]<budget*.6&&result.world.listed[p.id]<=aiBidLimit(temp,p,club.id,valuation(p))&&transferDecision(temp,p).available).sort((a,b)=>b.overall-a.overall)[0];
  if(listed&&(!targets[0]||listed.overall>=targets[0].overall)&&!result.world.offers.some(o=>o.playerId===listed.id&&o.buyerId===club.id&&o.status==='incoming')){
-  const fee=Math.min(aiBidLimit(temp,listed,club.id,valuation(listed)),Math.round(result.world.listed![listed.id]*(.9+rng()*.15)/10000)*10000),world=structuredClone(result.world);
+  const fee=Math.min(aiBidLimit(temp,listed,club.id,valuation(listed)),Math.round(result.world.listed![listed.id]*(.9+rng()*.15)/10000)*10000),world=copyLiveWorld(result.world);
   world.offers.unshift({id:`incoming-${world.season}-${c.week}-${club.id}-${listed.id}`,playerId:listed.id,buyerId:club.id,sellerId:c.clubId,fee,asking:world.listed![listed.id],status:'incoming',message:'AI club submits a cash bid. You decide whether to accept; player terms and club budgets are checked on completion.',season:world.season,week:c.week,date:world.date});
   world.news.unshift({id:`bid-${world.season}-${c.week}-${club.id}-${listed.id}`,date:world.date,text:`${club.name} bids £${fee.toLocaleString()} for ${listed.name}.`});result={...result,world};continue;
  }
@@ -61,8 +63,8 @@ export function rolloverSeason(c:Career,nextClubId=c.clubId):Career{
  const clubs=managedClubs(c),current=leagueClubs(c),movement=promotionDraw(c);
  if(!movement.leagueClubIds.includes(nextClubId))throw Error('Choose a club that will be in next season’s Premier League.');
  const penalties=Object.fromEntries(clubs.map(club=>[club.id,Math.max(0,-financialSummary(c,club.id).headroom)*financeRules.excessPenaltyRate]));
- const world=structuredClone(c.world),oldSeason=world.season,season=oldSeason+1,table=standings(current,c.fixtures),rank=table.findIndex(r=>r.clubId===c.clubId)+1;
- world.history.push({season:oldSeason,clubId:c.clubId,position:rank,points:table[rank-1].points,leagueClubIds:current.map(club=>club.id),promoted:movement.promoted,relegated:movement.relegated,results:c.fixtures.map(({report,...result})=>result)});world.season=season;world.date=weekDate(season,0);world.leagueClubIds=movement.leagueClubIds;world.championshipClubIds=movement.championshipClubIds;
+ const world=copyLiveWorld(c.world),oldSeason=world.season,season=oldSeason+1,table=standings(current,c.fixtures),rank=table.findIndex(r=>r.clubId===c.clubId)+1;
+ world.history.push({season:oldSeason,boxScores:archiveBoxScores(c),clubId:c.clubId,position:rank,points:table[rank-1].points,leagueClubIds:current.map(club=>club.id),promoted:movement.promoted,relegated:movement.relegated,results:c.fixtures.map(({report,...result})=>result)});world.season=season;world.date=weekDate(season,0);world.leagueClubIds=movement.leagueClubIds;world.championshipClubIds=movement.championshipClubIds;
  let players:Player[]=c.players.map(p=>{
  const a=structuredClone(identity(p)),age=p.age+1;if(p.clubId&&p.age<21){const time=a.joinedSeason===oldSeason?Math.max(0,(38-a.joinedWeek)/38):1;a.trainingYears=Math.min(3,a.trainingYears+time);}a.development.history.push({season:oldSeason,week:38,overall:p.overall,minutes:a.development.minutes});a.development.history=a.development.history.filter((h,i,all)=>h.week===38||i>=all.length-12).slice(-36);a.development.minutes=0;a.development.seasonStart=p.overall;a.development.baseline={...a.attributes};a.injuryWeeks=0;a.bookValue=Math.max(0,a.bookValue-a.annualAmortization);
  let clubId=p.clubId,years=p.clubId?Math.max(0,Number(a.contractEnd.slice(0,4))-season):0;

@@ -1,3 +1,4 @@
+import { validArchivedBoxScore } from './simulation/boxScore';
 import { validAimedShot } from './simulation/shotGeometry';
 import { validLegacy, legacyState, settleLegacySeason } from './simulation/legacy';
 import { momentKinds } from './simulation/momentRules';
@@ -87,6 +88,8 @@ export function loadCareer():{career:Career|null;error:string}{
  if(c.world.offers.some(o=>!Number.isFinite(o.fee)||o.fee<0||!ids.has(o.buyerId)||(o.sellerId!==''&&!ids.has(o.sellerId))))throw Error();
  if(c.players.some(p=>!p.identity||!Number.isFinite(p.identity.appearanceSeed)||!Number.isFinite(p.identity.development.minutes)||Object.values(p.identity.attributes).some(n=>!Number.isFinite(n)||n<0||n>100)))throw Error();
  if((c.week===38)===(c.status==='active'))throw Error();
+ const playerIds=new Set(c.players.map(p=>p.id));
+ for(const h of c.world.history)if(h.boxScores!==undefined){if(!h.boxScores||typeof h.boxScores!=='object'||Array.isArray(h.boxScores)||!h.results||Object.keys(h.boxScores).length>380)throw Error();for(const [id,b] of Object.entries(h.boxScores)){const f=h.results.find(f=>f.id===id);if(!f||!validArchivedBoxScore(b,f,playerIds))throw Error();}}
  if(!validLegacy(c))throw Error();
  if(!c.legacy)c={...c,legacy:legacyState(c)};
  c=settleLegacySeason(c);

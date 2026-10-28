@@ -1,3 +1,4 @@
+import { copyLiveWorld } from './worldCopy';
 import { hasManagerStyle, minimumSigningBonus } from './managerStyles';
 import type { Career, Player } from '../models';
 import { leagueClubs, clubById } from '../data/clubs';
@@ -47,7 +48,7 @@ export function submitOffer(c:Career,playerId:string,fee:number):Career{
  const f=c.world.finances[c.clubId];if(fee>f.budget||fee>f.cash)throw Error('Transfer fee exceeds available funds.');
  const decision=transferDecision(c,p),asking=askingPrice(c,p,decision),status=!decision.available?'rejected':fee>=asking?'accepted':fee>=asking*.7?'countered':'rejected';
  const message=!decision.available?decision.reason:status==='accepted'?'Club agreement reached. Negotiate personal terms within two matchweeks; sporting circumstances are checked again before signing.':status==='countered'?`Seller counters at £${asking.toLocaleString()}. ${decision.reason}`:'Offer rejected: the selling club values this player more highly.';
- const world=structuredClone(c.world);world.offers=world.offers.filter(o=>!(o.playerId===p.id&&o.buyerId===c.clubId&&o.status!=='completed'));
+ const world=copyLiveWorld(c.world);world.offers=world.offers.filter(o=>!(o.playerId===p.id&&o.buyerId===c.clubId&&o.status!=='completed'));
  world.offers.unshift({id:`offer-${c.world.season}-${c.week}-${p.id}-${c.world.news.length}`,playerId:p.id,buyerId:c.clubId,sellerId:p.clubId,fee,asking,status,message,season:world.season,week:c.week,date:world.date});world.news.unshift({id:`news-${world.news.length}-${world.season}-${c.week}`,date:world.date,text:`${clubName(c.clubId)}: ${status} offer for ${p.name}. ${message}`});
  return {...c,world};
 }
@@ -70,7 +71,7 @@ export function finalizeSigning(c:Career,offerId:string,wage:number,years:number
  const fee=p.clubId?offer.fee:0,agentFee=fee*financeRules.agentFeeRate+bonus*.05,cost=fee+bonus+agentFee,f=c.world.finances[c.clubId],summary=financialSummary(c);
  if(cost>f.budget||cost>f.cash)throw Error('Fee, signing bonus and agent fees exceed available funds.');if(wage>summary.wageCapacity)throw Error('Weekly wage capacity would be exceeded.');
  if(summary.headroom<Math.max(0,wage*52+fee/years+agentFee+bonus))throw Error('This signing would exceed the configured 85% squad cost limit.');
- const world=structuredClone(c.world),oldClub=p.clubId;
+ const world=copyLiveWorld(c.world),oldClub=p.clubId;
  world.finances[c.clubId]={...f,cash:f.cash-cost,budget:f.budget-cost,spending:f.spending+fee,agentFees:f.agentFees+agentFee,bonuses:f.bonuses+bonus};
  if(oldClub){const seller=world.finances[oldClub];seller.cash+=fee;seller.budget+=fee*.75;seller.income+=fee;seller.saleProfit+=fee-identity(p).bookValue;world.registration[oldClub]=(world.registration[oldClub]??[]).filter(id=>id!==p.id);
   world.transferDepartures=[...(world.transferDepartures??[]).filter(d=>d.season===world.season),{season:world.season,window:transferWindow(c),sellerId:oldClub,playerId:p.id,starter:decision.starter}];
@@ -85,7 +86,7 @@ export function releasePlayer(c:Career,id:string):Career{
  if(c.pending||c.status!=='active')throw Error('Player changes are currently locked.');const p=c.players.find(p=>p.id===id);if(!p||p.clubId!==c.clubId)throw Error('Player is not at your club.');
  const squad=c.players.filter(p=>p.clubId===c.clubId);if(squad.length<=20||squad.filter(x=>x.position===p.position).length<=(p.position==='GK'?2:1))throw Error('Keep sufficient squad and positional depth before releasing this player.');
  const cost=Math.max(0,(Date.parse(identity(p).contractEnd)-Date.parse(c.world.date))/(7*864e5))*p.wage*.5,f=c.world.finances[c.clubId];if(cost>f.budget||cost>f.cash)throw Error('Insufficient funds to terminate the contract.');
- const world=structuredClone(c.world);world.finances[c.clubId]={...f,cash:f.cash-cost,budget:f.budget-cost,operatingCosts:f.operatingCosts+cost,saleProfit:f.saleProfit-identity(p).bookValue};world.registration[c.clubId]=world.registration[c.clubId].filter(x=>x!==id);world.news.unshift({id:`release-${id}-${world.news.length}`,date:world.date,text:`${p.name} released and joins the free-agent market.`});
+ const world=copyLiveWorld(c.world);world.finances[c.clubId]={...f,cash:f.cash-cost,budget:f.budget-cost,operatingCosts:f.operatingCosts+cost,saleProfit:f.saleProfit-identity(p).bookValue};world.registration[c.clubId]=world.registration[c.clubId].filter(x=>x!==id);world.news.unshift({id:`release-${id}-${world.news.length}`,date:world.date,text:`${p.name} released and joins the free-agent market.`});
  return repairLineup({...c,players:c.players.map(x=>x.id===id?{...x,clubId:'',contractYears:0,identity:{...identity(x),freeSince:world.date,contractEnd:world.date,bookValue:0,annualAmortization:0}}:x),world,transferBudget:world.finances[c.clubId].budget});
 }
 export function renewalWageDemand(c:Career,p:Player){const reference=Math.max(p.wage,identity(p).renewalBaseWage??p.real?.weeklyWageEstimate??p.wage);return Math.ceil(reference*(hasManagerStyle(c,'negotiator')?.95:1.05));}

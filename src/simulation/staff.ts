@@ -1,3 +1,4 @@
+import { copyLiveWorld } from './worldCopy';
 import managerReferences from '../../docs/research/managers-2026.json';
 import type { Career, Club } from '../models';
 import type { Staff, StaffRole } from '../worldModels';
@@ -28,7 +29,7 @@ export function hireStaff(c:Career,id:string,wage:number,years:number):Career{
  const f=c.world.finances[c.clubId];if(cost>f.cash||cost>f.budget)throw Error('Insufficient funds for compensation and replacement costs.');
  const payroll=c.world.staff.filter(s=>s.clubId===c.clubId&&s.id!==outgoing?.id&&s.id!==id).reduce((n,s)=>n+s.wage,0)+c.players.filter(p=>p.clubId===c.clubId).reduce((n,p)=>n+p.wage,0)+wage;
  if(payroll>f.wageCap)throw Error('Staff appointment would exceed the weekly wage capacity.');
- const world=structuredClone(c.world);world.finances[c.clubId]={...f,cash:f.cash-cost,budget:f.budget-cost,operatingCosts:f.operatingCosts+cost};
+ const world=copyLiveWorld(c.world);world.finances[c.clubId]={...f,cash:f.cash-cost,budget:f.budget-cost,operatingCosts:f.operatingCosts+cost};
  if(s.clubId&&s.clubId!==c.clubId)world.finances[s.clubId].cash+=compensation;
  world.staff=world.staff.map(p=>p.id===id?{...p,clubId:c.clubId,wage,contractEnd:`${world.season+years}-06-30`,appointedSeason:world.season,appointedWeek:c.week}:p.id===outgoing?.id?{...p,clubId:'',contractEnd:world.date}:p);
  world.news.unshift({id:`hire-${id}-${world.season}-${c.week}-${world.news.length}`,date:world.date,text:`${c.manager} appointed ${s.name} as ${s.role}. Compensation and termination: £${Math.round(cost).toLocaleString()}.`});
@@ -37,5 +38,5 @@ export function hireStaff(c:Career,id:string,wage:number,years:number):Career{
 export function releaseStaff(c:Career,id:string):Career{
  if(c.pending||c.status!=='active')throw Error('Staff changes are currently locked.');const s=c.world.staff.find(s=>s.id===id);if(!s||s.clubId!==c.clubId||s.role==='Manager')throw Error('This staff member cannot be released.');
  const cost=staffCompensation(s,c.world.date),f=c.world.finances[c.clubId];if(cost>f.cash||cost>f.budget)throw Error('Insufficient funds to terminate this contract.');
- const world=structuredClone(c.world);world.staff=world.staff.map(p=>p.id===id?{...p,clubId:'',contractEnd:world.date}:p);world.finances[c.clubId]={...f,cash:f.cash-cost,budget:f.budget-cost,operatingCosts:f.operatingCosts+cost};world.news.unshift({id:`release-staff-${id}-${world.news.length}`,date:world.date,text:`${s.name} released from ${s.role}.`});return {...c,world,transferBudget:world.finances[c.clubId].budget};
+ const world=copyLiveWorld(c.world);world.staff=world.staff.map(p=>p.id===id?{...p,clubId:'',contractEnd:world.date}:p);world.finances[c.clubId]={...f,cash:f.cash-cost,budget:f.budget-cost,operatingCosts:f.operatingCosts+cost};world.news.unshift({id:`release-staff-${id}-${world.news.length}`,date:world.date,text:`${s.name} released from ${s.role}.`});return {...c,world,transferBudget:world.finances[c.clubId].budget};
 }

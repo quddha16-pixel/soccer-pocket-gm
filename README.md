@@ -1,6 +1,12 @@
-# Pocket Football GM — v1.11
+# Pocket Football GM — v1.12
 
 Created By: Quentin Warminsky. A mobile-first football management game built with React, TypeScript and Vite in the existing `quddha16-pixel/soccer-pocket-gm` repository. No licensed club marks, photos, external portrait services or external fonts are used.
+
+## Match box scores (v1.12)
+
+Every finished game has a **Box score** button in the matchweek results and **League → Fixtures**. **View match box score** also opens your game at full time. Tap the corresponding club insignia at the top to switch teams; one team's players are shown at a time. The list shows minutes, goals, assists and ratings. Tap a player for shots, shots on target, chances created, saves, tackles, conceded goals and substitution intervals. Unused substitutes are clearly marked and have no rating.
+
+Compact box scores now survive season rollover, refresh and club changes. Existing current-season reports work immediately. Older score-only archives explicitly say individual stats are unavailable. No missing player stats are invented. [v1.12 implementation and validation](docs/v1.12-release.md).
 
 ## Drawn set pieces, depth chart and arrows (v1.11)
 
@@ -42,7 +48,7 @@ The authoritative project-owner-supplied 2026–27 list of 20 clubs lives in the
 
 Each season has 380 fixtures, 38 per club, with one home and one away match against every opponent. Standings sort by points, goal difference and goals scored; exact ties use club ID as a display fallback. Official head-to-head/play-off tiebreakers and the real fixture calendar are not implemented.
 
-Relegation dismisses the GM from that club; the same career can continue through a new contract. A surviving GM can stay or move. At each season rollover, the bottom three clubs enter a 24-club Championship pool and three distinct clubs are randomly drawn from the existing pool to replace them. A seeded draw survives reloads; newly relegated clubs cannot return in the same draw. Membership belongs to each save. This is a custom promotion rule; Championship fixtures and playoffs are not simulated. Previous fixture scores remain available through the Fixtures season selector. Current-season detailed reports are retained; old seasons archive compact scores and final user position/points, rather than full replay timelines.
+Relegation dismisses the GM from that club; the same career can continue through a new contract. A surviving GM can stay or move. At each season rollover, the bottom three clubs enter a 24-club Championship pool and three distinct clubs are randomly drawn from the existing pool to replace them. A seeded draw survives reloads; newly relegated clubs cannot return in the same draw. Membership belongs to each save. This is a custom promotion rule; Championship fixtures and playoffs are not simulated. Previous fixture scores remain available through the Fixtures season selector. Current-season detailed reports are retained; future season archives retain compact individual box scores as well as scores and final user position/points, rather than full replay timelines. Older score-only archives remain readable.
 
 ## Play and manage the club
 
