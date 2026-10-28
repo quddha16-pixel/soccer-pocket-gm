@@ -6,7 +6,7 @@ export type StatKey='goals'|'assists'|'saves'|'chances'|'shots'|'tackles'|'clean
 export const statLabels:Record<StatKey,string>={goals:'Goals',assists:'Assists',saves:'Saves',chances:'Chances created',shots:'Shots',tackles:'Tackles',cleanSheets:'Clean sheets',appearances:'Appearances',motm:'Player of the Match awards'};
 export interface GameBest { value:number;season:number;week:number;fixtureId:string;clubId:string;opponentId:string }
 export interface PlayerSeason extends Record<StatKey,number> {playerId:string;name:string;position:string;age:number;clubs:string[];ratingTotal:number;goalsConceded:number;best:Record<'goals'|'assists'|'saves'|'chances',GameBest|null>}
-export interface SeasonAward {id:string;title:string;winners:string[];reason:string;score:number}
+export interface SeasonAward {managerNames?:Record<string,string>;clubWinners?:string[];id:string;title:string;winners:string[];reason:string;score:number}
 export interface SeasonReview {season:number;complete:boolean;matches:number;reportedMatches:number;players:PlayerSeason[];awards:SeasonAward[]}
 const emptyBest=()=>({goals:null,assists:null,saves:null,chances:null});
 export const averageRating=(p:PlayerSeason)=>p.ratingTotal/Math.max(1,p.appearances);
@@ -52,6 +52,8 @@ function chooseAwards(c:Career,r:SeasonReview):SeasonAward[]{
  award('yashin','Yashin Trophy',keepers,p=>averageRating(p)*8+p.cleanSheets*1.5+(p.saves/Math.max(1,p.saves+p.goalsConceded))*30,'Regular goalkeeper performance, clean sheets and save percentage.');
  award('kopa','Kopa Trophy',regular.filter(p=>p.age<=21),score,'Best season by a player aged 21 or under at the start of the game season.');
  award('creator','Chance Creator of the Season',r.players,p=>p.chances,'Most recorded passes leading directly to a simulated shot, including assists. Ties share the award.',true);
+ const ranked=[...table].map((row,i)=>{const club=leagueClubs(c).find(t=>t.id===row.clubId)!;const expected=(c.legacy?.baseline.season===c.world.season?c.legacy.baseline.targets?.[club.id]??(club.id===c.clubId?c.legacy.baseline.target:undefined):undefined)??(club.strength>=85?1:club.strength>=80?4:club.strength>=75?10:17);return {clubId:club.id,score:(expected-i-1)*6+row.points*.35+(i===0?35:0),points:row.points};}).sort((a,b)=>b.score-a.score||b.points-a.points||a.clubId.localeCompare(b.clubId));
+ if(ranked.length)awards.push({id:'manager-season',title:'Manager of the Season',winners:[],clubWinners:[ranked[0].clubId],managerNames:{[ranked[0].clubId]:ranked[0].clubId===c.clubId?c.manager:c.world.staff.find(s=>s.clubId===ranked[0].clubId&&s.role==='Manager')?.name??'Management team'},score:Math.round(ranked[0].score*100)/100,reason:'League achievement and points relative to club stature. Awarded to the winning club’s management team.'});
  return awards;
 }
 export function completedReviews(c:Career):SeasonReview[]{return (c.world.seasonReviews??[]).filter(r=>r.season!==c.world.season);}

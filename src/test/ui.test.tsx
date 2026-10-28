@@ -28,12 +28,12 @@ it('creates a career, advances, displays results, persists, navigates, and reset
  await user.click(screen.getByRole('button',{name:'Main menu'}));await user.click(screen.getByRole('button',{name:/Start career/i}));await user.click(screen.getByRole('button',{name:'Start completely new career'}));
  expect(screen.getByRole('heading',{name:'Meet the manager.'})).toBeTruthy();expect(localStorage.getItem(SAVE_KEY)).toBeNull();
 },30000);
-it('shows Game Over for a relegated completed career',async()=>{
+it('shows dismissal and a route to continue a relegated GM’s legacy',async()=>{
  let c=newCareer('Test','unknown',offers('unknown')[0].id,1);for(let i=0;i<38;i++)c=advance(c);
  // Select a genuinely relegated club from the completed simulation, rather than forcing a result.
  const {standings}=await import('../simulation/league');const {clubs}=await import('../data/clubs');
  const {autoLineup,eligibleStars}=await import('../simulation/management');
  c={...c,clubId:standings(clubs,c.fixtures)[19].clubId,status:'fired'};
  c.lineup=autoLineup(c.players,c.clubId,c.formation);c.starId=eligibleStars(c)[0].id;saveCareer(c);
- render(<App/>);await userEvent.click(screen.getByRole('button',{name:/Continue career/i}));expect(screen.getByRole('heading',{name:/Game Over/})).toBeTruthy();expect(screen.queryByRole('button',{name:'Play Next Match'})).toBeNull();
+ render(<App/>);await userEvent.click(screen.getByRole('button',{name:/Continue career/i}));expect(screen.getByRole('heading',{name:/Relegated/})).toBeTruthy();expect(screen.queryByRole('button',{name:'Play Next Match'})).toBeNull();expect(screen.getByRole('button',{name:'Review jobs & poaching offers'})).toBeTruthy();
 },30000);

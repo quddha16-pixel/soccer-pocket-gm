@@ -110,7 +110,7 @@ describe('season awards and permanent career records',()=>{
   c.world.history=[{season:2025,position:1,points:6,results:[game(1,1,0),game(2,2,0)]}];r=clubRecords(c).find(r=>r.clubId===home)!;expect(r.wins).toBe(4);expect(r.unbeaten).toBe(5);
  });
  it('retains team results but never invents player statistics for legacy score-only archives',()=>{
-  const c=fixtureSeason();c.fixtures=c.fixtures.map(({report,...f})=>f);expect(seasonReview(c).players).toEqual([]);expect(seasonReview(c).awards).toEqual([]);expect(clubRecords(c).some(r=>r.goalsGame===3)).toBe(true);
+  const c=fixtureSeason();c.fixtures=c.fixtures.map(({report,...f})=>f);expect(seasonReview(c).players).toEqual([]);expect(seasonReview(c).awards.filter(a=>a.id!=='manager-season')).toEqual([]);expect(seasonReview(c).awards.find(a=>a.id==='manager-season')!.clubWinners).toHaveLength(1);expect(clubRecords(c).some(r=>r.goalsGame===3)).toBe(true);
  });
  it('makes awards and record categories browseable and keeps old seasons visible',()=>{
   const c=fixtureSeason();const ui=render(<SeasonAwards career={c} onProfile={()=>{}}/>);expect(screen.getByText('Ballon d’Or')).toBeTruthy();expect(screen.getByText('Golden Glove')).toBeTruthy();ui.unmount();

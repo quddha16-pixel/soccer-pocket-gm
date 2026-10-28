@@ -1,6 +1,18 @@
-# Pocket Football GM — v1.9
+# Pocket Football GM — v1.10
 
 Created By: Quentin Warminsky. A mobile-first football management game built with React, TypeScript and Vite in the existing `quddha16-pixel/soccer-pocket-gm` repository. No licensed club marks, photos, external portrait services or external fonts are used.
+
+## Legacy, achievements and GM contracts (v1.10)
+
+Open **Your legacy** on Home or **Club → Legacy & achievements**. Each GM career retains a season points ledger, permanent achievements, club tenures and an estimated one-season GM salary. Finish all 38 matchweeks to settle points once. The target is frozen from squad ability and club stature at season start; adoption of an older mid-season save is clearly labelled and uses the squad at adoption. Untracked earlier seasons receive no invented legacy awards.
+
+Titles, exceeding expectations and your club's award winners earn points. Relegation, missed expectations, compliance overspend and new debt deduct points. First titles at new clubs and rebuilding a survival-target/low-rated starting XI into champions receive larger bonuses. Manager of the Season joins the eight player awards; its archived name remains stable after a move. Player award credit requires at least half the winner's recorded appearances at your club. Shared winners pay once per award type.
+
+**Jobs & contracts** shows every club in the next Premier League, including the three promoted clubs. Only clubs making offers are highlighted. Successful seasons attract higher-paying poaching approaches; experienced and elite GMs may choose small clubs as well as favorites. Reputation expands cumulatively at 350/1,000 legacy points. Accept one job at the season boundary, or renew your current job. The confirmation advances the same world, retains club/player/financial histories, changes management control, and begins the new season. Relegated GMs can find a new club. Salary figures are game estimates stored in the GM career record, separate from the existing head-coach payroll; this release does not introduce a personal spending economy.
+
+Achievements include every award type, all award types across a career, an awards-night sweep, league titles, three title-winning clubs, an unbeaten season, 100 points, relegation, rebuilding, poaching, three clubs managed, and title checklists for all original 20 clubs and the full 44-club universe. Achievements do not pay repeatable points and remain unlocked after setbacks. They persist within this GM career; starting an entirely new career uses the existing explicit save replacement flow.
+
+Full scoring rules and validation: [v1.10 release notes](docs/v1.10-release.md). Existing key moments, substitutions, form suggestions, squads and saves remain supported.
 
 ## Run, test and build
 
@@ -22,14 +34,14 @@ The authoritative project-owner-supplied 2026–27 list of 20 clubs lives in the
 
 Each season has 380 fixtures, 38 per club, with one home and one away match against every opponent. Standings sort by points, goal difference and goals scored; exact ties use club ID as a display fallback. Official head-to-head/play-off tiebreakers and the real fixture calendar are not implemented.
 
-Relegation still ends the user’s career. A surviving manager can start the next season. At each surviving manager’s season rollover, the bottom three clubs enter a 24-club Championship pool and three distinct clubs are randomly drawn from the existing pool to replace them. A seeded draw survives reloads; newly relegated clubs cannot return in the same draw. Membership belongs to each save. This is a custom promotion rule; Championship fixtures and playoffs are not simulated. Previous fixture scores remain available through the Fixtures season selector. Current-season detailed reports are retained; old seasons archive compact scores and final user position/points, rather than full replay timelines.
+Relegation dismisses the GM from that club; the same career can continue through a new contract. A surviving GM can stay or move. At each season rollover, the bottom three clubs enter a 24-club Championship pool and three distinct clubs are randomly drawn from the existing pool to replace them. A seeded draw survives reloads; newly relegated clubs cannot return in the same draw. Membership belongs to each save. This is a custom promotion rule; Championship fixtures and playoffs are not simulated. Previous fixture scores remain available through the Fixtures season selector. Current-season detailed reports are retained; old seasons archive compact scores and final user position/points, rather than full replay timelines.
 
 ## Play and manage the club
 
 1. Start a career, choose reputation and one of three managerial specialties, then browse all 20 clubs. Unknown coaches receive six highlighted offers; Established and Elite coaches can choose any club, including smaller ones. Continue restores a saved career or pending matchday.
 2. **Home** shows your club, league position, points, recent form, next opponent and **Play Next Match**. Detailed season metrics and squad leaders are a secondary view.
 3. **Squad** contains Lineup, Players and Progress. Choose 4-3-3, 4-4-2 or 4-2-3-1; tap a starter, choose a replacement and confirm. Selecting another starter swaps slots. Toggle chemistry or open a complete profile. Match approach remains a separate screen.
-4. **Market** contains player/free-agent search, negotiations, incoming offers, history and shortlist. Search/filter opens a sheet; contract and scouting details expand on each card. **Club** links to Staff & contracts, Finances and performance. **League** contains Table, Fixtures, Stats, EFL pool, Awards and Records, including previous-season scores, head coaches and promotion/relegation changes.
+4. **Market** contains player/free-agent search, negotiations, incoming offers, history and shortlist. Search/filter opens a sheet; contract and scouting details expand on each card. **Club** links to Legacy & achievements, GM job offers, Staff & contracts, Finances and performance. **League** contains Table, Fixtures, Stats, EFL pool, Awards and Records, including previous-season scores, head coaches and promotion/relegation changes.
 5. Choose Balanced, Attack, Defensive or Feed Your Star. Ability, opposition, fitness, morale and chemistry still affect strength; no approach guarantees success.
 6. Play Next Match opens **Watch Match** or **Quick Sim**. Both resolve the same engine. Watch can pause/resume, use 1×/2×/4×, switch to text, expand the pitch, or skip to full time. Finish the matchweek to commit all ten matches, finances, familiarity and development once. Refresh, skipping and speed changes cannot reroll or duplicate this round.
 

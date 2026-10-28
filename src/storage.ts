@@ -1,3 +1,4 @@
+import { validLegacy, legacyState, settleLegacySeason } from './simulation/legacy';
 import { momentKinds } from './simulation/momentRules';
 import { fixtureLineup } from './simulation/substitutionRules';
 import { managerStyles, geniusPlaystyles } from './simulation/managerStyles';
@@ -84,6 +85,9 @@ export function loadCareer():{career:Career|null;error:string}{
  if(c.world.offers.some(o=>!Number.isFinite(o.fee)||o.fee<0||!ids.has(o.buyerId)||(o.sellerId!==''&&!ids.has(o.sellerId))))throw Error();
  if(c.players.some(p=>!p.identity||!Number.isFinite(p.identity.appearanceSeed)||!Number.isFinite(p.identity.development.minutes)||Object.values(p.identity.attributes).some(n=>!Number.isFinite(n)||n<0||n>100)))throw Error();
  if((c.week===38)===(c.status==='active'))throw Error();
+ if(!validLegacy(c))throw Error();
+ if(!c.legacy)c={...c,legacy:legacyState(c)};
+ c=settleLegacySeason(c);
  return {career:c,error:''};
  }catch{return {career:null,error:'Your saved career could not be loaded. Start a new career to replace it.'};}
 }
