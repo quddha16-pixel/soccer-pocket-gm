@@ -1,4 +1,4 @@
-# Pocket Football GM — v1.8
+# Pocket Football GM — v1.9
 
 Created By: Quentin Warminsky. A mobile-first football management game built with React, TypeScript and Vite in the existing `quddha16-pixel/soccer-pocket-gm` repository. No licensed club marks, photos, external portrait services or external fonts are used.
 
@@ -54,6 +54,14 @@ Natural positions retain all 15 detailed codes, mapped to the six legacy engine 
 Overall, identity, positions, preferred foot, summary skills and referenced PlayStyles come from dated EA team references. Detailed attributes, potential, development, contracts, values and wages are explicitly labelled game estimates. There is no claim that these are fully researched FC 27 subattributes. Rebuild with `python scripts/build-championship-pool.py`; selected facts and URLs are in `docs/research/championship-facts.json`. See [pool reconciliation and scope](docs/championship-pool.md).
 
 Existing saves adopt the pool at their next season rollover without replacing their current players or fixtures. Off-league clubs keep their accounts and squads; annual aging, contracts and existing youth replenishment continue. They do not receive simulated Championship matches, weekly performance development or weekly league revenue/payroll settlements. The existing future youth-intake system remains separate from the real first-entry squads.
+
+## v1.9: reuse substitutions and compare player form
+
+**Matchday → Reuse most recent subs** reapplies the most recent available plan in one tap. Up to five distinct recent plans retain player names, bench choices and substitution minutes. Completed matches are remembered automatically; the substitution sheet also offers **Save this plan for reuse**. Existing v1.7/v1.8 match reports can supply recent plans without a new career. Applying a plan rechecks the current XI, player ownership, injuries, registration, goalkeeper rules and substitution limits. Unavailable instructions are skipped visibly; a completely unusable plan leaves your current setup unchanged. Plans carry across season rollover, and reuse remains an explicit choice before kickoff.
+
+**Home → Player form** ranks your current squad's best three and lowest three by this season's recorded match ratings, weighted by minutes. Each row shows its average, appearances, minutes, whether the player is in the starting XI, and an evidence-based selection suggestion. Small samples are labelled; injuries, registration, fatigue and positional fit are considered before advice. Suitable, better-performing bench players can be suggested as starters, while a strong overall team is not told to drop its lowest-ranked players merely because they are relatively lower. Tap a player to inspect their profile or **Review starting XI** to make your own changes. Pending matches, unused players, departed players and performances for other clubs do not distort the report.
+
+The key-moment system remains active in Watch Match, alongside the v1.8 sticky substitution controls. See [v1.9 validation and save compatibility](docs/v1.9-release.md).
 
 ## v1.8: interactive key moments
 

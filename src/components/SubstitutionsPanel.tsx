@@ -1,5 +1,6 @@
 import { useId, useState } from 'react';
 import type { Career, Substitution } from '../models';
+import { previewSubstitutionPlan, recentSubstitutionPlans, reuseSubstitutionPlan, saveSubstitutionPlan, subPlanLabel } from '../simulation/recentSubs';
 import { Modal } from './Modal';
 import { PlayerAvatar } from './PlayerAvatar';
 import { eligiblePlayers } from '../simulation/economy';
@@ -18,14 +19,18 @@ export function SubstitutionsPanel({career:c,onUpdate,dialogOpen,onDialogOpenCha
  const outgoing=starting.map(id=>c.players.find(p=>p.id===id)!),offId=outgoing.some(p=>p.id===off)?off:outgoing.find(p=>p.position!=='GK')?.id??'';
  const out=c.players.find(p=>p.id===offId),incoming=bench.filter(id=>!used.has(id)).map(id=>c.players.find(p=>p.id===id)!).filter(p=>(p.position==='GK')===(out?.position==='GK')).sort((a,b)=>lineupFit(b,c.formation,starting.indexOf(offId))-lineupFit(a,c.formation,starting.indexOf(offId))||b.overall-a.overall);
  const onId=incoming.some(p=>p.id===on)?on:incoming[0]?.id??'';
+ const recent=live?[]:recentSubstitutionPlans(c),mostRecentAvailable=recent.find(plan=>previewSubstitutionPlan(c,plan.id).plan.changes.length>0);
  const name=(id:string)=>c.players.find(p=>p.id===id)?.name??id;
  function apply(fn:()=>Career,message=''){try{onUpdate(fn());setError('');setSuccess(message);}catch(e){setSuccess('');setError((e as Error).message);}}
+ function reuse(id:string){const preview=previewSubstitutionPlan(c,id);apply(()=>reuseSubstitutionPlan(c,id),`Applied ${preview.plan.changes.length} of ${preview.original.changes.length} changes from week ${preview.original.week}.${preview.skipped.length?' Unavailable changes were skipped; review your plan below.':''}`);}
  function show(){setError('');setSuccess('');setOpen(true);if(c.pending)onUpdate({...c,pending:{...c.pending,paused:true}});}
  function remove(s:Substitution){if(live)apply(()=>cancelPlannedSubstitution(c,changes.indexOf(s)));else apply(()=>setMatchPlan(c,{bench,changes:own.filter(x=>x!==s)}));}
  return <section className="subs-panel">
   <div className="section-heading"><h3>{live?'Substitutions':'Set your subs'}</h3><span className="tag">{live?`${own.filter(s=>s.minute<=now).length} / 5 used`:`${bench.length} / 9 bench`}</span></div>
   <button className="secondary full" disabled={live&&now>=90} onClick={show}>{live?'Make a substitution':'Set your subs'}</button>
   <p className="small muted">{live?'Pause the action and make a change. Changes affect the remaining match.':'Choose bench players and times before Quick Sim. Watch Match also supports live changes.'} Five changes · three windows · half-time is an extra window.</p>
+  {!live&&recent.length>0&&<div className="recent-subs"><button className="secondary full" disabled={c.status!=='active'||!mostRecentAvailable} onClick={()=>mostRecentAvailable&&reuse(mostRecentAvailable.id)}>Reuse most recent subs</button><details className="disclosure"><summary>Recent substitution plans · {recent.length}</summary>{recent.map(plan=>{const preview=previewSubstitutionPlan(c,plan.id);return <article className="recent-sub-plan" key={plan.id}><strong>{subPlanLabel(plan)}</strong><small>{plan.formation} · {preview.plan.changes.length} / {plan.changes.length} changes available</small>{plan.changes.map(s=><p key={s.onId}>{s.minute}′ · {name(s.onId)} on for {name(s.offId)}</p>)}{!!preview.skipped.length&&<p className="warning">{preview.skipped.length} change(s) unavailable with your current team.</p>}<button className="text-button full" disabled={!preview.plan.changes.length||c.status!=='active'} onClick={()=>reuse(plan.id)}>Use this plan</button></article>;})}</details></div>}
+  {success&&!open&&<p className="success-message" role="status">{success}</p>}
   {!!own.length&&<ol className="sub-instructions">{[...own].sort((a,b)=>a.minute-b.minute).map((s,i)=><li key={`${s.onId}-${i}`}><time>{s.minute}′</time><span><strong>{name(s.onId)} on</strong><small>{name(s.offId)} off · {live&&s.minute<=now?'Completed':'Scheduled'}</small></span>{(!live||s.minute>now)&&<button className="text-button" aria-label={`Cancel ${name(s.onId)} substitution`} onClick={()=>remove(s)}>Cancel</button>}</li>)}</ol>}
   {error&&!open&&<p className="error" role="alert">{error}</p>}
   {open&&<Modal title={live?(now===0?'Change kickoff lineup':`Make a substitution · ${now}′`):'Set your subs'} onClose={()=>setOpen(false)} closeLabel="Close substitutions" className="substitutions-modal" footer={<div className="sub-footer"><button className="primary full" form={formId} type="submit" disabled={!offId||!onId||(own.length>=5&&(!live||now>0))}>{live?(now===0?'Confirm lineup change':'Confirm substitution'):'Schedule substitution'}</button><button className="secondary full" onClick={()=>setOpen(false)}>Done</button></div>}>
@@ -40,6 +45,7 @@ export function SubstitutionsPanel({career:c,onUpdate,dialogOpen,onDialogOpenCha
     <label>Player on<select aria-label="Player on" value={onId} onChange={e=>setOn(e.target.value)}>{incoming.map(p=><option key={p.id} value={p.id}>{p.name} · {p.real?.primaryPosition??p.position} · {p.overall}</option>)}</select></label>
     {onId&&<p className={lineupFit(c.players.find(p=>p.id===onId)!,c.formation,starting.indexOf(offId))<.85?'warning':'small muted'}>Incoming player: {Math.round(lineupFit(c.players.find(p=>p.id===onId)!,c.formation,starting.indexOf(offId))*100)}% role effectiveness.</p>}<p className="small muted">Players keep the outgoing player’s position. Unfamiliar roles substantially reduce chance creation, defending and finishing.</p>
    </form>
+   {!live&&<button className="secondary full" disabled={!own.length} onClick={()=>apply(()=>saveSubstitutionPlan(c),'Substitution plan saved for reuse before future matches.')}>Save this plan for reuse</button>}
    <details className="disclosure"><summary>Browse bench · {bench.filter(id=>!used.has(id)).length} available</summary>   <div className="sub-bench">{bench.map(id=>{const p=c.players.find(p=>p.id===id)!;return <button type="button" key={id} disabled={used.has(id)||(p.position==='GK')!==(out?.position==='GK')} aria-pressed={onId===id} className={used.has(id)?'muted':''} onClick={()=>setOn(id)}><PlayerAvatar player={p}/><span>{p.name}<small>{p.real?.primaryPosition??p.position} · {p.overall}{used.has(id)?' · Used / scheduled':''}</small></span></button>;})}</div></details>
    <div className="sub-instructions">{own.map(s=><div key={s.onId}><strong>{s.minute}′ · {name(s.onId)} on</strong><small>{name(s.offId)} off</small>{(!live||s.minute>now)&&<button className="text-button" onClick={()=>remove(s)}>Cancel planned change</button>}</div>)}</div>
 

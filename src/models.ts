@@ -8,6 +8,7 @@ export interface MatchEvent { momentId?:string; id:string; minute:number; type:'
 export interface Performance { minutes?:number;entered?:number;exited?:number;conceded?:number; playerId:string; clubId:string; goals:number; assists:number; shots:number; saves:number; tackles:number; rating:number }
 export interface Substitution {clubId:string;offId:string;onId:string;minute:number}
 export interface MatchPlan {bench:string[];changes:Substitution[]}
+export interface SavedSubPlan extends MatchPlan {id:string;clubId:string;season:number;week:number;formation:Formation;source:'match'|'saved'}
 export type MomentKind='penalty'|'free-kick'|'corner'|'one-on-one'|'big-chance'|'cross';
 export type MomentOption=0|1|2;
 export type MomentOutcome='goal'|'saved'|'wide'|'blocked'|'intercepted';
@@ -19,4 +20,4 @@ export type Reputation = 'unknown'|'established'|'elite';
 export type Tactic = 'balanced'|'attacking'|'defensive'|'feed-star';
 export type Formation = '4-3-3'|'4-4-2'|'4-2-3-1';
 export interface PendingWeek {decisionMode?:'interactive'|'automatic';decisionFeedback?:string; week:number; fixtures:Fixture[]; minute:number; speed:1|2|4; paused:boolean }
-export interface Career {interactiveMoments?:boolean;matchPlan?:MatchPlan; managerStyle?:ManagerStyle;geniusPlaystyle?:GeniusPlaystyle; version:3; world:World; manager:string; reputation:Reputation; clubId:string; players:Player[]; fixtures:Fixture[]; week:number; tactic:Tactic; status:'active'|'survived'|'fired'; seed:number; formation:Formation; lineup:string[]; starId:string; transferBudget:number; statsStartWeek:number; pending?:PendingWeek }
+export interface Career {recentSubPlans?:SavedSubPlan[];interactiveMoments?:boolean;matchPlan?:MatchPlan; managerStyle?:ManagerStyle;geniusPlaystyle?:GeniusPlaystyle; version:3; world:World; manager:string; reputation:Reputation; clubId:string; players:Player[]; fixtures:Fixture[]; week:number; tactic:Tactic; status:'active'|'survived'|'fired'; seed:number; formation:Formation; lineup:string[]; starId:string; transferBudget:number; statsStartWeek:number; pending?:PendingWeek }

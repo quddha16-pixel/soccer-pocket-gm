@@ -12,6 +12,7 @@ import { developRound } from './development';
 import { aiTransfers, settleFinances } from './worldTick';
 import { repairLineup, eligiblePlayers } from './economy';
 import { initializeWorld } from './world';
+import { rememberCompletedSubstitutions } from './recentSubs';
 import { nextMatchPlan } from './substitutionRules';
 import { resolveMatch } from './match';
 export { score } from './scoring';
@@ -37,7 +38,7 @@ export function commitWeek(c:Career,expectedWeek=c.pending?.week):Career{
  const played=new Map(c.pending.fixtures.flatMap(f=>f.report?.performances.map(p=>[p.playerId,(p.minutes??90)/90] as const)??[]));
  const players=grown.map(p=>({...p,fitness:Math.min(100,Math.max(75,p.fitness+5+Math.floor(rng()*4)-(played.get(p.id)??0)*(10+coachedPattern(c,p.clubId).fitnessCost))),morale:Math.min(100,Math.max(25,p.morale+Math.floor(rng()*7)-3))}));
  const world={...c.world,chemistry:buildFamiliarity(c)};
- const updated={...c,world,fixtures,players,week,matchPlan:undefined,pending:undefined,status:week===38?(isRelegated(standings(leagueClubs(c),fixtures),c.clubId,true)?'fired' as const:'survived' as const):'active' as const};
+ const updated={...c,world,fixtures,players,week,recentSubPlans:rememberCompletedSubstitutions(c),matchPlan:undefined,pending:undefined,status:week===38?(isRelegated(standings(leagueClubs(c),fixtures),c.clubId,true)?'fired' as const:'survived' as const):'active' as const};
  const committed=repairLineup(aiTransfers(settleFinances(updated)));
  return week===38?archiveSeasonReview(committed):committed;
 }
