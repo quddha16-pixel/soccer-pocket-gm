@@ -20,8 +20,8 @@ export function seasonReview(c:Career):SeasonReview {
    let s=players.get(p.id);
    if(!s){s={playerId:p.id,name:p.name,position:p.position,age:p.age,clubs:[],ratingTotal:0,goalsConceded:0,goals:0,assists:0,saves:0,chances:0,shots:0,tackles:0,cleanSheets:0,appearances:0,motm:0,best:emptyBest()};players.set(p.id,s);}
    if(!s.clubs.includes(perf.clubId))s.clubs.push(perf.clubId);
-   const conceded=perf.clubId===f.homeId?f.awayGoals!:f.homeGoals!,chances=f.report.events.filter(e=>e.creatorId===p.id).length;
-   s.appearances++;s.goals+=perf.goals;s.assists+=perf.assists;s.saves+=perf.saves;s.shots+=perf.shots;s.tackles+=perf.tackles;s.chances+=chances;s.ratingTotal+=perf.rating;s.goalsConceded+=conceded;s.cleanSheets+=Number(conceded===0);s.motm+=Number(f.report.motmId===p.id);
+   const conceded=perf.conceded??(perf.clubId===f.homeId?f.awayGoals!:f.homeGoals!),chances=f.report.events.filter(e=>e.creatorId===p.id).length;
+   s.appearances++;s.goals+=perf.goals;s.assists+=perf.assists;s.saves+=perf.saves;s.shots+=perf.shots;s.tackles+=perf.tackles;s.chances+=chances;s.ratingTotal+=perf.rating;s.goalsConceded+=conceded;s.cleanSheets+=Number(conceded===0&&(perf.minutes??90)>=60);s.motm+=Number(f.report.motmId===p.id);
    for(const key of ['goals','assists','saves','chances'] as const){const value=key==='chances'?chances:perf[key];if(value>(s.best[key]?.value??0))s.best[key]={value,season:c.world.season,week:f.week,fixtureId:f.id,clubId:perf.clubId,opponentId:perf.clubId===f.homeId?f.awayId:f.homeId};}
   }
  }

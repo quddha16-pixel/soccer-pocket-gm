@@ -36,5 +36,5 @@ export function developPlayer(p:Player,c:Career,minutes:number,rating:number,opp
 }
 export function developRound(c:Career){
  const performances=new Map((c.pending?.fixtures??[]).flatMap(f=>f.report?.performances.map(p=>[p.playerId,{performance:p,opposition:c.players.filter(x=>x.clubId===(p.clubId===f.homeId?f.awayId:f.homeId)).reduce((s,x)=>s+x.overall,0)/Math.max(1,c.players.filter(x=>x.clubId===(p.clubId===f.homeId?f.awayId:f.homeId)).length)}] as const)??[]));
- return c.players.map(p=>{const perf=performances.get(p.id);return developPlayer(p,c,perf?90:0,perf?.performance.rating??6.3,perf?.opposition??70);});
+ return c.players.map(p=>{const perf=performances.get(p.id);return developPlayer(p,c,perf?(perf.performance.minutes??90):0,perf?.performance.rating??6.3,perf?.opposition??70);});
 }

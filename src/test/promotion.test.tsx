@@ -9,6 +9,7 @@ import { advance, newCareer } from '../simulation/career';
 import { promotionDraw } from '../simulation/promotion';
 import { generateFixtures, standings } from '../simulation/league';
 import { rolloverSeason } from '../simulation/worldTick';
+import { transferDecision } from '../simulation/transferPolicy';
 import { eligiblePlayers, askingPrice, submitOffer, wageDemand, finalizeSigning } from '../simulation/economy';
 import { autoLineup, validLineup } from '../simulation/management';
 import { dashboard } from '../simulation/dashboard';
@@ -120,7 +121,7 @@ describe('season rollover integrates promoted clubs',()=>{
  });
  it('supports an actual transfer from a promoted club using its initialized accounts',()=>{
   const c=rolloverSeason(completedSeason(fresh())),promoted=c.world.history[0].promoted!;
-  const p=c.players.find(p=>promoted.includes(p.clubId)&&p.age<=21&&p.overall<=72&&askingPrice(c,p)<10e6)!;expect(p).toBeTruthy();
+  const p=c.players.find(p=>promoted.includes(p.clubId)&&p.age<=21&&p.overall<=72&&transferDecision(c,p).available&&askingPrice(c,p)<10e6)!;expect(p).toBeTruthy();
   const offered=submitOffer(c,p.id,askingPrice(c,p)),o=offered.world.offers[0],w=wageDemand(offered,p),signed=finalizeSigning(offered,o.id,w,3,w*5);
   expect(signed.players.find(x=>x.id===p.id)!.clubId).toBe(c.clubId);expect(signed.world.finances[p.clubId].income).toBe(o.fee);
  });

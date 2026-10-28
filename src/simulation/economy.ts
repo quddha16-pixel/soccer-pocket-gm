@@ -1,10 +1,11 @@
 import { hasManagerStyle, minimumSigningBonus } from './managerStyles';
 import type { Career, Player } from '../models';
 import { leagueClubs, clubById } from '../data/clubs';
-import { financeRules, inWindow, seasonRules } from '../data/rules';
+import { financeRules, inWindow, seasonRules, weekDate } from '../data/rules';
 import { identity } from './identity';
 import { valuation, autoLineup, eligibleStars, validLineup } from './management';
 import { standings } from './league';
+import { aiBidLimit, transferDecision, transferWindow } from './transferPolicy';
 export function clubName(id:string){return id?clubById(id)?.name??id:'Free agent';}
 export function under21(p:Player,season:number){return identity(p).birthDate>=seasonRules(season).u21Cutoff;}
 // Unknown training histories are never asserted as homegrown. Custom starting
@@ -32,10 +33,11 @@ export function canRegister(c:Career,p:Player,clubId:string){
 export function canSignNow(c:Career,p:Player){if(inWindow(c.world.date,c.world.season))return true;if(p.clubId)return false;
  const r=seasonRules(c.world.season),deadline=c.world.date>r.winter.close?r.winter.close:r.summer.close;return !!identity(p).freeSince&&identity(p).freeSince!<=deadline;
 }
-export function askingPrice(c:Career,p:Player){
- if(!p.clubId)return 0;const peers=c.players.filter(x=>x.clubId===p.clubId).sort((a,b)=>b.overall-a.overall),star=peers.slice(0,3).some(x=>x.id===p.id),depth=peers.filter(x=>x.position===p.position).length;
+export function askingPrice(c:Career,p:Player,decision=transferDecision(c,p)){
+ if(!p.clubId)return 0;
+ if(c.world.listed?.[p.id]!==undefined)return c.world.listed[p.id];
  const contract=Math.max(.7,Math.min(1.2,p.contractYears/3)),rich=c.world.finances[p.clubId].cash>70e6?1.12:1;
- return Math.round(valuation(p)*(star?1.65:1.12)*contract*rich*(depth<=2?1.2:1)*(p.clubId!==c.clubId&&hasManagerStyle(c,'negotiator')?.9:1)/10000)*10000;
+ return Math.round(valuation(p)*decision.multiplier*contract*rich*(p.clubId!==c.clubId&&hasManagerStyle(c,'negotiator')?.9:1)/10000)*10000;
 }
 export function submitOffer(c:Career,playerId:string,fee:number):Career{
  if(c.pending||c.status!=='active')throw Error('Transfers are locked during a resolved match or ended career.');
@@ -43,10 +45,10 @@ export function submitOffer(c:Career,playerId:string,fee:number):Career{
  if(!Number.isFinite(fee)||fee<0)throw Error('Enter a valid transfer fee.');if(!canSignNow(c,p))throw Error('The transfer/registration window is closed for this player.');
  const blocked=canRegister(c,p,c.clubId);if(blocked)throw Error(blocked);
  const f=c.world.finances[c.clubId];if(fee>f.budget||fee>f.cash)throw Error('Transfer fee exceeds available funds.');
- const asking=askingPrice(c,p),status=fee>=asking?'accepted':fee>=asking*.7?'countered':'rejected';
- const message=status==='accepted'?'Club agreement reached. Negotiate personal terms.':status==='countered'?`Seller counters at £${asking.toLocaleString()}. Submit that fee to agree.`:'Offer rejected: the selling club values this player more highly.';
+ const decision=transferDecision(c,p),asking=askingPrice(c,p,decision),status=!decision.available?'rejected':fee>=asking?'accepted':fee>=asking*.7?'countered':'rejected';
+ const message=!decision.available?decision.reason:status==='accepted'?'Club agreement reached. Negotiate personal terms within two matchweeks; sporting circumstances are checked again before signing.':status==='countered'?`Seller counters at £${asking.toLocaleString()}. ${decision.reason}`:'Offer rejected: the selling club values this player more highly.';
  const world=structuredClone(c.world);world.offers=world.offers.filter(o=>!(o.playerId===p.id&&o.buyerId===c.clubId&&o.status!=='completed'));
- world.offers.unshift({id:`offer-${c.world.season}-${c.week}-${p.id}-${c.world.news.length}`,playerId:p.id,buyerId:c.clubId,sellerId:p.clubId,fee,asking,status,message,season:world.season,week:c.week});world.news.unshift({id:`news-${world.news.length}-${world.season}-${c.week}`,date:world.date,text:`${clubName(c.clubId)}: ${status} offer for ${p.name}. ${message}`});
+ world.offers.unshift({id:`offer-${c.world.season}-${c.week}-${p.id}-${c.world.news.length}`,playerId:p.id,buyerId:c.clubId,sellerId:p.clubId,fee,asking,status,message,season:world.season,week:c.week,date:world.date});world.news.unshift({id:`news-${world.news.length}-${world.season}-${c.week}`,date:world.date,text:`${clubName(c.clubId)}: ${status} offer for ${p.name}. ${message}`});
  return {...c,world};
 }
 export function wageDemand(c:Career,p:Player,buyer=c.clubId){const quality=clubById(buyer).strength,rank=standings(leagueClubs(c),c.fixtures).findIndex(r=>r.clubId===buyer)+1,ambition=p.overall>quality+4?(hasManagerStyle(c,'negotiator',buyer)?1.2:1.65):1.12,competition=p.potential>=87?1.12:1;
@@ -56,18 +58,26 @@ export function finalizeSigning(c:Career,offerId:string,wage:number,years:number
  if(c.pending||c.status!=='active')throw Error('Transfer changes are currently locked.');
  const offer=c.world.offers.find(o=>o.id===offerId),p=c.players.find(p=>p.id===offer?.playerId);
  if(!offer||!p||!Number.isFinite(offer.fee)||offer.fee<0||offer.buyerId===offer.sellerId||offer.status!=='accepted'||offer.buyerId!==c.clubId||p.clubId!==offer.sellerId)throw Error('This offer is no longer available.');
+ if(offer.season!==c.world.season||c.week<offer.week||c.week-offer.week>2||transferWindow(c)!==((offer.date??weekDate(offer.season,offer.week))>=seasonRules(offer.season).winter.open?'winter':'summer'))throw Error('This club agreement has expired. Submit a fresh offer.');
  if(!Number.isFinite(wage)||!Number.isFinite(bonus)||wage<0||bonus<0||!Number.isInteger(years)||years<1||years>5)throw Error('Use valid wages, bonuses and 1–5 contract years.');
  if(!canSignNow(c,p))throw Error('The signing window has closed.');const problem=canRegister(c,p,c.clubId);if(problem)throw Error(problem);
  if(wage<wageDemand(c,p)||bonus<minimumSigningBonus(c,wage)||(p.age>=32&&years<2)||(p.overall>clubById(c.clubId).strength+10&&c.reputation==='unknown'&&!hasManagerStyle(c,'negotiator')))throw Error('Player rejected the personal terms: ambition, wages, bonus or contract security is insufficient.');
- if(p.clubId){const squad=c.players.filter(x=>x.clubId===p.clubId),similar=squad.filter(x=>x.position===p.position);if(squad.length<=20||similar.length<=(p.position==='GK'?2:1))throw Error('Seller withdrew: insufficient squad cover.');}
+ const decision=transferDecision(c,p);
+ if(!decision.available)throw Error(`Seller withdrew. ${decision.reason}`);
+ const controlledSeller=c.world.staff.some(s=>s.controlled&&s.clubId===p.clubId),controlledBuyer=c.world.staff.some(s=>s.controlled&&s.clubId===c.clubId);
+ if(p.clubId&&!(controlledSeller&&c.world.listed?.[p.id]!==undefined)&&offer.fee<askingPrice(c,p,decision))throw Error('Seller withdrew: circumstances changed and the fee no longer meets the club demand. Submit a fresh offer.');
+ if(!controlledBuyer&&offer.fee>aiBidLimit(c,p,c.clubId,valuation(p)))throw Error('Buyer withdrew: the fee exceeds its sporting valuation.');
  const fee=p.clubId?offer.fee:0,agentFee=fee*financeRules.agentFeeRate+bonus*.05,cost=fee+bonus+agentFee,f=c.world.finances[c.clubId],summary=financialSummary(c);
  if(cost>f.budget||cost>f.cash)throw Error('Fee, signing bonus and agent fees exceed available funds.');if(wage>summary.wageCapacity)throw Error('Weekly wage capacity would be exceeded.');
  if(summary.headroom<Math.max(0,wage*52+fee/years+agentFee+bonus))throw Error('This signing would exceed the configured 85% squad cost limit.');
  const world=structuredClone(c.world),oldClub=p.clubId;
  world.finances[c.clubId]={...f,cash:f.cash-cost,budget:f.budget-cost,spending:f.spending+fee,agentFees:f.agentFees+agentFee,bonuses:f.bonuses+bonus};
- if(oldClub){const seller=world.finances[oldClub];seller.cash+=fee;seller.budget+=fee*.75;seller.income+=fee;seller.saleProfit+=fee-identity(p).bookValue;world.registration[oldClub]=(world.registration[oldClub]??[]).filter(id=>id!==p.id);}
+ if(oldClub){const seller=world.finances[oldClub];seller.cash+=fee;seller.budget+=fee*.75;seller.income+=fee;seller.saleProfit+=fee-identity(p).bookValue;world.registration[oldClub]=(world.registration[oldClub]??[]).filter(id=>id!==p.id);
+  world.transferDepartures=[...(world.transferDepartures??[]).filter(d=>d.season===world.season),{season:world.season,window:transferWindow(c),sellerId:oldClub,playerId:p.id,starter:decision.starter}];
+ }
+ if(world.listed){delete world.listed[p.id];}
  world.registration[c.clubId]=[...(world.registration[c.clubId]??[]),p.id];for(const key of Object.keys(world.chemistry.familiarity))if(key.startsWith(p.id+':'))world.chemistry.familiarity[key]*=.3;
- const players=c.players.map(x=>x.id===p.id?{...x,clubId:c.clubId,wage,contractYears:years,identity:{...identity(x),contractEnd:`${world.season+years}-06-30`,renewalBaseWage:wage,signingBonus:bonus,bookValue:fee,annualAmortization:fee/years,joinedSeason:world.season,joinedWeek:c.week,freeSince:undefined}}:x);
+ const players=c.players.map(x=>x.id===p.id?{...x,clubId:c.clubId,wage,contractYears:years,identity:{...identity(x),contractEnd:`${world.season+years}-06-30`,transferArrival:{season:world.season,week:c.week},renewalBaseWage:wage,signingBonus:bonus,bookValue:fee,annualAmortization:fee/years,joinedSeason:world.season,joinedWeek:c.week,freeSince:undefined}}:x);
  world.offers=world.offers.map(o=>o.id===offerId?{...o,status:'completed'}:o);world.news.unshift({id:`signed-${offerId}`,date:world.date,text:`${clubName(c.clubId)} signed ${p.name} from ${clubName(oldClub)} for £${fee.toLocaleString()}.`});
  return {...c,players,world,transferBudget:world.finances[c.clubId].budget};
 }

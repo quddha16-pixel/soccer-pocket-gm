@@ -18,17 +18,19 @@ export const coordinates:Record<Formation,number[][]>={
  '4-4-2':[[50,89],[14,71],[38,73],[62,73],[86,71],[13,43],[38,47],[62,47],[87,43],[32,19],[68,19]],
  '4-2-3-1':[[50,89],[14,72],[38,74],[62,74],[86,72],[33,56],[67,56],[16,32],[50,35],[84,32],[50,15]]
 };
-export function positionFit(p:Position,slot:Position){return p===slot?1:(['WG','ST','CM'].includes(p)&&['WG','ST','CM'].includes(slot))||(['FB','CB'].includes(p)&&['FB','CB'].includes(slot))?.94:.72;}
+export function positionFit(p:Position,slot:Position){return p===slot?1:p==='GK'||slot==='GK'?.15:(['WG','ST','CM'].includes(p)&&['WG','ST','CM'].includes(slot))||(['FB','CB'].includes(p)&&['FB','CB'].includes(slot))?.78:.4;}
 export function naturalFit(player:Player,position:NaturalPosition){
  if(!player.real)return positionFit(player.position,coarsePosition(position));
  const p=player.real;if(p.primaryPosition===position)return 1;
  if(p.secondaryPositions.includes(position))return .98;
- if(p.primaryPosition==='GK'||position==='GK')return .2;
+ if(p.primaryPosition==='GK'||position==='GK')return .15;
  const adjacent:NaturalPosition[][]=[['LB','LWB'],['RB','RWB'],['LW','LM'],['RW','RM'],['ST','CF'],['CDM','CM'],['CM','CAM']];
- if(adjacent.some(group=>group.includes(position)&&[p.primaryPosition,...p.secondaryPositions].some(pos=>group.includes(pos))))return .94;
- return coarsePosition(position)===player.position?.84:.7;
+ if(adjacent.some(group=>group.includes(position)&&[p.primaryPosition,...p.secondaryPositions].some(pos=>group.includes(pos))))return .88;
+ if(coarsePosition(position)===player.position)return .72;
+ const attacking=['CM','WG','ST'];return attacking.includes(coarsePosition(position))&&attacking.includes(player.position)?.6:.4;
 }
 export const lineupFit=(p:Player,formation:Formation,index:number)=>naturalFit(p,naturalSlots[formation][index]);
+export const positionStatus=(fit:number)=>fit>=.97?'Natural / secondary':fit>=.85?'Related role':fit>=.7?'Unfamiliar role':'Out of position';
 export function autoLineup(players:Player[],clubId:string,formation:Formation){
  const available=players.filter(p=>p.clubId===clubId&&!(p.identity?.injuryWeeks));return slots[formation].map((slot,index)=>{const candidates=available.filter(p=>slot==='GK'?p.position==='GK':p.position!=='GK').sort((a,b)=>b.overall*lineupFit(b,formation,index)-a.overall*lineupFit(a,formation,index)||a.id.localeCompare(b.id));const chosen=candidates[0];if(!chosen)throw Error('Insufficient players for a valid lineup.');available.splice(available.indexOf(chosen),1);return chosen.id;});
 }

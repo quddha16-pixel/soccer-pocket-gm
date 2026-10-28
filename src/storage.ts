@@ -1,3 +1,4 @@
+import { fixtureLineup } from './simulation/substitutionRules';
 import { managerStyles, geniusPlaystyles } from './simulation/managerStyles';
 import { encodeSave, decodeSave } from './simulation/codec';
 import { initializeWorld } from './simulation/world';
@@ -19,6 +20,7 @@ export function loadCareer():{career:Career|null;error:string}{
  const progressRaw=localStorage.getItem(`${SAVE_KEY}-playback`);
  if(progressRaw&&c.pending){try{const progress=JSON.parse(progressRaw);if(progress.seed===c.seed&&progress.season===c.world.season&&progress.week===c.pending.week)c.pending={...c.pending,minute:progress.minute,speed:progress.speed,paused:progress.paused};}catch{/* The authoritative snapshot remains available. */}}
  const ids=new Set(allClubs.map(x=>x.id)),currentIds=c.world?.leagueClubIds??clubs.map(club=>club.id);
+ if(c.matchPlan!==undefined){const plan=c.matchPlan,players=new Set(c.players.map(p=>p.id));if(!plan||!Array.isArray(plan.bench)||plan.bench.length>9||new Set(plan.bench).size!==plan.bench.length||plan.bench.some(id=>!players.has(id))||!Array.isArray(plan.changes)||plan.changes.length>5||plan.changes.some(s=>s.clubId!==c.clubId||!players.has(s.offId)||!players.has(s.onId)||!Number.isInteger(s.minute)||s.minute<1||s.minute>89))throw Error();}
  if(!Array.isArray(currentIds)||currentIds.length!==20||new Set(currentIds).size!==20||currentIds.some(id=>!ids.has(id))||!currentIds.includes(c.clubId))throw Error();
  if(c.world?.championshipClubIds!==undefined){const pool=c.world.championshipClubIds;if(!Array.isArray(pool)||pool.length!==allClubs.length-20||new Set(pool).size!==pool.length||pool.some(id=>!ids.has(id)||currentIds.includes(id)))throw Error();}
  if((c.world?.leagueClubIds===undefined)!==(c.world?.championshipClubIds===undefined))throw Error();
@@ -37,8 +39,23 @@ export function loadCareer():{career:Career|null;error:string}{
  }
  for(const f of [...c.fixtures,...(c.pending?.fixtures??[])])if(f.report){
   const r=f.report,ids=new Set(c.players.map(p=>p.id));
-  if(!Array.isArray(r.events)||!Array.isArray(r.performances)||r.performances.length!==22||new Set(r.performances.map(p=>p.playerId)).size!==22||!r.performances.some(p=>p.playerId===r.motmId)||!Number.isFinite(r.homePossession)||r.homePossession<0||r.homePossession>100)throw Error();
+  if(r.simulationSeed!==undefined&&(!Number.isInteger(r.simulationSeed)||r.simulationSeed<0||r.simulationSeed>4294967295))throw Error();
+  if(!Array.isArray(r.events)||!Array.isArray(r.performances)||(r.performances.length<22||r.performances.length>32)||new Set(r.performances.map(p=>p.playerId)).size!==r.performances.length||!r.performances.some(p=>p.playerId===r.motmId)||!Number.isFinite(r.homePossession)||r.homePossession<0||r.homePossession>100)throw Error();
   if(r.events.some(e=>!ids.has(e.playerId)||(e.assistId&&!ids.has(e.assistId))||(e.creatorId&&!ids.has(e.creatorId))||![f.homeId,f.awayId].includes(e.clubId)||!Number.isInteger(e.minute)||e.minute<1||e.minute>90||!['goal','shot'].includes(e.type)))throw Error();
+  if(r.substitutions!==undefined){
+   if(!Array.isArray(r.substitutions)||r.substitutions.some(s=>![f.homeId,f.awayId].includes(s.clubId)))throw Error();
+   for(const clubId of [f.homeId,f.awayId]){
+    const start=clubId===f.homeId?r.homeLineup:r.awayLineup,bench=clubId===f.homeId?r.homeBench:r.awayBench,changes=r.substitutions.filter(s=>s.clubId===clubId);
+    if(!start||start.length!==11||new Set(start).size!==11||!bench||bench.length>9||new Set(bench).size!==bench.length||bench.some(id=>!ids.has(id)||start.includes(id))||changes.length>5||new Set(changes.filter(s=>s.minute!==45).map(s=>s.minute)).size>3)throw Error();
+    const active=[...start],used=new Set(start);
+    for(const s of [...changes].sort((a,b)=>a.minute-b.minute)){
+     const index=active.indexOf(s.offId);if(!Number.isInteger(s.minute)||s.minute<1||s.minute>89||index<0||!bench.includes(s.onId)||used.has(s.onId)||(index===0)!==(c.players.find(p=>p.id===s.onId)?.position==='GK'))throw Error();active[index]=s.onId;used.add(s.onId);
+    }
+    for(const perf of r.performances.filter(p=>p.clubId===clubId)){const entered=changes.find(s=>s.onId===perf.playerId)?.minute??0,exited=changes.find(s=>s.offId===perf.playerId)?.minute??90;if(!used.has(perf.playerId)||perf.minutes!==exited-entered||perf.entered!==entered||perf.exited!==exited)throw Error();}
+    if(r.performances.filter(p=>p.clubId===clubId).reduce((s,p)=>s+(p.minutes??90),0)!==990)throw Error();
+   }
+   if(r.events.some(e=>!fixtureLineup(f,e.clubId,e.minute-1).includes(e.playerId)||(e.creatorId&&!fixtureLineup(f,e.clubId,e.minute-1).includes(e.creatorId))||(e.assistId&&!fixtureLineup(f,e.clubId,e.minute-1).includes(e.assistId))))throw Error();
+  }
   if(r.events.filter(e=>e.type==='goal'&&e.clubId===f.homeId).length!==f.homeGoals||r.events.filter(e=>e.type==='goal'&&e.clubId===f.awayId).length!==f.awayGoals||r.performances.some(p=>!ids.has(p.playerId)||!Number.isFinite(p.rating)))throw Error();
  }
  if(!c.world||!Number.isInteger(c.world.season)||c.world.season<2026||!/^\d{4}-\d{2}-\d{2}$/.test(c.world.date)||!c.world.chemistry||!Array.isArray(c.world.staff)||!Array.isArray(c.world.offers))throw Error();

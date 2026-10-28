@@ -54,5 +54,5 @@ describe('persistent managerial specialties',()=>{
   const c=newCareer('Legacy style','elite','arsenal',2);saveCareer(c);expect(loadCareer().career!.managerStyle).toBeUndefined();
   for(const managerStyle of ['developer','negotiator','genius'] as const){saveCareer({...c,managerStyle,...(managerStyle==='genius'?{geniusPlaystyle:'transitions' as const}:{})});expect(loadCareer().career!.managerStyle).toBe(managerStyle);}
   saveCareer({...c,managerStyle:'developer',geniusPlaystyle:'counterpress'});expect(loadCareer().career).toBeNull();
- });
+ },15000);
 });

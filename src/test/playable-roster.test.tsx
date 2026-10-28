@@ -1,3 +1,4 @@
+import {releaseReserve} from './careerFixtures';
 import { afterEach, describe, expect, it } from 'vitest';
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { customRosterDraft } from '../data/customRoster';
@@ -132,11 +133,11 @@ describe('careers, transfers and mobile profile protection',()=>{
   const old=legacyCareer();expect(old.world.customRoster).toBeUndefined();
  });
  it('supports a genuine cash transfer of a researched player without losing his identity or profile',()=>{
-  const c=newCareer('Test','unknown','sunderland',27),p=c.players.find(p=>p.name==='Giovanni Leoni')!;
+  const c=releaseReserve(newCareer('Test','elite','chelsea',27)),p=c.players.find(p=>p.name==='Giovanni Leoni')!;
   const offered=submitOffer(c,p.id,3_000_000),offer=offered.world.offers[0];
   const accepted=offer.status==='accepted'?offered:submitOffer(c,p.id,offer.asking),o=accepted.world.offers[0],w=wageDemand(accepted,p);
   const signed=finalizeSigning(accepted,o.id,w,3,w*5),actual=signed.players.find(x=>x.id===p.id)!;
-  expect(actual.clubId).toBe('sunderland');expect(actual.real).toEqual(p.real);expect(identity(actual).appearanceSeed).toBe(identity(p).appearanceSeed);
+  expect(actual.clubId).toBe('chelsea');expect(actual.real).toEqual(p.real);expect(identity(actual).appearanceSeed).toBe(identity(p).appearanceSeed);
  });
  it('shows individual attributes, traits, position alternatives and evidence on a mobile profile',()=>{
   const c=newCareer('Test','elite','liverpool',27),p=c.players.find(p=>p.name==='Erling Haaland')!;

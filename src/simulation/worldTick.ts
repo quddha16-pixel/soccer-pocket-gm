@@ -11,6 +11,7 @@ import { random } from './random';
 import { autoLineup, eligibleStars, valuation } from './management';
 import { askingPrice, trainingExempt, financialSummary, finalizeSigning, payroll, repairLineup, submitOffer, wageDemand } from './economy';
 import { generateFixtures, standings } from './league';
+import { aiBidLimit, transferDecision, transferContext } from './transferPolicy';
 export function settleFinances(c:Career):Career{
  const world=structuredClone(c.world);world.date=weekDate(world.season,c.week);
  for(const club of leagueClubs(c)){const f=world.finances[club.id],w=payroll(c,club.id),income=f.revenue/38,expense=(w.players+w.staff)*52/38;const after=f.cash+income-expense;
@@ -23,25 +24,29 @@ export function settleFinances(c:Career):Career{
  return {...c,world,transferBudget:world.finances[c.clubId].budget};
 }
 export function aiTransfers(c:Career):Career{
- if(!inWindow(c.world.date,c.world.season)||c.week%3!==1)return c;
+ if(!inWindow(c.world.date,c.world.season))return c;
  let result=c;const rng=random(c.seed+c.world.season*137+c.week*971);
- for(const club of leagueClubs(c)){if(club.id===c.clubId||rng()>.35)continue;
+ for(const club of leagueClubs(c)){if(club.id===c.clubId||rng()>.5)continue;
  const squad=result.players.filter(p=>p.clubId===club.id),positions:Position[]=['GK','CB','FB','CM','WG','ST'];
- const weakest=positions.map(position=>({position,rating:squad.filter(p=>p.position===position).reduce((s,p)=>s+p.overall,0)/Math.max(1,squad.filter(p=>p.position===position).length)})).sort((a,b)=>a.rating-b.rating)[0];
+ const weakest=positions.map(position=>{const depth=squad.filter(p=>p.position===position).sort((a,b)=>b.overall-a.overall),needed=position==='GK'||position==='ST'?1:position==='CM'?3:2;return {position,rating:depth[needed-1]?.overall??50};}).sort((a,b)=>a.rating-b.rating)[0];
  const budget=result.world.finances[club.id].budget;
- const targets=result.players.filter(p=>p.clubId!==club.id&&p.clubId!==c.clubId&&!identity(p).retired&&p.position===weakest.position&&p.overall>weakest.rating+1&&askingPrice(result,p)<budget*.5).sort((a,b)=>(b.overall+(b.age<24?3:0))-(a.overall+(a.age<24?3:0)));
- const listed=result.players.filter(p=>p.clubId===c.clubId&&result.world.listed?.[p.id]!==undefined&&p.position===weakest.position&&p.overall>weakest.rating+1&&result.world.listed[p.id]<budget*.6).sort((a,b)=>b.overall-a.overall)[0];
+ const temp={...result,clubId:club.id,reputation:(club.strength<75?'unknown':club.strength<82?'established':'elite') as Career['reputation'],transferBudget:budget};
+ const context=transferContext();
+ const targets=result.players.filter(p=>p.clubId!==club.id&&p.clubId!==c.clubId&&!identity(p).retired&&p.position===weakest.position&&p.overall>weakest.rating+1).filter(p=>{const decision=transferDecision(temp,p,club.id,context),price=askingPrice(temp,p,decision);return decision.available&&price<budget*.6&&price<=aiBidLimit(temp,p,club.id,valuation(p));}).sort((a,b)=>(b.overall+(b.age<24?3:0))-(a.overall+(a.age<24?3:0)));
+ const listed=result.players.filter(p=>p.clubId===c.clubId&&result.world.listed?.[p.id]!==undefined&&p.position===weakest.position&&p.overall>weakest.rating+1&&result.world.listed[p.id]<budget*.6&&result.world.listed[p.id]<=aiBidLimit(temp,p,club.id,valuation(p))&&transferDecision(temp,p).available).sort((a,b)=>b.overall-a.overall)[0];
  if(listed&&(!targets[0]||listed.overall>=targets[0].overall)&&!result.world.offers.some(o=>o.playerId===listed.id&&o.buyerId===club.id&&o.status==='incoming')){
-  const fee=Math.round(result.world.listed![listed.id]*(.9+rng()*.15)/10000)*10000,world=structuredClone(result.world);
-  world.offers.unshift({id:`incoming-${world.season}-${c.week}-${club.id}-${listed.id}`,playerId:listed.id,buyerId:club.id,sellerId:c.clubId,fee,asking:world.listed![listed.id],status:'incoming',message:'AI club submits a cash bid. You decide whether to accept; player terms and club budgets are checked on completion.',season:world.season,week:c.week});
+  const fee=Math.min(aiBidLimit(temp,listed,club.id,valuation(listed)),Math.round(result.world.listed![listed.id]*(.9+rng()*.15)/10000)*10000),world=structuredClone(result.world);
+  world.offers.unshift({id:`incoming-${world.season}-${c.week}-${club.id}-${listed.id}`,playerId:listed.id,buyerId:club.id,sellerId:c.clubId,fee,asking:world.listed![listed.id],status:'incoming',message:'AI club submits a cash bid. You decide whether to accept; player terms and club budgets are checked on completion.',season:world.season,week:c.week,date:world.date});
   world.news.unshift({id:`bid-${world.season}-${c.week}-${club.id}-${listed.id}`,date:world.date,text:`${club.name} bids £${fee.toLocaleString()} for ${listed.name}.`});result={...result,world};continue;
  }
- const p=targets[0];if(!p)continue;
+ for(const p of targets.slice(0,5)){
  try{
- const temp={...result,clubId:club.id,reputation:(club.strength<75?'unknown':club.strength<82?'established':'elite') as Career['reputation'],transferBudget:budget};const offered=submitOffer(temp,p.id,askingPrice(temp,p)),offer=offered.world.offers[0],wage=wageDemand(offered,p),years=p.age>=30?2:3;
+ const offered=submitOffer(temp,p.id,askingPrice(temp,p)),offer=offered.world.offers[0],wage=wageDemand(offered,p),years=p.age>=30?2:3;
  const signed=finalizeSigning(offered,offer.id,wage,years,wage*5);
  result={...signed,clubId:c.clubId,manager:c.manager,reputation:c.reputation,lineup:c.lineup,starId:c.starId,transferBudget:signed.world.finances[c.clubId].budget};
+ break;
  }catch{/* A club passes when price, player wishes, cover or registration prevent a deal. */}
+ }
  }
  return result;
 }
@@ -95,6 +100,7 @@ export function rolloverSeason(c:Career):Career{
  for(const club of clubs)if(club.id!==c.clubId){for(const role of ['Assistant Manager','Shooting Coach','Dribbling Coach','Defensive Coach','Scout','Team Doctor'] as const){if(!world.staff.some(s=>s.clubId===club.id&&s.role===role)){const candidate=world.staff.filter(s=>!s.clubId&&s.role===role).sort((a,b)=>b.rating-a.rating)[0];if(candidate&&candidate.wage<world.finances[club.id].wageCap*.1){candidate.clubId=club.id;candidate.appointedSeason=season;candidate.appointedWeek=0;candidate.contractEnd=`${season+2}-06-30`;}}}
  const manager=world.staff.find(s=>s.clubId===club.id&&s.role==='Manager');if(manager&&table.findIndex(r=>r.clubId===club.id)>=17){world.news.unshift({id:`manager-${season}-${club.id}`,date:world.date,text:`${club.name} replaces its manager after a disappointing season.`});const replacement={...manager,reference:undefined,id:`manager-${season}-${club.id}`,name:`${['Alex','Rafael','Ben'][season%3]} ${['Foster','Moreno','Scott'][clubs.indexOf(club)%3]}`,rating:Math.max(50,club.strength-6),appointedSeason:season,appointedWeek:0,contractEnd:`${season+2}-06-30`};const termination=Math.max(0,(Date.parse(manager.contractEnd)-Date.parse(world.date))/(7*864e5))*manager.wage*.5;world.finances[club.id].cash=Math.max(0,world.finances[club.id].cash-termination);world.finances[club.id].operatingCosts+=termination;manager.clubId='';world.staff.push(replacement);}
  }
+ world.transferDepartures=[];
  world.offers=world.offers.filter(o=>o.status==='completed').slice(0,80);world.news.unshift({id:`promotion-${season}`,date:world.date,text:`Promoted: ${movement.promoted.map(id=>clubById(id).name).join(', ')}. Relegated: ${movement.relegated.map(id=>clubById(id).name).join(', ')}.`});world.news.unshift({id:`season-${season}`,date:world.date,text:`${season}–${String(season+1).slice(-2)} begins. Three clubs promoted from the Championship pool; three relegated.`});world.news=world.news.slice(0,150);
  const base={...c,players,world,week:0,status:'active' as const,fixtures:generateFixtures(movement.leagueClubIds),statsStartWeek:1,transferBudget:world.finances[c.clubId].budget};
  const available=players.filter(p=>p.clubId===c.clubId&&world.registration[c.clubId].includes(p.id));const lineup=autoLineup(available,c.clubId,c.formation);return {...base,lineup,starId:eligibleStars({...base,lineup})[0]?.id??''};

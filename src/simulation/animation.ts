@@ -1,8 +1,9 @@
 import type { Fixture } from '../models';
+import { fixtureLineup } from './substitutionRules';
 import { coordinates } from './management';
 const mix=(a:number,b:number,t:number)=>a+(b-a)*Math.max(0,Math.min(1,t));
 export function animationFrame(f:Fixture,clock:number){
- const report=f.report,home=report?.homeLineup??report?.performances.filter(p=>p.clubId===f.homeId).map(p=>p.playerId)??[],away=report?.awayLineup??report?.performances.filter(p=>p.clubId===f.awayId).map(p=>p.playerId)??[];
+ const report=f.report,home=fixtureLineup(f,f.homeId,clock),away=fixtureLineup(f,f.awayId,clock);
  const upcoming=report?.events.find(e=>e.minute>=clock&&e.minute-clock<=3),last=report?.events.filter(e=>e.minute<=clock).at(-1),event=upcoming??last;
  const phase=event?Math.max(0,Math.min(1,(clock-event.minute+3)/3)):0,attacking=event?.clubId??f.homeId,direction=attacking===f.homeId?-1:1;
  const points=[...home.map((id,i)=>({id,clubId:f.homeId,x:coordinates[report?.homeFormation??'4-3-3'][i]?.[0]??50,y:coordinates[report?.homeFormation??'4-3-3'][i]?.[1]??50})),...away.map((id,i)=>({id,clubId:f.awayId,x:100-(coordinates[report?.awayFormation??'4-3-3'][i]?.[0]??50),y:100-(coordinates[report?.awayFormation??'4-3-3'][i]?.[1]??50)}))];
