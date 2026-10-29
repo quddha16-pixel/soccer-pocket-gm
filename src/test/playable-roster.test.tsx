@@ -14,7 +14,7 @@ import { eligiblePlayers, canRegister, finalizeSigning, submitOffer, wageDemand 
 import { rolloverSeason } from '../simulation/worldTick';
 import { saveCareer, loadCareer, SAVE_KEY } from '../storage';
 import { PlayerProfile } from '../components/PlayerProfile';
-import { PlayerAvatar } from '../components/PlayerAvatar';
+import { AvatarHead } from '../components/AvatarHead';
 import { legacyCareer } from './legacyCareer';
 
 afterEach(()=>{cleanup();localStorage.clear();sessionStorage.clear();});
@@ -148,7 +148,7 @@ describe('careers, transfers and mobile profile protection',()=>{
  });
  it('gives a provisional youth profile an honest label and preserves the illustrated avatar through transfers',()=>{
   const c=newCareer('Test','elite','arsenal',27),p=c.players.find(p=>p.name==='Max Dowman')!;
-  const portrait=render(<PlayerAvatar player={p}/>),before=portrait.container.innerHTML;portrait.rerender(<PlayerAvatar player={{...p,clubId:'hull'}}/>);expect(portrait.container.innerHTML).toBe(before);portrait.unmount();
+  const portrait=render(<AvatarHead player={p}/>),before=portrait.container.innerHTML;portrait.rerender(<AvatarHead player={{...p,clubId:'hull'}}/>);expect(portrait.container.innerHTML).toBe(before);portrait.unmount();
   render(<PlayerProfile player={p} career={c} onClose={()=>{}}/>);expect(screen.getByText(/Provisional game assessment/)).toBeTruthy();
  });
  it('keeps every original player and valid lineups through three custom seasons',()=>{

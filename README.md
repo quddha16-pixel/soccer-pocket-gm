@@ -1,14 +1,16 @@
-# Pocket Football GM — v2.0
+# Pocket Football GM — v2.1
 
 Created By: Quentin Warminsky. A mobile-first football management game built with React, TypeScript and Vite in the existing `quddha16-pixel/soccer-pocket-gm` repository. No licensed club marks, photos, external portrait services or external fonts are used.
 
-## Play the full match (v2.0)
+## Play key attacking moments (v2.1)
 
-**Matchday → Play Match** is a complete top-down, 11-a-side contest. Move with the left stick, aim and Pass, hold for a lofted pass, or hold Shoot for power. The buttons become Switch/Tackle when defending. Tap a teammate to control them. Teammates and opponents play around you; the live ball, keeper and your decisions determine the result. Teams change ends at half time. Choose a 3-, 4- or 6-minute real-time match representing the full 90 minutes.
+**Matchday → Play Match** simulates the contest, pausing for key moments. Take control only for up to two short breakaways or counterattacks in a horizontal, field-level view. Move toward the right-hand goal, pass to a teammate in space and tap/hold Shoot; move up/down to aim for a corner. Control follows the receiving player. Individual ability, positioning and keeper quality matter, with assisted controls and open space to attack.
 
-Subs and Controls are always accessible. Tap your selected player's card for all assigned traits and ability details. Earn extra, capped partnership familiarity through successful forward combinations; actual minutes and performances feed development. New passing/interception/live-distance stats appear in the match box. Pause, reload and resume safely, or explicitly let the assistant finish the unplayed portion without erasing your score.
+Other chances retain three coaching options; penalties and free kicks retain drawn aiming. Each playable attack also offers the coaching options or delegation. **Watch Match** uses coaching decisions throughout, and **Quick Sim** remains available. Between decisions, a clean simulation/commentary view replaces the full-contest pitch. Live substitutions remain accessible between chances. Played results, partnership gains and interrupted attacks survive save/reload.
 
-Home shortcuts, screen-specific navigation help, clearer match-mode ordering, touch-friendly controls and mobile tab layouts make the career tools easier to reach. Watch Match and Quick Sim remain available. The following avatar update will replace the existing appearances using researched references. [v2.0 controls, mechanics, saves and validation](docs/v2.0-release.md).
+Original full-body models appear in highlights and profiles, using sourced heights and the first inspected likeness batch. **Appearance research remains partial:** 545/546 custom heights, 64/546 inspected portraits and five published weight references. Unchecked real appearances use neutral placeholders; builds remain schematic or labelled illustration estimates. [Research coverage](docs/research/avatar-status.md). The 546 custom players and club memberships are unchanged.
+
+Existing v2.0 full-contest saves can finish their current match or use **Let assistant finish**. New matches use the hybrid format. [v2.1 controls, results, saves and validation](docs/v2.1-release.md). Home shortcuts, navigation help, depth charts, development arrows and the other career tools remain available.
 
 ## Match box scores (v1.12)
 

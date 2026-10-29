@@ -1,0 +1,1546 @@
+{
+  "ea-204935": {
+    "name": "Jordan Pickford",
+    "birthDate": "1994-03-07",
+    "skin": "#edc1ac",
+    "hair": "#463229",
+    "style": "swept",
+    "facialHair": "stubble",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p204935.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-232284": {
+    "name": "Mark Travers",
+    "birthDate": "1999-05-18",
+    "skin": "#edc1ac",
+    "hair": "#a98c5f",
+    "style": "curls",
+    "facialHair": "stubble",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p232284.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-225650": {
+    "name": "Tom King",
+    "birthDate": "1995-03-09",
+    "skin": "#dca58a",
+    "hair": "#211e1c",
+    "style": "buzz",
+    "facialHair": "beard",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p225650.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-225782": {
+    "name": "Ainsley Maitland-Niles",
+    "birthDate": "1997-08-29",
+    "skin": "#925d42",
+    "hair": "#211e1c",
+    "style": "crop",
+    "facialHair": "beard",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p225782.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-247649": {
+    "name": "Jarrad Branthwaite",
+    "birthDate": "2002-06-27",
+    "skin": "#edc1ac",
+    "hair": "#a98c5f",
+    "style": "swept",
+    "facialHair": "none",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p247649.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-207599": {
+    "name": "Michael Keane",
+    "birthDate": "1993-01-11",
+    "skin": "#edc1ac",
+    "hair": "#211e1c",
+    "style": "swept",
+    "facialHair": "stubble",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p207599.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-202695": {
+    "name": "James Tarkowski",
+    "birthDate": "1992-11-19",
+    "skin": "#dca58a",
+    "hair": "#463229",
+    "style": "swept",
+    "facialHair": "stubble",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p202695.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-253510": {
+    "name": "Jake O’Brien",
+    "birthDate": "2001-05-15",
+    "skin": "#edc1ac",
+    "hair": "#8a5036",
+    "style": "crop",
+    "facialHair": "stubble",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p253510.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-244380": {
+    "name": "Vitalii Mykolenko",
+    "birthDate": "1999-05-29",
+    "skin": "#edc1ac",
+    "hair": "#463229",
+    "style": "buzz",
+    "facialHair": "none",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p244380.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-237386": {
+    "name": "Kiernan Dewsbury-Hall",
+    "birthDate": "1998-09-06",
+    "skin": "#edc1ac",
+    "hair": "#a98c5f",
+    "style": "swept",
+    "facialHair": "goatee",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p237386.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-206517": {
+    "name": "Jack Grealish",
+    "birthDate": "1995-09-10",
+    "skin": "#dca58a",
+    "hair": "#211e1c",
+    "style": "swept",
+    "facialHair": "beard",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p206517.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-210697": {
+    "name": "Christian Nørgaard",
+    "birthDate": "1994-03-10",
+    "skin": "#edc1ac",
+    "hair": "#463229",
+    "style": "waves",
+    "facialHair": "none",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p210697.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-256402": {
+    "name": "Charly Alcaraz",
+    "birthDate": "2002-11-30",
+    "skin": "#b97b57",
+    "hair": "#211e1c",
+    "style": "swept",
+    "facialHair": "none",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p256402.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-253054": {
+    "name": "Hayden Hackney",
+    "birthDate": "2002-06-26",
+    "skin": "#edc1ac",
+    "hair": "#463229",
+    "style": "waves",
+    "facialHair": "stubble",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p253054.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-259714": {
+    "name": "Merlin Röhl",
+    "birthDate": "2002-07-05",
+    "skin": "#dca58a",
+    "hair": "#463229",
+    "style": "waves",
+    "facialHair": "stubble",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p259714.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-243657": {
+    "name": "James Garner",
+    "birthDate": "2001-03-13",
+    "skin": "#edc1ac",
+    "hair": "#463229",
+    "style": "crop",
+    "facialHair": "stubble",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p243657.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-74413": {
+    "name": "Harrison Armstrong",
+    "birthDate": "2007-01-19",
+    "skin": "#edc1ac",
+    "hair": "#463229",
+    "style": "buzz",
+    "facialHair": "none",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p74413.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-276295": {
+    "name": "Thierno Barry",
+    "birthDate": "2002-10-21",
+    "skin": "#684334",
+    "hair": "#211e1c",
+    "style": "braids",
+    "facialHair": "none",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p276295.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-71998": {
+    "name": "Tyrique George",
+    "birthDate": "2006-02-04",
+    "skin": "#684334",
+    "hair": "#211e1c",
+    "style": "curls",
+    "facialHair": "none",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p71998.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-279497": {
+    "name": "Tyler Dibling",
+    "birthDate": "2006-02-17",
+    "skin": "#edc1ac",
+    "hair": "#463229",
+    "style": "waves",
+    "facialHair": "none",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p279497.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-251421": {
+    "name": "Brennan Johnson",
+    "birthDate": "2001-05-23",
+    "skin": "#dca58a",
+    "hair": "#211e1c",
+    "style": "curls",
+    "facialHair": "none",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p251421.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-220901": {
+    "name": "David Raya",
+    "birthDate": "1995-09-15",
+    "skin": "#dca58a",
+    "hair": "#211e1c",
+    "style": "crop",
+    "facialHair": "beard",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p220901.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-242656": {
+    "name": "Illan Meslier",
+    "birthDate": "2000-03-02",
+    "skin": "#edc1ac",
+    "hair": "#463229",
+    "style": "crop",
+    "facialHair": "none",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p242656.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-206585": {
+    "name": "Kepa Arrizabalaga",
+    "birthDate": "1994-10-03",
+    "skin": "#dca58a",
+    "hair": "#211e1c",
+    "style": "swept",
+    "facialHair": "none",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p206585.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-243715": {
+    "name": "William Saliba",
+    "birthDate": "2001-03-24",
+    "skin": "#925d42",
+    "hair": "#211e1c",
+    "style": "crop",
+    "facialHair": "goatee",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p243715.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-232580": {
+    "name": "Gabriel",
+    "birthDate": "1997-12-19",
+    "skin": "#925d42",
+    "hair": "#211e1c",
+    "style": "crop",
+    "facialHair": "goatee",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p232580.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-256197": {
+    "name": "Piero Hincapié",
+    "birthDate": "2002-01-09",
+    "skin": "#b97b57",
+    "hair": "#211e1c",
+    "style": "swept",
+    "facialHair": "none",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p256197.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-227678": {
+    "name": "Ezri Konsa",
+    "birthDate": "1997-10-23",
+    "skin": "#925d42",
+    "hair": "#211e1c",
+    "style": "buzz",
+    "facialHair": "goatee",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p227678.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-264846": {
+    "name": "Cristhian Mosquera",
+    "birthDate": "2004-06-27",
+    "skin": "#925d42",
+    "hair": "#211e1c",
+    "style": "crop",
+    "facialHair": "none",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p264846.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-257711": {
+    "name": "Riccardo Calafiori",
+    "birthDate": "2002-05-19",
+    "skin": "#dca58a",
+    "hair": "#463229",
+    "style": "long",
+    "facialHair": "none",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p257711.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-251805": {
+    "name": "Jurriën Timber",
+    "birthDate": "2001-06-17",
+    "skin": "#925d42",
+    "hair": "#211e1c",
+    "style": "crop",
+    "facialHair": "beard",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p251805.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-231936": {
+    "name": "Ben White",
+    "birthDate": "1997-10-08",
+    "skin": "#dca58a",
+    "hair": "#463229",
+    "style": "swept",
+    "facialHair": "beard",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p231936.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-248148": {
+    "name": "Martín Zubimendi",
+    "birthDate": "1999-02-02",
+    "skin": "#edc1ac",
+    "hair": "#463229",
+    "style": "crop",
+    "facialHair": "none",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p248148.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-278773": {
+    "name": "Myles Lewis-Skelly",
+    "birthDate": "2006-09-26",
+    "skin": "#925d42",
+    "hair": "#211e1c",
+    "style": "curls",
+    "facialHair": "none",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p278773.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-234378": {
+    "name": "Declan Rice",
+    "birthDate": "1999-01-14",
+    "skin": "#edc1ac",
+    "hair": "#463229",
+    "style": "swept",
+    "facialHair": "beard",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p234378.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-247851": {
+    "name": "Bruno Guimarães",
+    "birthDate": "1997-11-16",
+    "skin": "#b97b57",
+    "hair": "#211e1c",
+    "style": "crop",
+    "facialHair": "goatee",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p247851.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-225193": {
+    "name": "Mikel Merino",
+    "birthDate": "1996-06-22",
+    "skin": "#dca58a",
+    "hair": "#211e1c",
+    "style": "crop",
+    "facialHair": "stubble",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p225193.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-222665": {
+    "name": "Martin Ødegaard",
+    "birthDate": "1998-12-17",
+    "skin": "#edc1ac",
+    "hair": "#a98c5f",
+    "style": "swept",
+    "facialHair": "stubble",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p222665.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-235794": {
+    "name": "Eberechi Eze",
+    "birthDate": "1998-06-29",
+    "skin": "#684334",
+    "hair": "#211e1c",
+    "style": "braids",
+    "facialHair": "goatee",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p235794.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-256948": {
+    "name": "Christos Tzolis",
+    "birthDate": "2002-01-30",
+    "skin": "#edc1ac",
+    "hair": "#463229",
+    "style": "buzz",
+    "facialHair": "none",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p256948.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-246669": {
+    "name": "Bukayo Saka",
+    "birthDate": "2001-09-05",
+    "skin": "#684334",
+    "hair": "#211e1c",
+    "style": "curls",
+    "facialHair": "none",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p246669.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-254796": {
+    "name": "Noni Madueke",
+    "birthDate": "2002-03-10",
+    "skin": "#684334",
+    "hair": "#211e1c",
+    "style": "headband",
+    "facialHair": "goatee",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p254796.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-235790": {
+    "name": "Kai Havertz",
+    "birthDate": "1999-06-11",
+    "skin": "#edc1ac",
+    "hair": "#211e1c",
+    "style": "crop",
+    "facialHair": "goatee",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p235790.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-241651": {
+    "name": "Viktor Gyökeres",
+    "birthDate": "1998-06-04",
+    "skin": "#edc1ac",
+    "hair": "#a98c5f",
+    "style": "swept",
+    "facialHair": "none",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p241651.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-230621": {
+    "name": "Gianluigi Donnarumma",
+    "birthDate": "1999-02-25",
+    "skin": "#dca58a",
+    "hair": "#211e1c",
+    "style": "crop",
+    "facialHair": "beard",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p230621.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-215316": {
+    "name": "Gerónimo Rulli",
+    "birthDate": "1992-05-20",
+    "skin": "#b97b57",
+    "hair": "#211e1c",
+    "style": "crop",
+    "facialHair": "stubble",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p215316.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-204246": {
+    "name": "Marcus Bettinelli",
+    "birthDate": "1992-05-24",
+    "skin": "#edc1ac",
+    "hair": "#463229",
+    "style": "crop",
+    "facialHair": "stubble",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p204246.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-241159": {
+    "name": "Marc Guéhi",
+    "birthDate": "2000-07-13",
+    "skin": "#684334",
+    "hair": "#211e1c",
+    "style": "curls",
+    "facialHair": "beard",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p241159.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-239818": {
+    "name": "Rúben Dias",
+    "birthDate": "1997-05-14",
+    "skin": "#dca58a",
+    "hair": "#463229",
+    "style": "swept",
+    "facialHair": "beard",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p239818.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-277031": {
+    "name": "Abdukodir Khusanov",
+    "birthDate": "2004-02-29",
+    "skin": "#dca58a",
+    "hair": "#211e1c",
+    "style": "fringe",
+    "facialHair": "none",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p277031.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-251517": {
+    "name": "Josko Gvardiol",
+    "birthDate": "2002-01-23",
+    "skin": "#dca58a",
+    "hair": "#211e1c",
+    "style": "curls",
+    "facialHair": "beard",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p251517.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-277427": {
+    "name": "Nico O’Reilly",
+    "birthDate": "2005-03-21",
+    "skin": "#dca58a",
+    "hair": "#211e1c",
+    "style": "curls",
+    "facialHair": "none",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p277427.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-242641": {
+    "name": "Rayan Aït-Nouri",
+    "birthDate": "2001-06-06",
+    "skin": "#dca58a",
+    "hair": "#211e1c",
+    "style": "crop",
+    "facialHair": "beard",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p242641.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-253124": {
+    "name": "Matheus Nunes",
+    "birthDate": "1998-08-27",
+    "skin": "#b97b57",
+    "hair": "#211e1c",
+    "style": "crop",
+    "facialHair": "goatee",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p253124.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-271574": {
+    "name": "Rico Lewis",
+    "birthDate": "2004-11-21",
+    "skin": "#b97b57",
+    "hair": "#211e1c",
+    "style": "twists",
+    "facialHair": "none",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p271574.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-254243": {
+    "name": "Elliot Anderson",
+    "birthDate": "2002-11-06",
+    "skin": "#edc1ac",
+    "hair": "#8a5036",
+    "style": "crop",
+    "facialHair": "none",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p254243.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-247090": {
+    "name": "Enzo Fernández",
+    "birthDate": "2001-01-17",
+    "skin": "#dca58a",
+    "hair": "#463229",
+    "style": "swept",
+    "facialHair": "stubble",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p247090.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-207410": {
+    "name": "Mateo Kovacic",
+    "birthDate": "1994-05-06",
+    "skin": "#dca58a",
+    "hair": "#211e1c",
+    "style": "buzz",
+    "facialHair": "beard",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p207410.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-251570": {
+    "name": "Rayan Cherki",
+    "birthDate": "2003-08-17",
+    "skin": "#dca58a",
+    "hair": "#211e1c",
+    "style": "braids",
+    "facialHair": "beard",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p251570.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-237692": {
+    "name": "Phil Foden",
+    "birthDate": "2000-05-28",
+    "skin": "#edc1ac",
+    "hair": "#211e1c",
+    "style": "buzz",
+    "facialHair": "none",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p237692.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-246420": {
+    "name": "Jérémy Doku",
+    "birthDate": "2002-05-27",
+    "skin": "#684334",
+    "hair": "#211e1c",
+    "style": "locks",
+    "facialHair": "none",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p246420.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-261188": {
+    "name": "Iliman Ndiaye",
+    "birthDate": "2000-03-06",
+    "skin": "#925d42",
+    "hair": "#211e1c",
+    "style": "crop",
+    "facialHair": "goatee",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p261188.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-241236": {
+    "name": "Antoine Semenyo",
+    "birthDate": "2000-01-07",
+    "skin": "#925d42",
+    "hair": "#211e1c",
+    "style": "braids",
+    "facialHair": "beard",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://ratings-images-prod.pulse.ea.com/FC25/full/player-portraits/p241236.png?padding=0.7",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected portrait; original illustration palette"
+      }
+    ]
+  },
+  "ea-239085": {
+    "name": "Erling Haaland",
+    "birthDate": "2000-07-21",
+    "skin": "#edc1ac",
+    "hair": "#a98c5f",
+    "style": "tied",
+    "facialHair": "none",
+    "status": "photo-observed",
+    "confidence": "medium",
+    "photoDate": "unknown",
+    "sources": [
+      {
+        "url": "https://premierleague-static-files.s3.amazonaws.com/premierleague25/photos/players/500x500/223094.png",
+        "checked": "2026-10-28",
+        "fields": [
+          "skin",
+          "hair",
+          "style",
+          "facialHair"
+        ],
+        "kind": "visually inspected Premier League portrait; original illustration palette"
+      },
+      {
+        "url": "https://www.brightonandhovealbion.com/match-centre?gameId=2562102",
+        "checked": "2026-10-28",
+        "fields": [
+          "identity"
+        ],
+        "kind": "official club match-centre portrait identity"
+      }
+    ]
+  }
+}

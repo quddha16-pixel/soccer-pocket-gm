@@ -18,12 +18,12 @@ export function chooseKeyMoment(c:Career,id:string,option:MomentOption,shot?:Aim
  const result=resolveMoment(f,c,{...moment,selection:option,...(shot?{shot:{path:shot.path.map(p=>({...p}))}}:{})},option);
  const events=f.report!.events.filter(e=>e.momentId!==id&&e.id!==moment.eventId);if(result.event)events.push(result.event);events.sort((a,b)=>a.minute-b.minute||a.id.localeCompare(b.id));
  const resolved=refreshMatchStatistics({...f,report:{...f.report!,events,keyMoments:f.report!.keyMoments!.map(m=>m.id===id?result.moment:m)}},c);
- return {...c,pending:{...c.pending,paused:true,decisionFeedback:id,fixtures:c.pending.fixtures.map(x=>x.id===f.id?resolved:x)}};
+ return {...c,pending:{...c.pending,highlight:undefined,paused:true,decisionFeedback:id,fixtures:c.pending.fixtures.map(x=>x.id===f.id?resolved:x)}};
 }
 export function continueAfterDecision(c:Career):Career {
  if(!c.pending)return c;const feedback=decisionFeedback(c);if(!feedback)return c;
  const another=managedFixture(c)?.report?.keyMoments?.some(m=>m.clubId===c.clubId&&m.selection===undefined&&m.minute===feedback.minute);
- return {...c,pending:{...c.pending,decisionFeedback:undefined,paused:false,minute:another?c.pending.minute:Math.max(c.pending.minute,feedback.minute)}};
+ return {...c,pending:{...c.pending,highlight:undefined,decisionFeedback:undefined,paused:false,minute:another?c.pending.minute:Math.max(c.pending.minute,feedback.minute)}};
 }
 export function advancePlayback(c:Career):Career {
  if(!c.pending||c.pending.paused||c.pending.minute>=90)return c;
@@ -32,7 +32,7 @@ export function advancePlayback(c:Career):Career {
 }
 export function skipToFullTime(c:Career):Career {
  if(!c.pending)return c;
- return {...c,pending:{...c.pending,minute:90,decisionMode:'automatic',decisionFeedback:undefined,paused:false}};
+ return {...c,pending:{...c.pending,highlight:undefined,minute:90,decisionMode:'automatic',decisionFeedback:undefined,paused:false}};
 }
 
 export function shootKeyMoment(c:Career,id:string,shot:AimedShot):Career {

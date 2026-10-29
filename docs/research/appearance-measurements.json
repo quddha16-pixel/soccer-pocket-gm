@@ -1,0 +1,239 @@
+{
+  "custom-jordan-pickford": {
+    "heightCm": 185,
+    "sources": [
+      {
+        "url": "https://www.uefa.com/european-qualifiers/teams/players/250024791--jordan-pickford/",
+        "checked": "2026-10-28",
+        "fields": [
+          "heightCm",
+          "weightKg"
+        ],
+        "kind": "published profile"
+      }
+    ],
+    "weightKg": 77,
+    "buildStatus": "measurement-derived illustration"
+  },
+  "custom-martin-degaard": {
+    "heightCm": 178,
+    "sources": [
+      {
+        "url": "https://www.laliga.com/en-GB/player/odegaard",
+        "checked": "2026-10-28",
+        "fields": [
+          "heightCm",
+          "weightKg"
+        ],
+        "kind": "published profile"
+      }
+    ],
+    "weightKg": 68,
+    "buildStatus": "measurement-derived illustration",
+    "measurementNote": "UEFA lists 170 cm; LaLiga and supporting profiles agree on 178 cm. Published measurements may be historic."
+  },
+  "custom-takehiro-tomiyasu": {
+    "heightCm": 187,
+    "sources": [
+      {
+        "url": "https://www.jfa.jp/eng/national_team/u24_2021/member/TOMIYASU_Takehiro.html",
+        "checked": "2026-10-28",
+        "fields": [
+          "heightCm",
+          "weightKg"
+        ],
+        "kind": "published profile"
+      }
+    ],
+    "weightKg": 84,
+    "buildStatus": "measurement-derived illustration",
+    "measurementNote": "Historic 2021 national-team measurements; other sources list 188 cm. Not a current weigh-in."
+  },
+  "custom-noah-okafor": {
+    "heightCm": 185,
+    "sources": [
+      {
+        "url": "https://sscnapoli.it/en/ufficiale-okafor-e-un-nuovo-calciatore-del-napoli/",
+        "checked": "2026-10-28",
+        "fields": [
+          "heightCm"
+        ],
+        "kind": "published profile"
+      }
+    ]
+  },
+  "custom-calvin-bassey": {
+    "heightCm": 185,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.co.uk/calvin-bassey/profil/spieler/461883",
+        "checked": "2026-10-28",
+        "fields": [
+          "heightCm"
+        ],
+        "kind": "published profile"
+      }
+    ]
+  },
+  "custom-max-dowman": {
+    "heightCm": 183,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.us/max-dowman/profil/spieler/1187629",
+        "checked": "2026-10-28",
+        "fields": [
+          "heightCm"
+        ],
+        "kind": "published profile"
+      }
+    ],
+    "measurementNote": "Young player: height may change."
+  },
+  "custom-luke-chambers": {
+    "heightCm": 181,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.co.uk/luke-chambers/profil/spieler/670861",
+        "checked": "2026-10-28",
+        "fields": [
+          "heightCm"
+        ],
+        "kind": "published profile"
+      }
+    ],
+    "measurementNote": "Matched Liverpool left-back born 24 June 2004, not the older namesake."
+  },
+  "custom-jayden-danns": {
+    "heightCm": 183,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.co.uk/jayden-danns/profil/spieler/939290",
+        "checked": "2026-10-28",
+        "fields": [
+          "heightCm"
+        ],
+        "kind": "published profile"
+      }
+    ]
+  },
+  "custom-michael-svoboda": {
+    "heightCm": 195,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.us/michael-svoboda/profil/spieler/438961",
+        "checked": "2026-10-28",
+        "fields": [
+          "heightCm"
+        ],
+        "kind": "published profile"
+      }
+    ]
+  },
+  "custom-matt-targett": {
+    "heightCm": 183,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.co.uk/matt-targett/profil/spieler/250478/",
+        "checked": "2026-10-28",
+        "fields": [
+          "heightCm"
+        ],
+        "kind": "published profile"
+      }
+    ]
+  },
+  "custom-kenny-tete": {
+    "heightCm": 180,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.co.uk/kenny-tete/profil/spieler/206746",
+        "checked": "2026-10-28",
+        "fields": [
+          "heightCm"
+        ],
+        "kind": "published profile"
+      }
+    ]
+  },
+  "custom-frank-onyeka": {
+    "heightCm": 183,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.com/frank-onyeka/profil/spieler/421637",
+        "checked": "2026-10-28",
+        "fields": [
+          "heightCm"
+        ],
+        "kind": "published profile"
+      }
+    ]
+  },
+  "custom-aji-alese": {
+    "heightCm": 192,
+    "sources": [
+      {
+        "url": "https://www.transfermarkt.co.uk/aji-alese/profil/spieler/502065/sort/wettbewerb",
+        "checked": "2026-10-28",
+        "fields": [
+          "heightCm"
+        ],
+        "kind": "published profile"
+      }
+    ],
+    "measurementNote": "Transfermarkt and Sofascore list 192 cm; Soccerbase lists 193 cm."
+  },
+  "custom-abdoullah-ba": {
+    "heightCm": 180,
+    "sources": [
+      {
+        "url": "https://www.lequipe.fr/fiche/abdoullah-ba/173200",
+        "checked": "2026-10-28",
+        "fields": [
+          "heightCm",
+          "weightKg"
+        ],
+        "kind": "published profile"
+      }
+    ],
+    "weightKg": 70,
+    "buildStatus": "measurement-derived illustration"
+  },
+  "custom-mahdi-nicoll-jazuli": {
+    "measurementNote": "Unresolved height conflict: 11v11 187 cm; Sofascore 190 cm; Rotascore 178 cm. No height or weight asserted.",
+    "sources": [
+      {
+        "url": "https://www.11v11.com/players/mahdi-nicoll-jazuli-280953/",
+        "checked": "2026-10-28",
+        "fields": [
+          "measurementNote"
+        ],
+        "kind": "published profile"
+      },
+      {
+        "url": "https://www.sofascore.com/football/player/mahdi-nicoll-jazuli/2037476",
+        "checked": "2026-10-28",
+        "fields": [
+          "measurementNote"
+        ],
+        "kind": "published profile"
+      }
+    ]
+  },
+  "custom-erling-haaland": {
+    "heightCm": 195,
+    "sources": [
+      {
+        "url": "https://www.bundesliga.com/en/player/erling-haaland/stats",
+        "checked": "2026-10-28",
+        "fields": [
+          "heightCm",
+          "weightKg"
+        ],
+        "kind": "published profile"
+      }
+    ],
+    "weightKg": 94,
+    "buildStatus": "measurement-derived illustration",
+    "measurementNote": "Historic Bundesliga player profile lists 195 cm / 94 kg. Other sources list 88 kg; this is not a current weigh-in. Body proportions are an illustration estimate."
+  }
+}

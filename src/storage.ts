@@ -1,4 +1,5 @@
 import { snapshotManual, validManualState } from './simulation/manualCareer';
+import { validHighlight, validHighlightResult } from './simulation/highlights';
 import { validArchivedBoxScore } from './simulation/boxScore';
 import { validAimedShot } from './simulation/shotGeometry';
 import { validLegacy, legacyState, settleLegacySeason } from './simulation/legacy';
@@ -25,7 +26,7 @@ export function loadCareer():{career:Career|null;error:string}{
  }
  if(oldVersion===1||oldVersion===2)c=initializeWorld(c);
  const progressRaw=localStorage.getItem(`${SAVE_KEY}-playback`);
- if(progressRaw&&c.pending){try{const progress=JSON.parse(progressRaw);if(progress.seed===c.seed&&progress.season===c.world.season&&progress.week===c.pending.week)c.pending={...c.pending,minute:progress.minute,speed:progress.speed,paused:progress.paused,decisionMode:progress.decisionMode,decisionFeedback:progress.decisionFeedback};}catch{/* The authoritative snapshot remains available. */}}
+ if(progressRaw&&c.pending){try{const progress=JSON.parse(progressRaw);if(progress.seed===c.seed&&progress.season===c.world.season&&progress.week===c.pending.week){const candidate={...c,pending:{...c.pending,minute:progress.minute,speed:progress.speed,paused:progress.paused,decisionMode:progress.decisionMode,decisionFeedback:progress.decisionFeedback,highlight:progress.highlight}};if(validHighlight(candidate))c=candidate;}}catch{/* The authoritative snapshot remains available. */}}
  if(c.pending?.manual){try{const raw=localStorage.getItem(MANUAL_SAVE_KEY);if(raw){const progress=JSON.parse(raw);if(progress.seed===c.seed&&progress.season===c.world.season&&progress.week===c.pending.week&&progress.state?.elapsed>=c.pending.manual.elapsed){const candidate=snapshotManual(c,progress.state,true);if(validManualState(candidate))c=candidate;}}}catch{/* Keep the authoritative checkpoint if a sidecar is interrupted. */}}
  const ids=new Set(allClubs.map(x=>x.id)),currentIds=c.world?.leagueClubIds??clubs.map(club=>club.id);
  if(c.matchPlan!==undefined){const plan=c.matchPlan,players=new Set(c.players.map(p=>p.id));if(!plan||!Array.isArray(plan.bench)||plan.bench.length>9||new Set(plan.bench).size!==plan.bench.length||plan.bench.some(id=>!players.has(id))||!Array.isArray(plan.changes)||plan.changes.length>5||plan.changes.some(s=>s.clubId!==c.clubId||!players.has(s.offId)||!players.has(s.onId)||!Number.isInteger(s.minute)||s.minute<1||s.minute>89))throw Error();}
@@ -38,6 +39,7 @@ export function loadCareer():{career:Career|null;error:string}{
  if(c.world?.championshipClubIds!==undefined){const pool=c.world.championshipClubIds;if(!Array.isArray(pool)||pool.length!==allClubs.length-20||new Set(pool).size!==pool.length||pool.some(id=>!ids.has(id)||currentIds.includes(id)))throw Error();}
  if((c.world?.leagueClubIds===undefined)!==(c.world?.championshipClubIds===undefined))throw Error();
  if(c.interactiveMoments!==undefined&&typeof c.interactiveMoments!=='boolean')throw Error();
+ if(c.playableHighlights!==undefined&&typeof c.playableHighlights!=='boolean')throw Error();
  if(c.managerStyle!==undefined&&!managerStyles.some(s=>s.id===c.managerStyle))throw Error();
  if(c.geniusPlaystyle!==undefined&&(c.managerStyle!=='genius'||!geniusPlaystyles.some(s=>s.id===c.geniusPlaystyle)))throw Error();
  const expected=generateFixtures(currentIds);
@@ -78,6 +80,7 @@ export function loadCareer():{career:Career|null;error:string}{
    if(!Array.isArray(r.keyMoments)||r.keyMoments.length>64||new Set(r.keyMoments.map(m=>m.id)).size!==r.keyMoments.length||new Set(r.keyMoments.map(m=>m.eventId)).size!==r.keyMoments.length)throw Error();
    for(const m of r.keyMoments){
     if(typeof m.id!=='string'||typeof m.eventId!=='string'||!momentKinds.includes(m.kind)||![f.homeId,f.awayId].includes(m.clubId)||!Number.isInteger(m.minute)||m.minute<1||m.minute>90||!Number.isFinite(m.baseXg)||m.baseXg<0||m.baseXg>1||![0,1,2].includes(m.autoChoice)||(m.selection!==undefined&&![0,1,2].includes(m.selection))||!['set','advancing','committing'].includes(m.keeperApproach)||!['space','closing'].includes(m.pressure)||!['goal','saved','wide','blocked','intercepted'].includes(m.outcome))throw Error();
+    if(m.highlight!==undefined&&(!['one-on-one','big-chance'].includes(m.kind)||m.selection===undefined||m.shot||!validHighlightResult(m.highlight,[m.actorId,m.receiverId,m.alternateId,m.supportId])||m.highlight.outcome!==m.outcome||!Number.isFinite(m.highlight.elapsed)||m.highlight.elapsed<0||m.highlight.elapsed>20||!Number.isInteger(m.highlight.passes)||m.highlight.passes<0||m.highlight.passes>60))throw Error();
     if(m.shot!==undefined&&(!['penalty','free-kick'].includes(m.kind)||m.selection!==(m.kind==='penalty'?1:0)||!validAimedShot(m.shot)))throw Error();
     const own=fixtureLineup(f,m.clubId,m.minute-1),other=fixtureLineup(f,m.clubId===f.homeId?f.awayId:f.homeId,m.minute-1);
     if([m.actorId,m.receiverId,m.alternateId,m.supportId].some(id=>!ids.has(id)||!own.slice(1).includes(id))||m.keeperId!==other[0])throw Error();
@@ -96,8 +99,8 @@ export function loadCareer():{career:Career|null;error:string}{
  if((c.week===38)===(c.status==='active'))throw Error();
  const playerIds=new Set(c.players.map(p=>p.id));
  for(const h of c.world.history)if(h.boxScores!==undefined){if(!h.boxScores||typeof h.boxScores!=='object'||Array.isArray(h.boxScores)||!h.results||Object.keys(h.boxScores).length>380)throw Error();for(const [id,b] of Object.entries(h.boxScores)){const f=h.results.find(f=>f.id===id);if(!f||!validArchivedBoxScore(b,f,playerIds))throw Error();}}
- if(!validManualState(c))throw Error();
- if(c.pending?.manual)c={...c,pending:{...c.pending,paused:true}};
+ if(!validManualState(c)||!validHighlight(c))throw Error();
+ if(c.pending?.manual||c.pending?.highlight)c={...c,pending:{...c.pending!,paused:true}};
  if(!validLegacy(c))throw Error();
  if(!c.legacy)c={...c,legacy:legacyState(c)};
  c=settleLegacySeason(c);
@@ -106,8 +109,8 @@ export function loadCareer():{career:Career|null;error:string}{
 }
 let lastSnapshot:Career|null=null;
 export function saveCareer(c:Career){
- const sameRound=localStorage.getItem(SAVE_KEY)&&lastSnapshot&&['seed','week','manager','reputation','clubId','status','tactic','formation','starId'].every(key=>c[key as keyof Career]===lastSnapshot![key as keyof Career])&&c.lineup===lastSnapshot.lineup&&c.world===lastSnapshot.world&&c.players===lastSnapshot.players&&c.fixtures===lastSnapshot.fixtures&&c.pending?.fixtures===lastSnapshot.pending?.fixtures&&c.pending?.manual===lastSnapshot.pending?.manual&&c.pending&&lastSnapshot.pending;
- if(sameRound){localStorage.setItem(`${SAVE_KEY}-playback`,JSON.stringify({seed:c.seed,season:c.world.season,week:c.pending!.week,minute:c.pending!.minute,speed:c.pending!.speed,paused:c.pending!.paused,decisionMode:c.pending!.decisionMode,decisionFeedback:c.pending!.decisionFeedback}));lastSnapshot=c;return;}
+ const sameRound=localStorage.getItem(SAVE_KEY)&&lastSnapshot&&['seed','week','manager','reputation','clubId','status','tactic','formation','starId','playableHighlights','interactiveMoments'].every(key=>c[key as keyof Career]===lastSnapshot![key as keyof Career])&&c.lineup===lastSnapshot.lineup&&c.world===lastSnapshot.world&&c.players===lastSnapshot.players&&c.fixtures===lastSnapshot.fixtures&&c.pending?.fixtures===lastSnapshot.pending?.fixtures&&c.pending?.manual===lastSnapshot.pending?.manual&&c.pending&&lastSnapshot.pending;
+ if(sameRound){localStorage.setItem(`${SAVE_KEY}-playback`,JSON.stringify({seed:c.seed,season:c.world.season,week:c.pending!.week,minute:c.pending!.minute,speed:c.pending!.speed,paused:c.pending!.paused,decisionMode:c.pending!.decisionMode,decisionFeedback:c.pending!.decisionFeedback,highlight:c.pending!.highlight}));lastSnapshot=c;return;}
  const previous=localStorage.getItem(SAVE_KEY);
  if(previous&&!previous.startsWith('PFGM-LZW1:')){try{const version=JSON.parse(previous).version;if(version<3&&!localStorage.getItem(`${SAVE_KEY}-backup-v${version}`))localStorage.setItem(`${SAVE_KEY}-backup-v${version}`,encodeSave(previous));}catch(error){if(error instanceof DOMException)throw error;}}
  localStorage.setItem(SAVE_KEY,encodeSave(JSON.stringify(c)));localStorage.removeItem(`${SAVE_KEY}-playback`);localStorage.removeItem(MANUAL_SAVE_KEY);lastSnapshot=c;

@@ -89,6 +89,7 @@ export function resolveMatch(f:Fixture,c:Career,rng:()=>number,known?:Fixture,ch
  // IDs depend on the source interval, never the number of past shots. A lost
  // delivery must not change the identity or random draw of a later chance.
  const base:Fixture={...f,report:{simulationSeed,substitutions:changes,homeBench,awayBench,homeLineup:home,awayLineup:away,homeFormation:f.homeId===c.clubId?c.formation:'4-3-3',awayFormation:f.awayId===c.clubId?c.formation:'4-3-3',events,performances:[],homePossession:Math.round(possession),motmId:''}};
+ if(known?.report?.manualLinks)base.report!.manualLinks=known.report.manualLinks.map(link=>({...link}));
  return refreshMatchStatistics(addKeyMoments(base,c,known,preserveThrough),c);
 }
 

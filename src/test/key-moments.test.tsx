@@ -13,7 +13,7 @@ import { saveCareer,loadCareer,SAVE_KEY } from '../storage';
 import { KeyMomentDialog } from '../components/KeyMomentDialog';
 import { Matchday,visibleMatch } from '../components/Matchday';
 
-const fresh=()=>newCareer('Decision coach','elite','liverpool',23);
+const fresh=()=>({...newCareer('Decision coach','elite','liverpool',23),playableHighlights:false});
 function scenario(kind:MomentKind='penalty'):Career {
  const c=prepareWeek(fresh()),f=managedFixture(c)!,old=f.report!.keyMoments!.find(m=>m.clubId===c.clubId)!,m={...old,kind,autoChoice:0 as const};
  const result=resolveMoment(f,c,m,0),events=f.report!.events.filter(e=>e.momentId!==m.id);if(result.event)events.push(result.event);events.sort((a,b)=>a.minute-b.minute||a.id.localeCompare(b.id));

@@ -117,6 +117,9 @@ it('pauses, changes speed, changes rendering and skips without rerolling the pen
  fireEvent.click(screen.getByRole('button', { name: 'Resume' }));
  expect(latest.pending!.paused).toBe(false);
  fireEvent.click(screen.getByRole('button', { name: 'Pause' }));
+ expect(document.querySelector('.text-match-view')).toBeTruthy();
+ fireEvent.click(screen.getByText('Show animated pitch'));
+ expect(document.querySelector('.live-pitch')).toBeTruthy();
  fireEvent.click(screen.getByText('Use text view'));
  expect(document.querySelector('.text-match-view')).toBeTruthy();
  fireEvent.click(screen.getByText('Skip to full time'));

@@ -1,0 +1,8 @@
+import type { Player } from '../models';
+import { appearanceRecord, playerAppearance } from '../data/appearances';
+import { PlayerBody } from './PlayerBody';
+
+export function AppearanceDetails({player:p}:{player:Player}){
+ const record=appearanceRecord(p),a=playerAppearance(p);
+ return <section className="appearance-preview" aria-label="Player appearance and measurements"><PlayerBody player={p}/><div><h3>Player model</h3><dl className="data-list"><div><dt>Height</dt><dd>{record?.heightCm?`${record.heightCm} cm`:'Unverified'}</dd></div><div><dt>Published weight</dt><dd>{record?.weightKg?`${record.weightKg} kg`:'Unverified'}</dd></div></dl><p className="small muted">{a.status==='referenced'?'Portrait-referenced skin, hair and facial hair. Photo date unknown; hairstyle may have changed.':a.status==='unverified'?'Appearance awaiting a checked reference. Neutral placeholder shown.':'Fictional academy player · persistent generated appearance.'}</p><details className="disclosure"><summary>Appearance evidence</summary><p className="small muted">Original illustrated model. {record?.weightKg?'Body width is an artistic interpretation of published height and weight, not a measured body shape.':'Body build is schematic pending reliable measurements.'} Visual height has no effect on collision or player ability.</p>{record?.measurementNote&&<p className="small muted">{record.measurementNote}</p>}{record?.sources.length?<ul>{record.sources.map((s,i)=><li key={s.url+i}><a href={s.url} target="_blank" rel="noreferrer">{s.kind}</a> · {s.fields.join(', ')} · checked {s.checked}</li>)}</ul>:<p className="small muted">No real-life appearance reference recorded.</p>}</details></div></section>;
+}

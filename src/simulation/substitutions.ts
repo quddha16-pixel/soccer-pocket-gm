@@ -13,6 +13,7 @@ export function setMatchPlan(c:Career,plan:MatchPlan):Career {
  return {...c,matchPlan:{bench:[...plan.bench],changes:[...plan.changes]}};
 }
 function editLive(c:Career,changes:Substitution[]):Career {
+ if(c.pending?.highlight)throw Error('Finish the current attacking highlight before making a substitution.');
  if(!c.pending||c.pending.minute<0||c.pending.minute>=90)throw Error('Substitutions are available until full time.');
  if(c.pending.decisionFeedback)throw Error('Continue after the current decision before making a substitution.');
  const pending=c.pending,f=pending.fixtures.find(f=>f.homeId===c.clubId||f.awayId===c.clubId)!;
@@ -25,6 +26,7 @@ function editLive(c:Career,changes:Substitution[]):Career {
  return {...c,pending:{...pending,paused:true,fixtures:pending.fixtures.map(x=>x.id===f.id?resolved:x)}};
 }
 export function makeLiveSubstitution(c:Career,offId:string,onId:string):Career {
+ if(c.pending?.highlight)throw Error('Finish the current attacking highlight before making a substitution.');
  if(!c.pending)throw Error('Start the match first.');
  const f=c.pending.fixtures.find(f=>f.homeId===c.clubId||f.awayId===c.clubId)!;
  if(c.pending.manual&&c.pending.minute>=89)throw Error('Manual substitutions close before the final minute.');
