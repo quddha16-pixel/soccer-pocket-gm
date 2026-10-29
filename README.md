@@ -1,6 +1,10 @@
-# Pocket Football GM — v2.2.1
+# Pocket Football GM — v2.2.2
 
 Created By: Quentin Warminsky. A mobile-first football management game built with React, TypeScript and Vite in the existing `quddha16-pixel/soccer-pocket-gm` repository. No licensed club marks, photos, external portrait services or external fonts are used.
+
+## Home season record (v2.2.2)
+
+Home now displays the current season’s **Wins, Draws and Losses** alongside league position, points and recent form. The totals come from committed league results, exclude the pending match, and reset with the season’s fixtures. [Release notes](docs/v2.2.2-release.md).
 
 ## Compact club offers (v2.2.1)
 
