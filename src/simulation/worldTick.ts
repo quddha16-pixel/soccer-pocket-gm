@@ -1,3 +1,4 @@
+import {archiveDomestic,initializeDomestic} from './domestic';
 import { copyLiveWorld } from './worldCopy';
 import { archiveBoxScores } from './boxScore';
 import { settleLegacySeason, startLegacySeason, legacyState } from './legacy';
@@ -64,6 +65,7 @@ export function rolloverSeason(c:Career,nextClubId=c.clubId):Career{
  if(!movement.leagueClubIds.includes(nextClubId))throw Error('Choose a club that will be in next season’s Premier League.');
  const penalties=Object.fromEntries(clubs.map(club=>[club.id,Math.max(0,-financialSummary(c,club.id).headroom)*financeRules.excessPenaltyRate]));
  const world=copyLiveWorld(c.world),oldSeason=world.season,season=oldSeason+1,table=standings(current,c.fixtures),rank=table.findIndex(r=>r.clubId===c.clubId)+1;
+ const cupArchive=archiveDomestic(c);if(cupArchive)world.domesticHistory=[...(world.domesticHistory??[]),cupArchive];
  world.history.push({season:oldSeason,boxScores:archiveBoxScores(c),clubId:c.clubId,position:rank,points:table[rank-1].points,leagueClubIds:current.map(club=>club.id),promoted:movement.promoted,relegated:movement.relegated,results:c.fixtures.map(({report,...result})=>result)});world.season=season;world.date=weekDate(season,0);world.leagueClubIds=movement.leagueClubIds;world.championshipClubIds=movement.championshipClubIds;
  let players:Player[]=c.players.map(p=>{
  const a=structuredClone(identity(p)),age=p.age+1;if(p.clubId&&p.age<21){const time=a.joinedSeason===oldSeason?Math.max(0,(38-a.joinedWeek)/38):1;a.trainingYears=Math.min(3,a.trainingYears+time);}a.development.history.push({season:oldSeason,week:38,overall:p.overall,minutes:a.development.minutes});a.development.history=a.development.history.filter((h,i,all)=>h.week===38||i>=all.length-12).slice(-36);a.development.minutes=0;a.development.seasonStart=p.overall;a.development.baseline={...a.attributes};a.injuryWeeks=0;a.bookValue=Math.max(0,a.bookValue-a.annualAmortization);
@@ -92,7 +94,7 @@ export function rolloverSeason(c:Career,nextClubId=c.clubId):Career{
  for(const position of needed)players.push(intake(club.id,position,season,index++));
  }
  for(const club of clubs){const f=world.finances[club.id];
- const penalty=penalties[club.id]??0;f.penalties+=penalty;f.debt=(f.debt??0)+Math.max(0,penalty-f.cash);f.cash=Math.max(0,f.cash-penalty);f.budget=(f.debt??0)>0?0:Math.min(f.cash,club.budget*1e6);f.spending=0;f.income=0;f.saleProfit=0;f.agentFees=0;f.bonuses=0;f.paidPayroll=0;f.operatingCosts=0;
+ const penalty=penalties[club.id]??0;f.penalties+=penalty;f.debt=(f.debt??0)+Math.max(0,penalty-f.cash);f.cash=Math.max(0,f.cash-penalty);f.budget=(f.debt??0)>0?0:Math.min(f.cash,club.budget*1e6);f.spending=0;f.income=0;f.cupIncome=0;f.saleProfit=0;f.agentFees=0;f.bonuses=0;f.paidPayroll=0;f.operatingCosts=0;
  world.registration[club.id]=players.filter(p=>p.clubId===club.id).sort((a,b)=>(b.position==='GK'?1:0)-(a.position==='GK'?1:0)||b.overall-a.overall).reduce<string[]>((ids,p)=>{const senior=players.filter(x=>ids.includes(x.id)&&identity(x).birthDate<`${season-21}-01-01`),non=senior.filter(x=>identity(x).trainingYears<3&&!trainingExempt({...c,world,players},x));if(identity(p).birthDate>=`${season-21}-01-01`||(senior.length<(world.customRoster?.seniorLimits[club.id]??25)&&(identity(p).trainingYears>=3||trainingExempt({...c,world,players},p)||non.length<17)))ids.push(p.id);return ids;},[]);
  }
  world.staff=world.staff.map(s=>{
@@ -108,5 +110,5 @@ export function rolloverSeason(c:Career,nextClubId=c.clubId):Career{
  world.offers=world.offers.filter(o=>o.status==='completed').slice(0,80);world.news.unshift({id:`promotion-${season}`,date:world.date,text:`Promoted: ${movement.promoted.map(id=>clubById(id).name).join(', ')}. Relegated: ${movement.relegated.map(id=>clubById(id).name).join(', ')}.`});world.news.unshift({id:`season-${season}`,date:world.date,text:`${season}–${String(season+1).slice(-2)} begins. Three clubs promoted from the Championship pool; three relegated.`});world.news=world.news.slice(0,150);
  world.staff=world.staff.map(s=>({...s,controlled:s.role==='Manager'&&s.clubId===nextClubId}));
  const base={...c,clubId:nextClubId,players,world,week:0,status:'active' as const,pending:undefined,matchPlan:undefined,fixtures:generateFixtures(movement.leagueClubIds),statsStartWeek:1,transferBudget:world.finances[nextClubId].budget};
- const available=players.filter(p=>p.clubId===nextClubId&&world.registration[nextClubId].includes(p.id));const lineup=autoLineup(available,nextClubId,c.formation);return {...base,legacy:startLegacySeason(base,legacyState(c)),lineup,starId:eligibleStars({...base,lineup})[0]?.id??''};
+ const available=players.filter(p=>p.clubId===nextClubId&&world.registration[nextClubId].includes(p.id));const lineup=autoLineup(available,nextClubId,c.formation);return initializeDomestic({...base,domestic:undefined,legacy:startLegacySeason(base,legacyState(c)),lineup,starId:eligibleStars({...base,lineup})[0]?.id??''});
 }

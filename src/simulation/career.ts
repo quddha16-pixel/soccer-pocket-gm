@@ -1,3 +1,4 @@
+import {initializeDomestic,dueCupRound,prepareDomestic,commitDomestic} from './domestic';
 import { legacyState, settleLegacySeason } from './legacy';
 import { coachedPattern, type ManagerStyle } from './managerStyles';
 import { researchedFreeAgents } from '../data/freeAgents';
@@ -23,17 +24,20 @@ export function newCareer(manager:string,reputation:Reputation,clubId:string,see
  if(!offers(reputation).some(c=>c.id===clubId))throw Error('This club has not offered you a job.');
  const custom=customStartingPlayers(),players=[...custom,...researchedFreeAgents(2026,custom)],lineup=autoLineup(players,clubId,'4-3-3');
  const career=initializeWorld({version:3,managerStyle,geniusPlaystyle:managerStyle==='genius'?'positional':undefined,manager:manager.trim()||'Alex Morgan',reputation,clubId,players,fixtures:generateFixtures(clubs.map(c=>c.id)),week:0,tactic:'balanced',status:'active',seed,formation:'4-3-3',lineup,starId:eligibleStars({players,lineup})[0].id,transferBudget:clubById(clubId).budget*1e6,statsStartWeek:1} as Career);
- return {...career,legacy:legacyState(career)};
+ return initializeDomestic({...career,playableHighlights:false,legacy:legacyState(career)});
 }
 export function strength(players:Player[],clubId:string){const squad=players.filter(p=>p.clubId===clubId).sort((a,b)=>b.overall-a.overall).slice(0,11);return squad.reduce((s,p)=>s+p.overall*(.85+.15*p.fitness/100)*(.95+.05*p.morale/100),0)/squad.length;}
 export function prepareWeek(c:Career,watch=true):Career{
  if(c.pending||c.status!=='active'||c.week>=38)return c;
+ c=initializeDomestic(c);
+ for(let i=0;i<16;i++){const due=dueCupRound(c);if(!due)break;if(due.round.fixtures.some(f=>[f.homeId,f.awayId].includes(c.clubId)))return prepareDomestic(repairLineup(c),watch);c=commitDomestic(prepareDomestic(c,false));}
  c=repairLineup(c);
  const week=c.week+1,rng=random(c.seed+(c.world.season-2026)*104729+week*7919);
  const fixtures=c.fixtures.filter(f=>f.week===week).map(f=>resolveMatch(f,c,rng));
  return {...c,matchPlan:nextMatchPlan(c),pending:{week,fixtures,decisionMode:watch&&(c.interactiveMoments??true)?'interactive':'automatic',minute:watch?0:90,speed:1,paused:false}};
 }
 export function commitWeek(c:Career,expectedWeek=c.pending?.week):Career{
+ if(c.pending?.competition)return commitDomestic(c);
  if(c.pending?.highlight)return c;
  if(c.pending?.manual&&c.pending.manual.phase!=='fulltime')return c;
  if(!c.pending||c.pending.week!==expectedWeek||c.pending.minute<90||c.pending.week!==c.week+1)return c;
@@ -48,4 +52,4 @@ export function commitWeek(c:Career,expectedWeek=c.pending?.week):Career{
  return week===38?settleLegacySeason(archiveSeasonReview(committed)):committed;
 }
 // Headless quick simulation retains the original API for full-season tests and tooling.
-export function advance(c:Career):Career{const prepared=prepareWeek(c,false);return prepared.pending?commitWeek({...prepared,pending:{...prepared.pending,minute:90}}):prepared;}
+export function advance(c:Career):Career{const week=c.week;let result=c;for(let i=0;i<16;i++){const prepared=prepareWeek(result,false);if(!prepared.pending)return prepared;result=commitWeek({...prepared,pending:{...prepared.pending,minute:90}});if(result.week>week||result.status!=='active'||result.pending)return result;}return result;}

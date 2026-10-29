@@ -71,19 +71,11 @@ describe('drawn set-piece geometry and football outcomes',()=>{
   const bad=structuredClone(c);activeDecision(bad)!.kind='corner';expect(()=>shootKeyMoment(bad,m.id,curved)).toThrow(/valid shot/);expect(()=>shootKeyMoment(c,m.id,{path:[]})).toThrow(/valid shot/);
  });
 });
-describe('set-piece mini-game replaces choices',()=>{
- it('shows both real player avatars, keyboard/tap aiming, redraw and one shot action for both kinds',()=>{
-  for(const kind of ['penalty','free-kick'] as const){const c=scenario(kind),m=activeDecision(c)!,actor=c.players.find(p=>p.id===m.actorId)!,keeper=c.players.find(p=>p.id===m.keeperId)!;const {unmount}=render(<KeyMomentDialog career={c} onUpdate={()=>{}}/>);
-   expect(screen.getByText(actor.name)).toBeTruthy();expect(screen.getByText(keeper.name)).toBeTruthy();expect(screen.getAllByRole('img',{name:`Portrait of ${keeper.name}`}).length).toBeGreaterThan(0);expect(document.querySelector('.moment-options')).toBeNull();
-   const take=screen.getByRole('button',{name:'Take shot'}) as HTMLButtonElement;expect(take.disabled).toBe(true);const surface=screen.getByRole('group',{name:'Shot aiming area'});fireEvent.keyDown(surface,{key:'ArrowLeft'});fireEvent.keyDown(surface,{key:'Enter'});expect(take.disabled).toBe(false);expect(screen.getByTestId('drawn-shot-path')).toBeTruthy();fireEvent.click(screen.getByRole('button',{name:'Redraw'}));expect(take.disabled).toBe(true);unmount();
-  }
+describe('simulation coaching replaces the set-piece mini-game',()=>{
+ it('offers three coaching actions for both set pieces without aiming or shooting controls',()=>{
+  for(const kind of ['penalty','free-kick'] as const){const c=scenario(kind),m=activeDecision(c)!,actor=c.players.find(p=>p.id===m.actorId)!,keeper=c.players.find(p=>p.id===m.keeperId)!;const {unmount}=render(<KeyMomentDialog career={c} onUpdate={()=>{}}/>);expect(screen.getByText(actor.name)).toBeTruthy();expect(screen.getByText(keeper.name)).toBeTruthy();expect(document.querySelectorAll('.moment-options>button')).toHaveLength(3);expect(screen.queryByRole('group',{name:'Shot aiming area'})).toBeNull();expect(screen.queryByRole('button',{name:'Take shot'})).toBeNull();unmount();}
  });
- it('submits once, animates the saved path and allows continuing without the old options',async()=>{
-  const start=scenario();let latest:Career;
-  vi.stubGlobal('matchMedia',()=>({matches:true}));
-  function Harness(){const [c,setC]=useState(start);latest=c;return <KeyMomentDialog career={c} onUpdate={setC}/>;}
-  render(<Harness/>);const surface=screen.getByRole('group',{name:'Shot aiming area'});fireEvent.keyDown(surface,{key:'Enter'});fireEvent.click(screen.getByRole('button',{name:'Take shot'}));
-  await waitFor(()=>expect((screen.getByRole('button',{name:'Continue match'}) as HTMLButtonElement).disabled).toBe(false));
-  expect(decisionFeedback(latest!)!.shot!.path).toHaveLength(2);const replay=within(screen.getByRole('dialog',{name:'The outcome'})).getByTestId('shot-ball');expect(replay.getAttribute('data-y')).toBe('0.2800');fireEvent.click(screen.getByRole('button',{name:'Continue match'}));expect(latest!.pending!.decisionFeedback).toBeUndefined();
+ it('still replays a previously saved drawn shot and continues without changing its recorded outcome',async()=>{
+  const c=scenario(),start=shootKeyMoment(c,activeDecision(c)!.id,curved);let latest:Career;vi.stubGlobal('matchMedia',()=>({matches:true}));function Harness(){const[c,setC]=useState(start);latest=c;return <KeyMomentDialog career={c} onUpdate={setC}/>;}render(<Harness/>);await waitFor(()=>expect((screen.getByRole('button',{name:'Continue match'}) as HTMLButtonElement).disabled).toBe(false));expect(decisionFeedback(latest!)!.shot).toEqual(curved);expect(within(screen.getByRole('dialog',{name:'The outcome'})).getByTestId('shot-ball').getAttribute('data-y')).toBe('0.1600');fireEvent.click(screen.getByRole('button',{name:'Continue match'}));expect(latest!.pending!.decisionFeedback).toBeUndefined();
  });
 });

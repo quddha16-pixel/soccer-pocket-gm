@@ -12,7 +12,7 @@ function distinct(plans:SavedSubPlan[]){
 function fromFixture(c:Career,f:Fixture):SavedSubPlan|undefined {
  const report=f.report,changes=report?.substitutions?.filter(s=>s.clubId===c.clubId)??[],bench=f.homeId===c.clubId?report?.homeBench:report?.awayBench;
  if(!changes.length||!bench)return;
- return {id:`subs-${c.clubId}-${c.world.season}-${f.week}`,clubId:c.clubId,season:c.world.season,week:f.week,formation:(f.homeId===c.clubId?report?.homeFormation:report?.awayFormation)??'4-3-3',source:'match',bench:[...bench],changes:changes.map(s=>({...s}))};
+ return {id:`subs-${c.clubId}-${c.world.season}-${f.week}${f.competition?`-${f.id}`:''}`,clubId:c.clubId,season:c.world.season,week:f.week,formation:(f.homeId===c.clubId?report?.homeFormation:report?.awayFormation)??'4-3-3',source:'match',bench:[...bench],changes:changes.map(s=>({...s}))};
 }
 /** Existing v1.7/v1.8 match reports supply recent plans without a career reset. */
 export function recentSubstitutionPlans(c:Career):SavedSubPlan[]{

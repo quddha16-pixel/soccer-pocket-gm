@@ -22,7 +22,7 @@ export function payroll(c:Career,clubId:string){return {players:c.players.filter
 export function financialSummary(c:Career,clubId=c.clubId){
  const f=c.world.finances[clubId],wages=payroll(c,clubId),manager=c.world.staff.filter(s=>s.clubId===clubId&&s.role==='Manager').reduce((s,p)=>s+p.wage*52,0),amortization=c.players.filter(p=>p.clubId===clubId).reduce((s,p)=>s+identity(p).annualAmortization,0);
  const annualCost=wages.players*52+manager+amortization+f.agentFees+f.bonuses;
- const revenue=Math.max(1,f.revenue+f.saleProfit),ratio=annualCost/revenue;
+ const revenue=Math.max(1,f.revenue+(f.cupIncome??0)+f.saleProfit),ratio=annualCost/revenue;
  return {...f,...wages,manager,amortization,annualCost,ratio,headroom:revenue*(financeRules.scrLimit+financeRules.additionalAllowance)-annualCost,wageCapacity:Math.max(0,f.wageCap-wages.players-wages.staff)};
 }
 export function canRegister(c:Career,p:Player,clubId:string){

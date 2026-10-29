@@ -49,7 +49,7 @@ describe('legacy season accounting',()=>{
   const missing={...c,fixtures:c.fixtures.map((f,i)=>i?f:{...f,homeGoals:undefined})};expect(settleLegacySeason(missing)).toBe(missing);
  });
  it('settles through the actual final matchweek commit exactly once',()=>{
-  const c=completed(),before={...c,week:37,status:'active' as const,fixtures:c.fixtures.map(f=>f.week===38?{...f,homeGoals:undefined,awayGoals:undefined}:f)};
+  const c=completed(),before={...c,domestic:undefined,week:37,status:'active' as const,fixtures:c.fixtures.map(f=>f.week===38?{...f,homeGoals:undefined,awayGoals:undefined}:f)};
   const end=commitWeek(prepareWeek(before,false));expect(end.week).toBe(38);expect(end.legacy!.settledSeasons).toEqual([2026]);expect(end.world.seasonReviews!.at(-1)!.complete).toBe(true);
   expect(commitWeek(end)).toBe(end);saveCareer(end);expect(loadCareer().career!.legacy).toEqual(end.legacy);
  });

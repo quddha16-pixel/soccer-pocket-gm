@@ -1,3 +1,4 @@
+import {domesticFixtures} from './domestic';
 import type { ManualPlayerStats } from './manualModels';
 import type { Career, Fixture } from '../models';
 import { naturalSlots } from './management';
@@ -31,11 +32,12 @@ export const unpackBoxScore=(b:ArchivedBoxScore):MatchBoxScore=>({home:b.h.map(u
 export function archiveBoxScores(c:Career){
  return Object.fromEntries(c.fixtures.flatMap(f=>{const b=buildBoxScore(f,c);return b?[[f.id,packBoxScore(b)]]:[];}));
 }
-export function findBoxScore(c:Career,season:number,id:string){
+export function findBoxScore(c:Career,season:number,id:string):{fixture:Omit<Fixture,'report'>;box:MatchBoxScore|undefined}|undefined{
  if(season===c.world.season){
-  const f=c.fixtures.find(f=>f.id===id&&f.week<=c.week&&completedFixture(f))??(c.pending?.minute===90?c.pending.fixtures.find(f=>f.id===id):undefined);
+  const f=[...c.fixtures,...domesticFixtures(c)].find(f=>f.id===id&&completedFixture(f))??(c.pending?.minute===90?c.pending.fixtures.find(f=>f.id===id):undefined);
   return f?{fixture:f,box:buildBoxScore(f,c)}:undefined;
  }
+ const cup=c.world.domesticHistory?.find(h=>h.season===season)?.tournaments.find(t=>t.rounds.some(r=>r.fixtures.some(f=>f.id===id)));if(cup){const fixture=cup.rounds.flatMap(r=>r.fixtures).find(f=>f.id===id)!;return {fixture,box:cup.boxScores[id]?unpackBoxScore(cup.boxScores[id]):undefined};}
  const archive=c.world.history.find(h=>h.season===season),f=archive?.results?.find(f=>f.id===id&&completedFixture(f)),b=archive?.boxScores?.[id];
  return f?{fixture:f,box:b?unpackBoxScore(b):undefined}:undefined;
 }

@@ -81,6 +81,7 @@ const wins=(l:Legacy)=>l.entries.filter(e=>e.kind==='title');
 const titles=(l:Legacy)=>new Set(wins(l).map(e=>e.clubId));
 const awards=(l:Legacy)=>new Set(l.entries.filter(e=>e.kind==='award').map(e=>e.id.split(':').at(-1)!));
 export const achievementDefinitions:AchievementDefinition[]=[
+ ...([['carabao','Carabao Cup'],['fa-cup','FA Cup'],['shield','Community Shield']] as const).map(([id,name])=>({id:`cup-${id}`,title:`${name} winner`,description:`Win the ${name} in your GM career.`,goal:1,progress:(l:Legacy)=>l.entries.filter(e=>e.id.endsWith(`:cup-${id}`)).length})),
  {id:'champion',title:'Champion',description:'Win the league.',goal:1,progress:l=>wins(l).length},
  {id:'treble-titles',title:'Serial winner',description:'Win three league titles in this career.',goal:3,progress:l=>wins(l).length},
  {id:'three-clubs',title:'Travelling champion',description:'Win the league with three different clubs.',goal:3,progress:l=>titles(l).size},

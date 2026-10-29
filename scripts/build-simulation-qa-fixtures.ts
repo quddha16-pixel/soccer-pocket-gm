@@ -1,0 +1,20 @@
+import {mkdirSync,writeFileSync,readFileSync} from 'node:fs';
+import ts from 'typescript';
+import {newCareer,prepareWeek,advance} from '../src/simulation/career';
+import {managedFixture,activeDecision} from '../src/simulation/keyMoments';
+import {resolveMoment} from '../src/simulation/momentRules';
+import {refreshMatchStatistics} from '../src/simulation/match';
+import {encodeSave} from '../src/simulation/codec';
+import {rolloverSeason} from '../src/simulation/worldTick';
+import {createHighlight,snapshotHighlight} from '../src/simulation/highlights';
+import {standings} from '../src/simulation/league';
+import {leagueClubs,clubById} from '../src/data/clubs';
+import type {Career} from '../src/models';
+const dir='/tmp/pocket-v23-fixtures';mkdirSync(dir,{recursive:true});
+const save=(name:string,c:Career)=>{writeFileSync(`${dir}/${name}.json`,JSON.stringify({save:encodeSave(JSON.stringify(c))}));};
+const fresh=newCareer('Quentin','elite','everton',23);save('fresh',fresh);
+const start=prepareWeek(fresh),f=managedFixture(start)!,old=f.report!.keyMoments!.find(m=>m.clubId===start.clubId)!;
+for(const kind of ['penalty','free-kick','one-on-one','corner','cross','big-chance'] as const){const m={...old,kind},resolved=resolveMoment(f,start,m,m.autoChoice),events=f.report!.events.filter(e=>e.momentId!==m.id);if(resolved.event)events.push(resolved.event);const changed=refreshMatchStatistics({...f,report:{...f.report!,cornerTarget:undefined,events:events.sort((a,b)=>a.minute-b.minute),keyMoments:f.report!.keyMoments!.map(x=>x.id===m.id?resolved.moment:x.minute===m.minute?{...x,selection:x.autoChoice}:x)}},start);const c={...start,pending:{...start.pending!,paused:true,minute:m.minute-1,fixtures:start.pending!.fixtures.map(x=>x.id===f.id?changed:x)}};save(kind,c);if(kind==='one-on-one'){const legacy={...c,playableHighlights:true};save('legacy-highlight',snapshotHighlight(legacy,createHighlight(legacy,activeDecision(legacy)!)));}}
+let c=newCareer('Quentin','elite','city',901);for(let i=0;i<5;i++)c=advance(c);save('cup',c);save('old-season',{...c,domestic:undefined});for(let i=5;i<38;i++)c=advance(c);save('champions',c);const winner=standings(leagueClubs(c),c.fixtures)[0].clubId;save('shield',rolloverSeason(c,winner));writeFileSync(`${dir}/meta.json`,JSON.stringify({leagueWinner:clubById(winner).name,season:2026,custom:c.players.filter(p=>p.real?.origin==='custom').length,cupWinners:c.domestic!.tournaments.map(t=>({id:t.id,winner:t.championId}))}));
+writeFileSync(`${dir}/codec.cjs`,ts.transpileModule(readFileSync('src/simulation/codec.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText);
+console.log(JSON.stringify({fixtures:12,leagueWinner:clubById(winner).name,cups:c.domestic!.tournaments.map(t=>t.id),players:c.players.length}));

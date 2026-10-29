@@ -1,6 +1,22 @@
-# Pocket Football GM — v2.2.2
+# Pocket Football GM — v2.3.0
 
 Created By: Quentin Warminsky. A mobile-first football management game built with React, TypeScript and Vite in the existing `quddha16-pixel/soccer-pocket-gm` repository. No licensed club marks, photos, external portrait services or external fonts are used.
+
+## Watch, decide and manage (v2.3)
+
+**Matchday → Watch Match** is now a pure management simulation. Choose from three coaching approaches at penalties, free kicks, corners, one-on-ones, crosses and big chances. Your footballers execute those decisions using their individual abilities. Live/planned substitutions, recent substitution plans, tactics, fatigue, chemistry and Quick Sim remain. Direct movement, shooting buttons and new draw-to-shoot input have been removed. Old controller checkpoints resume as watched simulations, retaining played goals and substitutions; old authored shot replays remain readable.
+
+The broadcast pitch now has stadium seating, lighting, nets, richer turf and full-body illustrated footballers with team kits, shirt numbers, moving legs, ball trails and pass paths. **Follow play**, **Tactical view** and player selection provide viewing controls. Decision results have recorded-outcome replays. Reduced motion is respected. Appearance research remains partial: **545/546 sourced heights, 64/546 inspected portraits and five published weight references**. Unchecked appearances retain neutral placeholders. [Research coverage](docs/research/avatar-status.md).
+
+## English cups and the Premier League title
+
+**Home → Road to Wembley**, or **League → Cups**, opens the Carabao Cup, FA Cup and Community Shield. Cup ties use the same watchable match engine, coaching choices, live substitutions and box scores. Draws, qualification, two-leg Carabao semi-finals, finals, shootouts, honours, club income and legacy bonuses are saved. Cup results never add EPL points or change the Home league record. Cup player stats have a separate profile section.
+
+The cup field uses your **44 existing clubs and real squads**. This is a custom entry list, not the complete English cup pyramid. The 24 pool clubs play an opening round; 20 league clubs enter the round of 32. Level knockout ties go straight to simulated penalties (no extra time or FA Cup replays). Wembley hosts finals and FA Cup semi-finals. Gate/prize money is estimated. The Shield follows your first completed in-game league/FA Cup campaign; a league/FA Cup double qualifies the league runner-up.
+
+Cups begin immediately in new careers and existing careers still at week zero. Already active older seasons retain their existing results and adopt cups next season. The storage key, schema version and saving cadence are retained, with optional competition records and round-specific playback checkpoints.
+
+The EPL title is won by finishing top after **38 matches**, with the existing points/goal-difference/goals-scored table. **No EPL playoffs** are added. Late-season title-race panels, provisional live standings, clinching information and a prominent trophy presentation give the title more attention. [v2.3 implementation and validation](docs/v2.3-release.md).
 
 ## Home season record (v2.2.2)
 
@@ -12,15 +28,9 @@ Manager reputation now offers exactly **4 / 12 / 20 clubs** for **Unknown / Esta
 
 Every club remains visible in a smaller responsive grid, with contract highlighting and its legacy-point graphic. Use **Details** to inspect budgets, expectations, contracts and the full reward breakdown. Mobile screens use three columns where space allows and two on narrow phones; larger screens fit more columns. [Release notes](docs/v2.2.1-release.md).
 
-## Live pitch and field play (v2.2)
+## Previous match-control releases
 
-**Matchday → Play Match** now shows a continuously moving mini-pitch with circular player faces, visible passes, support runs and turnovers. More existing chances become interactive. One-on-ones open responsive horizontal field play with an advancing keeper, visible aiming, low/chipped finishes and support passes. Crosses and other big chances keep their three coaching options. New games have **4–17 total corners**: deliver your corners with Cross/Short and a timed finish, or move, Switch and Clear while defending opponent corners.
-
-Penalties and free kicks keep draw-to-shoot, with swipe-speed power, clearer placement/wall feedback, larger player models, keeper dives, flight trails and goal-impact effects. The horizontal movement circle follows touch directly, with smoother movement and release timing. **Career saving and progression retain their existing behavior.** Live substitutions, saved results and partnership gains remain supported. **Watch Match** uses coaching decisions and **Quick Sim** remains available. [v2.2 behavior and validation](docs/v2.2-release.md).
-
-Original full-body models appear in highlights and profiles, using sourced heights and the first inspected likeness batch. **Appearance research remains partial:** 545/546 custom heights, 64/546 inspected portraits and five published weight references. Unchecked real appearances use neutral placeholders; builds remain schematic or labelled illustration estimates. [Research coverage](docs/research/avatar-status.md). The 546 custom players and club memberships are unchanged.
-
-Existing v2.0 full-contest saves can finish their current match or use **Let assistant finish**. New matches use the hybrid format. [v2.1 controls, results, saves and validation](docs/v2.1-release.md). Home shortcuts, navigation help, depth charts, development arrows and the other career tools remain available.
+The direct-control modes from v2.0–v2.2 are superseded by v2.3 watch-and-decide play. Their source/history remains available for saved-career recovery. [v2.2 release history](docs/v2.2-release.md). The original 546-player roster, exact custom club assignments, Home record, depth charts, development arrows and career tools are preserved.
 
 ## Match box scores (v1.12)
 
@@ -30,7 +40,7 @@ Compact box scores now survive season rollover, refresh and club changes. Existi
 
 ## Drawn set pieces, depth chart and arrows (v1.11)
 
-Penalties and free kicks in interactive **Watch Match** now open a mini-game with your taker and the opposing keeper. Draw a line or curve from the ball to the goal, preview/redraw it, then **Take shot**. The ball follows your saved path. This replaces the three-option menus for these two moments; other key chances keep their tactical choices. Placement, player ability, goalkeeper quality and the free-kick wall affect the actual result. Tap and keyboard aiming and reduced-motion replay are supported.
+The former drawn-shot mini-game is retained only to read and replay historical saves. New set pieces use three coaching choices in v2.3.
 
 **Squad → Depth** shows every XI role and ranked eligible cover. Choose a role, use its starter slider, tap Start, or drag a player's grip into the sticky starting spot. Changes update the real XI and survive refresh. Existing starters swap slots; rotation players replace the current starter. Injured/unregistered players and goalkeeper restrictions follow the existing rules. During a matchweek, use Matchday substitutions instead.
 
@@ -58,6 +68,9 @@ npm run dev
 npm test
 npm run build
 npm run preview
+# Optional compiled-browser QA (requires Playwright and Chromium):
+node node_modules/vite-node/vite-node.mjs scripts/build-simulation-qa-fixtures.ts
+BASE_URL=http://localhost:4173/soccer-pocket-gm/ node scripts/simulation-cups-qa.cjs
 ```
 
 Open the Vite URL including `/soccer-pocket-gm/`. If the default npm cache is not writable, use `npm ci --cache /tmp/pocket-gm-npm-cache`. Tests use Vitest, jsdom and React Testing Library. Build runs TypeScript checking and produces `dist/`.
@@ -95,7 +108,7 @@ Natural positions retain all 15 detailed codes, mapped to the six legacy engine 
 
 ## Championship promotion pool
 
-`src/data/championship.ts` adds 24 distinct clubs without changing the original starting 20. `src/data/championship-players.json` contains **664 real incoming player profiles**, excluding five identities already assigned to the custom Premier League. New clubs receive these squads, seven staff roles, accounts and registration when first promoted. Returning clubs retain their career players, transfers, finances and history; no roster is reset. Relegated clubs remain in the pool and their players remain available in the market.
+`src/data/championship.ts` adds 24 distinct clubs without changing the original starting 20. `src/data/championship-players.json` contains **664 real incoming player profiles**, excluding five identities already assigned to the custom Premier League. New clubs receive these squads, seven staff roles, accounts and registration when first entering a domestic cup or being promoted. Returning clubs retain their career players, transfers, finances and history; no roster is reset. Relegated clubs remain in the pool and their players remain available in the market.
 
 Overall, identity, positions, preferred foot, summary skills and referenced PlayStyles come from dated EA team references. Detailed attributes, potential, development, contracts, values and wages are explicitly labelled game estimates. There is no claim that these are fully researched FC 27 subattributes. Rebuild with `python scripts/build-championship-pool.py`; selected facts and URLs are in `docs/research/championship-facts.json`. See [pool reconciliation and scope](docs/championship-pool.md).
 
@@ -111,7 +124,7 @@ The key-moment system remains active in Watch Match, alongside the v1.8 sticky s
 
 ## v1.8: interactive key moments
 
-Watch Match now pauses **before your team's chance is resolved on screen** for penalties, free kicks, corners, one-on-ones, big play chances and major crosses. Corners, one-on-ones, big chances and major crosses offer three football decisions with short tradeoff descriptions. As of v1.11, penalties and free kicks use the draw-to-aim mini-game instead. Choose an approach, see the outcome, then continue. **Let player decide** delegates a single chance; the pre-match **Interactive key moments** toggle enables uninterrupted watching. Quick Sim, opponent teams and skipped chances use the same assessment and resolution rules automatically.
+Watch Match now pauses **before your team's chance is resolved on screen** for penalties, free kicks, corners, one-on-ones, big play chances and major crosses. All six opportunity types offer three football decisions with short tradeoff descriptions in v2.3. Choose an approach, see the outcome, then continue. **Let player decide** delegates a single chance; the pre-match **Interactive key moments** toggle enables uninterrupted watching. Quick Sim, opponent teams and skipped chances use the same assessment and resolution rules automatically.
 
 Decisions use individual finishing, power, composure, control, passing, crossing, aerial ability, specialist traits, goalkeeper quality/movement, defensive pressure, fatigue and positional fit. Deliveries or dribbles can fail before a shot, passing options can produce a teammate's goal, and penalties are not constrained by the open-play conversion cap. There is no guaranteed scoring option. Only the current chance changes: past events, unrelated chances and the other fixtures retain their outcomes. Substitutions update future opportunities without erasing completed decisions.
 

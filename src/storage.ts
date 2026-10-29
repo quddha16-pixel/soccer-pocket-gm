@@ -1,3 +1,5 @@
+import {domesticFixtures} from './simulation/domestic';
+import {validDomestic} from './simulation/domesticValidation';
 import { needsDecision } from './simulation/momentControl';
 import { snapshotManual, validManualState } from './simulation/manualCareer';
 import { validHighlight, validHighlightResult } from './simulation/highlights';
@@ -27,7 +29,7 @@ export function loadCareer():{career:Career|null;error:string}{
  }
  if(oldVersion===1||oldVersion===2)c=initializeWorld(c);
  const progressRaw=localStorage.getItem(`${SAVE_KEY}-playback`);
- if(progressRaw&&c.pending){try{const progress=JSON.parse(progressRaw);if(progress.seed===c.seed&&progress.season===c.world.season&&progress.week===c.pending.week){const candidate={...c,pending:{...c.pending,minute:progress.minute,speed:progress.speed,paused:progress.paused,decisionMode:progress.decisionMode,decisionFeedback:progress.decisionFeedback,highlight:progress.highlight}};if(validHighlight(candidate))c=candidate;}}catch{/* The authoritative snapshot remains available. */}}
+ if(progressRaw&&c.pending){try{const progress=JSON.parse(progressRaw);if(progress.seed===c.seed&&progress.season===c.world.season&&progress.week===c.pending.week&&progress.roundId===c.pending.competition?.roundId){const candidate={...c,pending:{...c.pending,minute:progress.minute,speed:progress.speed,paused:progress.paused,decisionMode:progress.decisionMode,decisionFeedback:progress.decisionFeedback,highlight:progress.highlight}};if(validHighlight(candidate))c=candidate;}}catch{/* The authoritative snapshot remains available. */}}
  if(c.pending?.manual){try{const raw=localStorage.getItem(MANUAL_SAVE_KEY);if(raw){const progress=JSON.parse(raw);if(progress.seed===c.seed&&progress.season===c.world.season&&progress.week===c.pending.week&&progress.state?.elapsed>=c.pending.manual.elapsed){const candidate=snapshotManual(c,progress.state,true);if(validManualState(candidate))c=candidate;}}}catch{/* Keep the authoritative checkpoint if a sidecar is interrupted. */}}
 
  const ids=new Set(allClubs.map(x=>x.id)),currentIds=c.world?.leagueClubIds??clubs.map(club=>club.id);
@@ -51,13 +53,15 @@ export function loadCareer():{career:Career|null;error:string}{
  if(!formations.includes(c.formation)||!validLineup(c.players,c.clubId,c.lineup)||!eligibleStars(c).some(p=>p.id===c.starId)||!Number.isFinite(c.transferBudget)||c.transferBudget<0||!Number.isInteger(c.statsStartWeek)||c.statsStartWeek<1||c.statsStartWeek>39)throw Error();
  if(c.pending){
   const p=c.pending;
-  if(c.status!=='active'||p.week!==c.week+1||!Number.isInteger(p.minute)||p.minute<0||p.minute>90||![1,2,4].includes(p.speed)||typeof p.paused!=='boolean'||!Array.isArray(p.fixtures)||p.fixtures.length!==10)throw Error();
+  if(c.status!=='active'||p.week!==c.week+1||!Number.isInteger(p.minute)||p.minute<0||p.minute>90||![1,2,4].includes(p.speed)||typeof p.paused!=='boolean'||!Array.isArray(p.fixtures)||(p.competition?p.fixtures.length<1||p.fixtures.length>16:p.fixtures.length!==10))throw Error();
   if(p.decisionMode!==undefined&&!['interactive','automatic'].includes(p.decisionMode))throw Error();
   if(p.decisionFeedback!==undefined){const f=p.fixtures.find(f=>f.homeId===c.clubId||f.awayId===c.clubId),m=f?.report?.keyMoments?.find(m=>m.id===p.decisionFeedback);if(p.decisionMode!=='interactive'||!m||!needsDecision(c,m)||m.selection===undefined||m.minute!==p.minute+1)throw Error();}
-  const expectedRound=c.fixtures.filter(f=>f.week===p.week);
-  if(p.fixtures.some((f,i)=>f.id!==expectedRound[i].id||f.homeId!==expectedRound[i].homeId||f.awayId!==expectedRound[i].awayId||f.week!==p.week||!Number.isInteger(f.homeGoals)||!Number.isInteger(f.awayGoals)||f.homeGoals!<0||f.awayGoals!<0||!f.report))throw Error();
+  const expectedRound=p.competition?c.domestic?.tournaments.find(t=>t.id===p.competition!.cupId)?.rounds.find(r=>r.id===p.competition!.roundId)?.fixtures??[]:c.fixtures.filter(f=>f.week===p.week);
+  if(expectedRound.length!==p.fixtures.length)throw Error();
+  if(p.fixtures.some((f,i)=>f.id!==expectedRound[i].id||f.homeId!==expectedRound[i].homeId||f.awayId!==expectedRound[i].awayId||f.week!==expectedRound[i].week||!Number.isInteger(f.homeGoals)||!Number.isInteger(f.awayGoals)||f.homeGoals!<0||f.awayGoals!<0||!f.report))throw Error();
  }
- for(const f of [...c.fixtures,...(c.pending?.fixtures??[])])if(f.report){
+ if(!validDomestic(c))throw Error();
+ for(const f of [...c.fixtures,...domesticFixtures(c),...(c.pending?.fixtures??[])])if(f.report){
   const r=f.report,ids=new Set(c.players.map(p=>p.id));
   if(r.cornerTarget!==undefined&&(!Number.isInteger(r.cornerTarget)||r.cornerTarget<4||r.cornerTarget>17||r.keyMoments?.filter(m=>m.kind==='corner').length!==r.cornerTarget))throw Error();
   if(r.manualStats!==undefined){if(!r.manualStats||typeof r.manualStats!=='object'||Array.isArray(r.manualStats)||!Number.isInteger(r.manualMinutes)||r.manualMinutes!<0||r.manualMinutes!>90)throw Error();for(const [id,n] of Object.entries(r.manualStats)){if(!r.performances.some(p=>p.playerId===id)||!n||[n.attempted,n.completed,n.interceptions,n.tackles].some(v=>!Number.isInteger(v)||v<0)||n.completed>n.attempted||!Number.isFinite(n.distance)||n.distance<0)throw Error();}}
@@ -112,8 +116,8 @@ export function loadCareer():{career:Career|null;error:string}{
 }
 let lastSnapshot:Career|null=null;
 export function saveCareer(c:Career){
- const sameRound=localStorage.getItem(SAVE_KEY)&&lastSnapshot&&['seed','week','manager','reputation','clubId','status','tactic','formation','starId','playableHighlights','interactiveMoments'].every(key=>c[key as keyof Career]===lastSnapshot![key as keyof Career])&&c.lineup===lastSnapshot.lineup&&c.world===lastSnapshot.world&&c.players===lastSnapshot.players&&c.fixtures===lastSnapshot.fixtures&&c.pending?.fixtures===lastSnapshot.pending?.fixtures&&c.pending?.manual===lastSnapshot.pending?.manual&&c.pending&&lastSnapshot.pending;
- if(sameRound){localStorage.setItem(`${SAVE_KEY}-playback`,JSON.stringify({seed:c.seed,season:c.world.season,week:c.pending!.week,minute:c.pending!.minute,speed:c.pending!.speed,paused:c.pending!.paused,decisionMode:c.pending!.decisionMode,decisionFeedback:c.pending!.decisionFeedback,highlight:c.pending!.highlight}));lastSnapshot=c;return;}
+ const sameRound=localStorage.getItem(SAVE_KEY)&&lastSnapshot&&['seed','week','manager','reputation','clubId','status','tactic','formation','starId','playableHighlights','interactiveMoments'].every(key=>c[key as keyof Career]===lastSnapshot![key as keyof Career])&&c.domestic===lastSnapshot.domestic&&c.pending?.competition?.roundId===lastSnapshot.pending?.competition?.roundId&&c.lineup===lastSnapshot.lineup&&c.world===lastSnapshot.world&&c.players===lastSnapshot.players&&c.fixtures===lastSnapshot.fixtures&&c.pending?.fixtures===lastSnapshot.pending?.fixtures&&c.pending?.manual===lastSnapshot.pending?.manual&&c.pending&&lastSnapshot.pending;
+ if(sameRound){localStorage.setItem(`${SAVE_KEY}-playback`,JSON.stringify({seed:c.seed,season:c.world.season,week:c.pending!.week,roundId:c.pending!.competition?.roundId,minute:c.pending!.minute,speed:c.pending!.speed,paused:c.pending!.paused,decisionMode:c.pending!.decisionMode,decisionFeedback:c.pending!.decisionFeedback,highlight:c.pending!.highlight}));lastSnapshot=c;return;}
  const previous=localStorage.getItem(SAVE_KEY);
  if(previous&&!previous.startsWith('PFGM-LZW1:')){try{const version=JSON.parse(previous).version;if(version<3&&!localStorage.getItem(`${SAVE_KEY}-backup-v${version}`))localStorage.setItem(`${SAVE_KEY}-backup-v${version}`,encodeSave(previous));}catch(error){if(error instanceof DOMException)throw error;}}
  localStorage.setItem(SAVE_KEY,encodeSave(JSON.stringify(c)));localStorage.removeItem(`${SAVE_KEY}-playback`);localStorage.removeItem(MANUAL_SAVE_KEY);lastSnapshot=c;
