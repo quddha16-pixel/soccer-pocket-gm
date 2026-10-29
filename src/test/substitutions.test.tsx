@@ -81,7 +81,7 @@ describe('planned and live substitutions',()=>{
  });
  it('loads a pre-substitutions pending report and adds a bench without changing the watched past',()=>{
   const c=prepareWeek(fresh());c.pending!.minute=30;c.pending!.paused=true;
-  for(const f of c.pending!.fixtures){const r=f.report!,ids=new Set([...r.homeLineup!,...r.awayLineup!]);delete r.substitutions;delete r.keyMoments;delete r.simulationSeed;delete r.homeBench;delete r.awayBench;
+  for(const f of c.pending!.fixtures){const r=f.report!,ids=new Set([...r.homeLineup!,...r.awayLineup!]);delete r.substitutions;delete r.keyMoments;delete r.cornerTarget;delete r.simulationSeed;delete r.homeBench;delete r.awayBench;
    r.events=r.events.map(({momentId,...event})=>event).filter(e=>ids.has(e.playerId)&&(!e.creatorId||ids.has(e.creatorId))&&(!e.assistId||ids.has(e.assistId)));
    r.performances=r.performances.filter(p=>ids.has(p.playerId)).map(({minutes,entered,exited,conceded,...p})=>p);r.motmId=r.performances[0].playerId;
    f.homeGoals=r.events.filter(e=>e.clubId===f.homeId&&e.type==='goal').length;f.awayGoals=r.events.filter(e=>e.clubId===f.awayId&&e.type==='goal').length;

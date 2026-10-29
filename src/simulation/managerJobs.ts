@@ -5,6 +5,7 @@ import { standings } from './league';
 import { leagueClubs } from '../data/clubs';
 import { promotionDraw } from './promotion';
 import { rolloverSeason } from './worldTick';
+import { managerCanJoin } from './clubAccess';
 
 export interface ManagerOffer {clubId:string;available:boolean;poaching:boolean;wage:number;target:number;reason:string}
 /** One job decision at the season boundary: no resign/rejoin points farming. */
@@ -14,7 +15,7 @@ export function managerJobOffers(c:Career):ManagerOffer[] {
  const successful=rank<=l.baseline.target&&rank<18,currentWage=l.tenures.at(-1)?.wage??startingManagerWage(c);
  return movement.leagueClubIds.map(id=>{
   const club=clubById(id),own=id===c.clubId;
-  const available=own||settled.reputation!=='unknown'||club.strength<=74||movement.promoted.includes(id)||(successful&&rank<=6&&club.strength<=84);
+  const available=own||managerCanJoin(settled.reputation,club.strength)||movement.promoted.includes(id)||(successful&&rank<=6&&club.strength<=84);
   const base=startingManagerWage(settled,id),performance=Math.max(0,Math.min(1,points/2500));
   const wage=Math.round(base*(1+performance*.5+(successful?.15:0))/500)*500;
   const poaching=available&&!own&&successful&&wage>currentWage&&club.strength>=clubById(c.clubId).strength;

@@ -69,8 +69,8 @@ export function assessMoment(f:Fixture,c:Career,m:KeyMoment,option:MomentOption,
   else if(option===1){completion=.62+(delivery-d)*.004;conversion=.10+(aerial(r)-g)*.002;shooter=r;assistId=a.id;chanceType='aerial';}
   else {completion=.77+(passing-d)*.003-pressure*.05;conversion=.12+(score(u)-g)*.002;shooter=u;assistId=a.id;}
  }else if(m.kind==='corner'){
-  if(option<2){shooter=option===0?r:t;completion=(option===0?.61:.71)+(delivery-d)*.004+trait(a,'precision-crosser')*.02-(option===0?pressure*.08:0);conversion=(option===0?.12:.09)+(aerial(shooter)-meanSkill(k,'handling','aerialAbility','gkPositioning'))*.002-(option===0?pressure*.02:0);chanceType='aerial';}
-  else {shooter=u;completion=.78+(passing+control-2*d)*.002;conversion=.105+(score(u)-g)*.0018;}
+  if(option<2){shooter=option===0?r:t;completion=(option===0?.61:.71)+(delivery-d)*.004+trait(a,'precision-crosser')*.02-(option===0?pressure*.08:0);conversion=(option===0?.08:.06)+(aerial(shooter)-meanSkill(k,'handling','aerialAbility','gkPositioning'))*.002-(option===0?pressure*.02:0);chanceType='aerial';}
+  else {shooter=u;completion=.78+(passing+control-2*d)*.002;conversion=.07+(score(u)-g)*.0018;}
   assistId=a.id;
  }else if(m.kind==='one-on-one'){
   if(option===0)conversion=.27+(finish-g)*.003-(m.keeperApproach==='advancing'?.025:0);
@@ -115,6 +115,9 @@ function newMoment(f:Fixture,c:Career,e:MatchEvent,kind:MomentKind,byId:Map<stri
  const targets=outfield.filter(p=>p.id!==actor.id),aerial=kind==='corner'||kind==='free-kick'||kind==='cross';
  const preference=(p:Player)=>c.clubId===e.clubId&&c.tactic==='feed-star'&&p.id===c.starId&&fit(p)>=.85?1.8:1;
  const ranked=best(targets,p=>(aerial?meanSkill(p,'heading','jumping','positioning')+trait(p,'aerial-threat')*2:meanSkill(p,'finishing','positioning','composure')*fit(p)*(['ST','WG'].includes(slots[formation][team.findIndex(x=>x.id===p.id)])?1.15:1))*preference(p));
+ // A surfaced cross keeps the match engine's intended finisher. Replacing
+ // every target with the same best striker would erase tactical shot allocation.
+ if(kind==='cross'&&e.playerId!==actor.id){const index=ranked.findIndex(p=>p.id===e.playerId);if(index>0)ranked.unshift(...ranked.splice(index,1));}
  const rng=random(hash(`${f.report!.simulationSeed}:${e.id}:scene`));
  const m:KeyMoment={id:`moment-${e.id}`,eventId:e.id,minute:e.minute,clubId:e.clubId,kind,actorId:actor.id,receiverId:ranked[0].id,alternateId:ranked[1].id,supportId:best(targets,p=>meanSkill(p,'shortPassing','ballControl','longShots')*fit(p)*(slots[formation][team.findIndex(x=>x.id===p.id)]==='CM'?1.2:1))[0].id,keeperId:keeper.id,baseXg:e.xG??.15,keeperApproach:kind==='penalty'?(rng()<.55?'committing':'set'):(rng()<.5?'advancing':'set'),pressure:rng()<.5?'closing':'space',autoChoice:0,outcome:'wide'};
  const prepared=context(f,c,m,byId),scores=([0,1,2] as const).map(option=>{const a=assessMoment(f,c,m,option,prepared);return {option,score:a.completion*a.conversion+(c.clubId===m.clubId&&c.tactic==='feed-star'&&a.shooterId===c.starId?.04:0)};});
@@ -128,9 +131,20 @@ export function addKeyMoments(f:Fixture,c:Career,known?:Fixture,preserveThrough=
  for(const e of report.events){
   if(e.minute<=preserveThrough){events.push(e);continue;}
   const roll=(hash(`${report.simulationSeed}:${e.id}:kind`)%10000)/10000;
-  const kind:MomentKind|undefined=roll<.018?'penalty':roll<.09?'free-kick':roll<.21?'corner':roll<.34?'cross':e.chanceType==='one-on-one'?'one-on-one':e.chanceType==='close'&&(e.xG??0)>=.11&&roll<.65?'big-chance':undefined;
-  if(!kind||(kind!=='penalty'&&keyMoments.filter(m=>m.clubId===e.clubId).length>=7)){events.push(e);continue;}
+  // Surface more of the chances already created by the match engine. A one-on-one
+  // remains playable rather than being hidden by a second random kind roll.
+  const kind:MomentKind|undefined=e.chanceType==='one-on-one'?'one-on-one':roll<.018?'penalty':roll<.11?'free-kick':roll<.36?'cross':e.chanceType==='close'&&(e.xG??0)>=.08&&roll<.90?'big-chance':undefined;
+  if(!kind||(kind!=='penalty'&&keyMoments.filter(m=>m.clubId===e.clubId&&m.kind!=='corner').length>=10)){events.push(e);continue;}
   const {moment:m,prepared}=newMoment(f,c,e,kind,byId),resolved=resolveMoment(f,c,m,m.autoChoice,prepared);keyMoments.push(resolved.moment);if(resolved.event)events.push(resolved.event);
  }
- return {...f,report:{...report,events,keyMoments}};
+ const rng=random(hash(`${report.simulationSeed}:${f.id}:corner-plan`)),past=keyMoments.filter(m=>m.kind==='corner').length,cornerTarget=preserveThrough>=90?past:known?.report?.cornerTarget??4+Math.floor((rng()+rng()+rng())/3*14);
+ for(let i=0;keyMoments.filter(m=>m.kind==='corner').length<cornerTarget;i++){
+  const eventId=`corner-${f.id}-${i}`;if(keyMoments.some(m=>m.eventId===eventId))continue;
+  const planned=1+Math.floor((i+.25+(hash(eventId)%50)/100)*89/cornerTarget),remaining=Math.max(1,90-preserveThrough),minute=planned>preserveThrough?Math.min(90,planned):preserveThrough+1+hash(eventId)%remaining;
+  const clubId=hash(`${report.simulationSeed}:${eventId}:team`)%100<report.homePossession?f.homeId:f.awayId,playerId=playersAt(f,c,clubId,minute,byId)[1].id;
+  const source:MatchEvent={id:eventId,minute,clubId,playerId,type:'shot',onTarget:false,chanceType:'aerial',xG:.05},created=newMoment(f,c,source,'corner',byId),resolved=resolveMoment(f,c,created.moment,created.moment.autoChoice,created.prepared);
+  keyMoments.push(resolved.moment);if(resolved.event)events.push(resolved.event);
+ }
+ events.sort((a,b)=>a.minute-b.minute||a.id.localeCompare(b.id));keyMoments.sort((a,b)=>a.minute-b.minute||a.id.localeCompare(b.id));
+ return {...f,report:{...report,cornerTarget:cornerTarget<4||cornerTarget>17?undefined:cornerTarget,events,keyMoments}};
 }

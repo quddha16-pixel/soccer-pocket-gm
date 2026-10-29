@@ -13,7 +13,7 @@ import { pairKey } from './chemistry';
 /** Reports remain compatible with the existing stats/box/awards/save pipeline. */
 export function manualFixture(c:Career,s:ManualState):Fixture {
  const f=c.pending!.fixtures.find(f=>f.id===s.fixtureId)!;
- const base=refreshMatchStatistics({...f,report:{...f.report!,events:s.events,keyMoments:s.moments,manualStats:s.stats,manualLinks:s.combinations,manualMinutes:manualMinute(s),homePossession:Math.round(s.homePossession+s.awayPossession>0?100*s.homePossession/(s.homePossession+s.awayPossession):50)}},c);
+ const base=refreshMatchStatistics({...f,report:{...f.report!,cornerTarget:undefined,events:s.events,keyMoments:s.moments,manualStats:s.stats,manualLinks:s.combinations,manualMinutes:manualMinute(s),homePossession:Math.round(s.homePossession+s.awayPossession>0?100*s.homePossession/(s.homePossession+s.awayPossession):50)}},c);
  const performances=base.report!.performances.map(p=>{const actual=s.stats[p.playerId],tackles=actual?.tackles??0;return {...p,tackles,rating:Math.round(Math.max(4,Math.min(10,p.rating-(p.tackles-tackles)*.13+Math.min(.6,(actual?.completed??0)*.025+(actual?.interceptions??0)*.05)))*10)/10};});
  return {...base,report:{...base.report!,performances,motmId:selectMotm(performances)}};
 }

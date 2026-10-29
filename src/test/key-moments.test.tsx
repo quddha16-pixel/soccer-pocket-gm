@@ -17,7 +17,7 @@ const fresh=()=>({...newCareer('Decision coach','elite','liverpool',23),playable
 function scenario(kind:MomentKind='penalty'):Career {
  const c=prepareWeek(fresh()),f=managedFixture(c)!,old=f.report!.keyMoments!.find(m=>m.clubId===c.clubId)!,m={...old,kind,autoChoice:0 as const};
  const result=resolveMoment(f,c,m,0),events=f.report!.events.filter(e=>e.momentId!==m.id);if(result.event)events.push(result.event);events.sort((a,b)=>a.minute-b.minute||a.id.localeCompare(b.id));
- const next=refreshMatchStatistics({...f,report:{...f.report!,events,keyMoments:f.report!.keyMoments!.map(x=>x.id===m.id?result.moment:x)}},c);
+ const next=refreshMatchStatistics({...f,report:{...f.report!,cornerTarget:undefined,events,keyMoments:f.report!.keyMoments!.map(x=>x.id===m.id?result.moment:x)}},c);
  return {...c,pending:{...c.pending!,minute:m.minute-1,paused:true,fixtures:c.pending!.fixtures.map(x=>x.id===f.id?next:x)}};
 }
 afterEach(()=>{cleanup();localStorage.clear();sessionStorage.clear();vi.useRealTimers();});
@@ -75,13 +75,13 @@ describe('six football decisions with real outcomes',()=>{
  it('handles two chances at the same minute without revealing either result early',()=>{
   const c=scenario('big-chance'),f=managedFixture(c)!,m=activeDecision(c)!,second={...m,id:m.id+'-second',eventId:m.eventId+'-second'};
   const result=resolveMoment(f,c,second,second.autoChoice),events=[...f.report!.events,...(result.event?[result.event]:[])].sort((a,b)=>a.minute-b.minute||a.id.localeCompare(b.id));
-  const expanded=refreshMatchStatistics({...f,report:{...f.report!,events,keyMoments:[...f.report!.keyMoments!,result.moment]}},c),state={...c,pending:{...c.pending!,fixtures:c.pending!.fixtures.map(x=>x.id===f.id?expanded:x)}};
+  const expanded=refreshMatchStatistics({...f,report:{...f.report!,cornerTarget:undefined,events,keyMoments:[...f.report!.keyMoments!,result.moment]}},c),state={...c,pending:{...c.pending!,fixtures:c.pending!.fixtures.map(x=>x.id===f.id?expanded:x)}};
   const first=continueAfterDecision(chooseKeyMoment(state,m.id,0));expect(first.pending!.minute).toBe(m.minute-1);expect(activeDecision(first)!.id).toBe(second.id);
   const final=continueAfterDecision(chooseKeyMoment(first,second.id,1));expect(final.pending!.minute).toBe(m.minute);expect(visibleMatch(managedFixture(first)!,first.pending!.minute).events.some(e=>e.momentId===m.id||e.momentId===second.id)).toBe(false);
  });
  it('requires the 90th-minute decision before revealing full time and commits its outcome once',()=>{
   const c=scenario(),f=managedFixture(c)!,old=activeDecision(c)!,m={...old,minute:90},result=resolveMoment(f,c,m,m.autoChoice),events=f.report!.events.filter(e=>e.momentId!==m.id);if(result.event)events.push(result.event);events.sort((a,b)=>a.minute-b.minute||a.id.localeCompare(b.id));
-  const changed=refreshMatchStatistics({...f,report:{...f.report!,events,keyMoments:f.report!.keyMoments!.map(x=>x.id===m.id?result.moment:x)}},c),state={...c,pending:{...c.pending!,minute:89,fixtures:c.pending!.fixtures.map(x=>x.id===f.id?changed:x)}};
+  const changed=refreshMatchStatistics({...f,report:{...f.report!,cornerTarget:undefined,events,keyMoments:f.report!.keyMoments!.map(x=>x.id===m.id?result.moment:x)}},c),state={...c,pending:{...c.pending!,minute:89,fixtures:c.pending!.fixtures.map(x=>x.id===f.id?changed:x)}};
   expect(activeDecision(state)!.minute).toBe(90);const chosen=chooseKeyMoment(state,m.id,1);expect(chosen.pending!.minute).toBe(89);saveCareer(chosen);expect(decisionFeedback(loadCareer().career!)!.minute).toBe(90);
   const complete=continueAfterDecision(chosen);expect(complete.pending!.minute).toBe(90);expect(activeDecision(complete)).toBeUndefined();expect(commitWeek(complete).week).toBe(1);
  },15000);

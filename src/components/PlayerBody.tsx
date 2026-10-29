@@ -15,8 +15,8 @@ export const PlayerBodyGlyph=memo(function PlayerBodyGlyph({player:p,kit,trim,nu
   <g transform={`scale(.033) translate(-50 -190)`}>
    <g transform={`translate(50 0) scale(${body.width} 1) translate(-50 0)`}>
     <g strokeLinecap="round" strokeLinejoin="round">
-     <g transform={`rotate(${-stride} 35 126)`}><path d="M36 127 34 157 32 182" stroke={a.skin} strokeWidth="11" fill="none"/><path d="m33 166-1 17" stroke={shirt} strokeWidth="11"/><path d="m31 185-8 3 17 1" stroke="#17212d" strokeWidth="8"/></g>
-     <g transform={`rotate(${stride} 65 126)`}><path d="m64 127 2 30 2 25" stroke={a.skin} strokeWidth="11" fill="none"/><path d="m67 166 1 17" stroke={shirt} strokeWidth="11"/><path d="m69 185 8 3H60" stroke="#17212d" strokeWidth="8"/></g>
+     <g className="body-leg-left" transform={`rotate(${-stride} 35 126)`}><path d="M36 127 34 157 32 182" stroke={a.skin} strokeWidth="11" fill="none"/><path d="m33 166-1 17" stroke={shirt} strokeWidth="11"/><path d="m31 185-8 3 17 1" stroke="#17212d" strokeWidth="8"/></g>
+     <g className="body-leg-right" transform={`rotate(${stride} 65 126)`}><path d="m64 127 2 30 2 25" stroke={a.skin} strokeWidth="11" fill="none"/><path d="m67 166 1 17" stroke={shirt} strokeWidth="11"/><path d="m69 185 8 3H60" stroke="#17212d" strokeWidth="8"/></g>
      <path d={`M29 71 20 ${96+stride/3} 17 ${119+stride/3}M71 71 80 ${96-stride/3} 83 ${119-stride/3}`} stroke={a.skin} strokeWidth="10" fill="none"/>
      {p.position==='GK'&&<path d="M16 117v7m68-7v7" stroke="#e4eef3" strokeWidth="12"/>}
     </g>

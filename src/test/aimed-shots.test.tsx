@@ -6,7 +6,7 @@ import { newCareer, prepareWeek } from '../simulation/career';
 import { activeDecision, continueAfterDecision, decisionFeedback, managedFixture, shootKeyMoment } from '../simulation/keyMoments';
 import { refreshMatchStatistics } from '../simulation/match';
 import { assessMoment, resolveMoment } from '../simulation/momentRules';
-import { pathPosition, shotBall, shotGeometry, shotPathData, validAimedShot } from '../simulation/shotGeometry';
+import { pathPosition, shotBall, shotGeometry, shotPathData, shotWall, validAimedShot } from '../simulation/shotGeometry';
 import { loadCareer, saveCareer, SAVE_KEY } from '../storage';
 import { KeyMomentDialog } from '../components/KeyMomentDialog';
 import { makeLiveSubstitution } from '../simulation/substitutions';
@@ -18,7 +18,7 @@ const wide:AimedShot={path:[shotBall,{x:.98,y:.16}]};
 function scenario(kind:'penalty'|'free-kick'='penalty'):Career {
  const c=prepareWeek(newCareer('Aim QA','elite','liverpool',23)),f=managedFixture(c)!,original=f.report!.keyMoments!.find(m=>m.clubId===c.clubId)!,m={...original,kind,autoChoice:0 as const};
  const result=resolveMoment(f,c,m,0),events=f.report!.events.filter(e=>e.momentId!==m.id);if(result.event)events.push(result.event);events.sort((a,b)=>a.minute-b.minute||a.id.localeCompare(b.id));
- const resolved=refreshMatchStatistics({...f,report:{...f.report!,events,keyMoments:f.report!.keyMoments!.map(x=>x.id===m.id?result.moment:x)}},c);
+ const resolved=refreshMatchStatistics({...f,report:{...f.report!,cornerTarget:undefined,events,keyMoments:f.report!.keyMoments!.map(x=>x.id===m.id?result.moment:x)}},c);
  return {...c,pending:{...c.pending!,minute:m.minute-1,paused:true,fixtures:c.pending!.fixtures.map(x=>x.id===f.id?resolved:x)}};
 }
 afterEach(()=>{cleanup();localStorage.clear();vi.restoreAllMocks();vi.unstubAllGlobals();});
@@ -52,7 +52,7 @@ describe('drawn set-piece geometry and football outcomes',()=>{
  it('can block a straight free kick at the wall, with a replay stop on the authored line and no phantom shot',()=>{
   const c=scenario('free-kick'),f=managedFixture(c)!,m=activeDecision(c)!,shot={path:[shotBall,{x:.5,y:.20}]};let blocked:KeyMoment|undefined;
   for(let i=0;i<100;i++){const r=resolveMoment(f,c,{...m,id:`wall-${i}`,shot},0);if(r.moment.outcome==='blocked'){blocked=r.moment;expect(r.event).toBeUndefined();break;}}
-  expect(blocked).toBeDefined();const geometry=shotGeometry(shot),stop=pathPosition(shot.path,geometry.wallAt!);expect(stop.x).toBe(.5);expect(stop.y).toBeGreaterThan(.59);expect(stop.y).toBeLessThanOrEqual(.68);
+  expect(blocked).toBeDefined();const geometry=shotGeometry(shot),stop=pathPosition(shot.path,geometry.wallAt!);expect(stop.x).toBe(.5);expect(stop.y).toBeGreaterThan(shotWall.top);expect(stop.y).toBeLessThanOrEqual(shotWall.bottom);
  });
  it('locks the drawn path and outcome once and leaves other chances and fixtures untouched',()=>{
   const c=scenario(),m=activeDecision(c)!,f=managedFixture(c)!,before=structuredClone(c),chosen=shootKeyMoment(c,m.id,curved),resolved=managedFixture(chosen)!;

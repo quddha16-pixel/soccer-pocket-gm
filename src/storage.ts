@@ -1,3 +1,4 @@
+import { needsDecision } from './simulation/momentControl';
 import { snapshotManual, validManualState } from './simulation/manualCareer';
 import { validHighlight, validHighlightResult } from './simulation/highlights';
 import { validArchivedBoxScore } from './simulation/boxScore';
@@ -28,6 +29,7 @@ export function loadCareer():{career:Career|null;error:string}{
  const progressRaw=localStorage.getItem(`${SAVE_KEY}-playback`);
  if(progressRaw&&c.pending){try{const progress=JSON.parse(progressRaw);if(progress.seed===c.seed&&progress.season===c.world.season&&progress.week===c.pending.week){const candidate={...c,pending:{...c.pending,minute:progress.minute,speed:progress.speed,paused:progress.paused,decisionMode:progress.decisionMode,decisionFeedback:progress.decisionFeedback,highlight:progress.highlight}};if(validHighlight(candidate))c=candidate;}}catch{/* The authoritative snapshot remains available. */}}
  if(c.pending?.manual){try{const raw=localStorage.getItem(MANUAL_SAVE_KEY);if(raw){const progress=JSON.parse(raw);if(progress.seed===c.seed&&progress.season===c.world.season&&progress.week===c.pending.week&&progress.state?.elapsed>=c.pending.manual.elapsed){const candidate=snapshotManual(c,progress.state,true);if(validManualState(candidate))c=candidate;}}}catch{/* Keep the authoritative checkpoint if a sidecar is interrupted. */}}
+
  const ids=new Set(allClubs.map(x=>x.id)),currentIds=c.world?.leagueClubIds??clubs.map(club=>club.id);
  if(c.matchPlan!==undefined){const plan=c.matchPlan,players=new Set(c.players.map(p=>p.id));if(!plan||!Array.isArray(plan.bench)||plan.bench.length>9||new Set(plan.bench).size!==plan.bench.length||plan.bench.some(id=>!players.has(id))||!Array.isArray(plan.changes)||plan.changes.length>5||plan.changes.some(s=>s.clubId!==c.clubId||!players.has(s.offId)||!players.has(s.onId)||!Number.isInteger(s.minute)||s.minute<1||s.minute>89))throw Error();}
  if(c.recentSubPlans!==undefined){
@@ -51,12 +53,13 @@ export function loadCareer():{career:Career|null;error:string}{
   const p=c.pending;
   if(c.status!=='active'||p.week!==c.week+1||!Number.isInteger(p.minute)||p.minute<0||p.minute>90||![1,2,4].includes(p.speed)||typeof p.paused!=='boolean'||!Array.isArray(p.fixtures)||p.fixtures.length!==10)throw Error();
   if(p.decisionMode!==undefined&&!['interactive','automatic'].includes(p.decisionMode))throw Error();
-  if(p.decisionFeedback!==undefined){const f=p.fixtures.find(f=>f.homeId===c.clubId||f.awayId===c.clubId),m=f?.report?.keyMoments?.find(m=>m.id===p.decisionFeedback);if(p.decisionMode!=='interactive'||!m||m.clubId!==c.clubId||m.selection===undefined||m.minute!==p.minute+1)throw Error();}
+  if(p.decisionFeedback!==undefined){const f=p.fixtures.find(f=>f.homeId===c.clubId||f.awayId===c.clubId),m=f?.report?.keyMoments?.find(m=>m.id===p.decisionFeedback);if(p.decisionMode!=='interactive'||!m||!needsDecision(c,m)||m.selection===undefined||m.minute!==p.minute+1)throw Error();}
   const expectedRound=c.fixtures.filter(f=>f.week===p.week);
   if(p.fixtures.some((f,i)=>f.id!==expectedRound[i].id||f.homeId!==expectedRound[i].homeId||f.awayId!==expectedRound[i].awayId||f.week!==p.week||!Number.isInteger(f.homeGoals)||!Number.isInteger(f.awayGoals)||f.homeGoals!<0||f.awayGoals!<0||!f.report))throw Error();
  }
  for(const f of [...c.fixtures,...(c.pending?.fixtures??[])])if(f.report){
   const r=f.report,ids=new Set(c.players.map(p=>p.id));
+  if(r.cornerTarget!==undefined&&(!Number.isInteger(r.cornerTarget)||r.cornerTarget<4||r.cornerTarget>17||r.keyMoments?.filter(m=>m.kind==='corner').length!==r.cornerTarget))throw Error();
   if(r.manualStats!==undefined){if(!r.manualStats||typeof r.manualStats!=='object'||Array.isArray(r.manualStats)||!Number.isInteger(r.manualMinutes)||r.manualMinutes!<0||r.manualMinutes!>90)throw Error();for(const [id,n] of Object.entries(r.manualStats)){if(!r.performances.some(p=>p.playerId===id)||!n||[n.attempted,n.completed,n.interceptions,n.tackles].some(v=>!Number.isInteger(v)||v<0)||n.completed>n.attempted||!Number.isFinite(n.distance)||n.distance<0)throw Error();}}
   if(r.manualLinks!==undefined){if(!Array.isArray(r.manualLinks)||r.manualLinks.length>110)throw Error();for(const l of r.manualLinks){const a=r.performances.find(p=>p.playerId===l.a),b=r.performances.find(p=>p.playerId===l.b);if(!a||!b||a.clubId!==b.clubId||a.playerId===b.playerId||!Number.isInteger(l.passes)||l.passes<0||l.passes>14||!Number.isFinite(l.last))throw Error();}}
   if(r.simulationSeed!==undefined&&(!Number.isInteger(r.simulationSeed)||r.simulationSeed<0||r.simulationSeed>4294967295))throw Error();
@@ -80,7 +83,7 @@ export function loadCareer():{career:Career|null;error:string}{
    if(!Array.isArray(r.keyMoments)||r.keyMoments.length>64||new Set(r.keyMoments.map(m=>m.id)).size!==r.keyMoments.length||new Set(r.keyMoments.map(m=>m.eventId)).size!==r.keyMoments.length)throw Error();
    for(const m of r.keyMoments){
     if(typeof m.id!=='string'||typeof m.eventId!=='string'||!momentKinds.includes(m.kind)||![f.homeId,f.awayId].includes(m.clubId)||!Number.isInteger(m.minute)||m.minute<1||m.minute>90||!Number.isFinite(m.baseXg)||m.baseXg<0||m.baseXg>1||![0,1,2].includes(m.autoChoice)||(m.selection!==undefined&&![0,1,2].includes(m.selection))||!['set','advancing','committing'].includes(m.keeperApproach)||!['space','closing'].includes(m.pressure)||!['goal','saved','wide','blocked','intercepted'].includes(m.outcome))throw Error();
-    if(m.highlight!==undefined&&(!['one-on-one','big-chance'].includes(m.kind)||m.selection===undefined||m.shot||!validHighlightResult(m.highlight,[m.actorId,m.receiverId,m.alternateId,m.supportId])||m.highlight.outcome!==m.outcome||!Number.isFinite(m.highlight.elapsed)||m.highlight.elapsed<0||m.highlight.elapsed>20||!Number.isInteger(m.highlight.passes)||m.highlight.passes<0||m.highlight.passes>60))throw Error();
+    if(m.highlight!==undefined&&(!['one-on-one','big-chance','corner'].includes(m.kind)||m.selection===undefined||m.shot||!validHighlightResult(m.highlight,[m.actorId,m.receiverId,m.alternateId,m.supportId])||m.highlight.outcome!==m.outcome||!Number.isFinite(m.highlight.elapsed)||m.highlight.elapsed<0||m.highlight.elapsed>20||!Number.isInteger(m.highlight.passes)||m.highlight.passes<0||m.highlight.passes>60))throw Error();
     if(m.shot!==undefined&&(!['penalty','free-kick'].includes(m.kind)||m.selection!==(m.kind==='penalty'?1:0)||!validAimedShot(m.shot)))throw Error();
     const own=fixtureLineup(f,m.clubId,m.minute-1),other=fixtureLineup(f,m.clubId===f.homeId?f.awayId:f.homeId,m.minute-1);
     if([m.actorId,m.receiverId,m.alternateId,m.supportId].some(id=>!ids.has(id)||!own.slice(1).includes(id))||m.keeperId!==other[0])throw Error();

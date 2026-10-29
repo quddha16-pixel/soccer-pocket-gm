@@ -87,7 +87,7 @@ describe('AI, migration and season integrity',()=>{
  },15000);
 });
 describe('authoritative animation',()=>{
- it('uses actual lineups and actors and reaches only recorded goal/shot outcomes',()=>{const c=prepareWeek(fresh()),f=c.pending!.fixtures.find(f=>[f.homeId,f.awayId].includes(c.clubId))!,original=JSON.stringify(f);for(const e of f.report!.events){const frame=animationFrame(f,e.minute);expect(frame.players).toHaveLength(22);expect(f.report!.events.some(actual=>actual.id===frame.event!.id)).toBe(true);expect(frame.players.every(p=>p.x>=0&&p.x<=100&&p.y>=0&&p.y<=100)).toBe(true);if(frame.event!.type==='goal'){expect(frame.label).toBe('Goal');expect(frame.event!.clubId===f.homeId?frame.ball.y<0:frame.ball.y>100).toBe(true);}}expect(JSON.stringify(f)).toBe(original);expect(animationFrame(f,45.5)).toEqual(animationFrame(f,45.5));});
+ it('uses actual lineups and actors and reaches only recorded goal/shot outcomes',()=>{const c=prepareWeek(fresh()),f=c.pending!.fixtures.find(f=>[f.homeId,f.awayId].includes(c.clubId))!,original=JSON.stringify(f);for(const e of f.report!.events){const frame=animationFrame(f,e.minute);expect(frame.players).toHaveLength(22);expect(f.report!.events.some(actual=>actual.id===frame.event!.id)).toBe(true);expect(frame.players.every(p=>p.x>=0&&p.x<=100&&p.y>=0&&p.y<=100)).toBe(true);if(frame.event!.type==='goal'){expect(frame.label).toBe('GOAL!');expect((frame.event!.clubId===f.homeId)===(e.minute<45.5)?frame.ball.y<0:frame.ball.y>100).toBe(true);}}expect(JSON.stringify(f)).toBe(original);expect(animationFrame(f,45.5)).toEqual(animationFrame(f,45.5));});
 });
 
 describe('large-save persistence',()=>{

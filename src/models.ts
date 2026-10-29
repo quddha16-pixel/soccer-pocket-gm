@@ -16,9 +16,9 @@ export type MomentKind='penalty'|'free-kick'|'corner'|'one-on-one'|'big-chance'|
 export type MomentOption=0|1|2;
 export type MomentOutcome='goal'|'saved'|'wide'|'blocked'|'intercepted';
 export interface AimPoint {x:number;y:number}
-export interface AimedShot {path:AimPoint[]}
+export interface AimedShot {path:AimPoint[];durationMs?:number}
 export interface KeyMoment {highlight?:HighlightResult&{elapsed:number;passes:number};shot?:AimedShot;id:string;eventId:string;minute:number;clubId:string;kind:MomentKind;actorId:string;receiverId:string;alternateId:string;supportId:string;keeperId:string;baseXg:number;keeperApproach:'set'|'advancing'|'committing';pressure:'space'|'closing';autoChoice:MomentOption;selection?:MomentOption;outcome:MomentOutcome}
-export interface MatchReport {manualMinutes?:number;manualStats?:Record<string,ManualPlayerStats>;manualLinks?:ManualCombination[];keyMoments?:KeyMoment[]; simulationSeed?:number;substitutions?:Substitution[];homeBench?:string[];awayBench?:string[]; events:MatchEvent[]; performances:Performance[]; homePossession:number; motmId:string; homeLineup?:string[]; awayLineup?:string[]; homeFormation?:Formation; awayFormation?:Formation }
+export interface MatchReport {cornerTarget?:number;manualMinutes?:number;manualStats?:Record<string,ManualPlayerStats>;manualLinks?:ManualCombination[];keyMoments?:KeyMoment[]; simulationSeed?:number;substitutions?:Substitution[];homeBench?:string[];awayBench?:string[]; events:MatchEvent[]; performances:Performance[]; homePossession:number; motmId:string; homeLineup?:string[]; awayLineup?:string[]; homeFormation?:Formation; awayFormation?:Formation }
 export interface Fixture { id:string; week:number; homeId:string; awayId:string; homeGoals?:number; awayGoals?:number; report?:MatchReport }
 export interface Standing { clubId:string; played:number; won:number; drawn:number; lost:number; gf:number; ga:number; points:number }
 export type Reputation = 'unknown'|'established'|'elite';

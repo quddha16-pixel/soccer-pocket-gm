@@ -3,11 +3,11 @@ import type { AimedShot, AimPoint } from '../models';
 // Normalised coordinates shared by the touch surface, replay and match rules.
 export const shotBall:AimPoint={x:.5,y:.88};
 export const shotGoal={left:.10,right:.90,top:.08,bottom:.50};
-export const shotWall={left:.41,right:.59,top:.60,bottom:.68};
+export const shotWall={left:.36,right:.64,top:.39,bottom:.73};
 const clamp=(n:number,a=0,b=1)=>Math.max(a,Math.min(b,n));
 export const pointDistance=(a:AimPoint,b:AimPoint)=>Math.hypot(a.x-b.x,a.y-b.y);
 export function validAimedShot(shot:AimedShot){
- return !!shot&&Array.isArray(shot.path)&&shot.path.length>=2&&shot.path.length<=64&&shot.path.every(p=>p&&Number.isFinite(p.x)&&Number.isFinite(p.y)&&p.x>=0&&p.x<=1&&p.y>=0&&p.y<=1)&&pointDistance(shot.path[0],shotBall)<.002&&pointDistance(shot.path.at(-1)!,shotBall)>=.2&&shot.path.at(-1)!.y<shotBall.y-.15;
+ return !!shot&&(shot.durationMs===undefined||Number.isFinite(shot.durationMs)&&shot.durationMs>=50&&shot.durationMs<=6000)&&Array.isArray(shot.path)&&shot.path.length>=2&&shot.path.length<=64&&shot.path.every(p=>p&&Number.isFinite(p.x)&&Number.isFinite(p.y)&&p.x>=0&&p.x<=1&&p.y>=0&&p.y<=1)&&pointDistance(shot.path[0],shotBall)<.002&&pointDistance(shot.path.at(-1)!,shotBall)>=.2&&shot.path.at(-1)!.y<shotBall.y-.15;
 }
 export function shotPathData(path:AimPoint[]){return path.map((p,i)=>`${i?'L':'M'}${(p.x*320).toFixed(2)} ${(p.y*270).toFixed(2)}`).join(' ');}
 export function pathPosition(path:AimPoint[],progress:number):AimPoint {
@@ -27,8 +27,9 @@ export function shotGeometry(shot:AimedShot){
  for(let i=0;i<=160;i++){const p=pathPosition(shot.path,i/160);if(p.x>=shotWall.left&&p.x<=shotWall.right&&p.y>=shotWall.top&&p.y<=shotWall.bottom){wallAt=i/160;break;}}
  return {end,inside,corner,edgeRisk:clamp((.025-edge)/.025),complexity,wallAt};
 }
+export const shotPower=(shot:AimedShot)=>shot.durationMs===undefined?.65:clamp(1.05-shot.durationMs/1900,.35,.98);
 export function aimedProbabilities(base:{completion:number;conversion:number;onTarget:number},shot:AimedShot,kind:'penalty'|'free-kick',ability:number){
- const geometry=shotGeometry(shot),control=clamp(.82+ability/550-geometry.edgeRisk*(1-ability/125)*.45-geometry.complexity*.12,.4,1);
+ const geometry=shotGeometry(shot),power=shotPower(shot),control=clamp(.82+ability/550-geometry.edgeRisk*(1-ability/125)*.45-geometry.complexity*.12-Math.max(0,power-.75)*geometry.edgeRisk*.18,.4,1);
  const wallRisk=kind==='free-kick'&&geometry.wallAt!==undefined?clamp(.70-ability*.003,.25,.65):0;
- return {...base,completion:1-wallRisk,conversion:geometry.inside?clamp(base.conversion*control+geometry.corner*(kind==='penalty'?.10:.07),.015,kind==='penalty'?.93:.48):0,onTarget:geometry.inside?1:0};
+ return {...base,completion:1-wallRisk,conversion:geometry.inside?clamp(base.conversion*control+(power-.65)*.055+geometry.corner*(kind==='penalty'?.10:.07),.015,kind==='penalty'?.93:.48):0,onTarget:geometry.inside?1:0};
 }

@@ -3,6 +3,7 @@ import { allClubs, clubs, clubById, leagueClubs } from '../data/clubs';
 import { standings } from './league';
 import { financialSummary } from './economy';
 import { seasonReview, type SeasonReview } from './records';
+import { customStartingPlayers } from '../data/playerProfiles';
 
 export interface LegacyEntry {id:string;season:number;clubId:string;points:number;reason:string;kind:'season'|'title'|'rebuild'|'award'|'conduct'|'move'}
 export interface AchievementUnlock {id:string;season:number;clubId:string}
@@ -23,6 +24,39 @@ export function expectedTargets(c:Career):Record<string,number>{
 }
 export function expectedFinish(c:Career,clubId=c.clubId){return expectedTargets(c)[clubId]??17;}
 export const startingManagerWage=(c:Career,clubId=c.clubId)=>Math.round((clubById(clubId).budget*150+(c.reputation==='elite'?25000:c.reputation==='established'?10000:0)+8000)/500)*500;
+
+/** The same placement rules power both settlement and the club-selection graphic. */
+export function placementLegacy(target:number,rank:number,firstTitle:boolean,rebuild:boolean){
+ const rewards:{key:string;points:number;reason:string;kind:LegacyEntry['kind']}[]=[],gap=target-rank;
+ const add=(key:string,points:number,reason:string,kind:LegacyEntry['kind']='season')=>rewards.push({key,points,reason,kind});
+ add('expectations',gap*20,gap>0?`Exceeded target ${target}: finished ${rank}.`:gap<0?`Missed target ${target}: finished ${rank}.`:`Met the season target: ${rank}.`);
+ if(rank===1){add('champion',500,'League champions.','title');if(firstTitle)add('new-champion',150,'First league title with this club.');if(firstTitle&&rebuild)add('rebuild',800,'Rebuilt an underdog into a first-time league champion.','rebuild');}
+ else if(rank<=4)add('top-four',100,'Secured a top-four finish.');
+ else if(rank<=17)add('survival',25,'Kept the club in the league.');
+ if(rank>=18)add('relegation',-250,'Relegation and dismissal.');
+ if(gap>=5)add('overachiever',75,'Finished at least five places above expectations.');
+ return rewards;
+}
+export interface LegacyOpportunity {target:number;title:number;topFour:number;survival:number;breakdown:ReturnType<typeof placementLegacy>;estimated:boolean}
+function opportunity(target:number,strength:number,firstTitle=true,estimated=false,rebuild=target===17||strength<=74):LegacyOpportunity{
+ const breakdown=placementLegacy(target,1,firstTitle,rebuild),sum=(rank:number)=>placementLegacy(target,rank,firstTitle,rebuild).reduce((n,r)=>n+r.points,0);
+ return {target,title:sum(1),topFour:sum(4),survival:sum(17),breakdown,estimated};
+}
+let startingOpportunities:Map<string,LegacyOpportunity>|undefined;
+export function startingLegacyOpportunity(clubId:string){
+ if(!startingOpportunities){const players=customStartingPlayers(),quality=(id:string)=>{const top=players.filter(p=>p.clubId===id).sort((a,b)=>b.overall-a.overall).slice(0,11);return Math.round(top.reduce((n,p)=>n+p.overall,0)/top.length);};
+  const ranked=[...clubs].sort((a,b)=>(quality(b.id)+b.strength)-(quality(a.id)+a.strength)||a.id.localeCompare(b.id));
+  startingOpportunities=new Map(ranked.map((club,i)=>[club.id,opportunity(i<2?1:i<6?4:i<13?10:17,quality(club.id))]));
+ }
+ return startingOpportunities.get(clubId)!;
+}
+export function clubLegacyOpportunity(c:Career,clubId:string):LegacyOpportunity{
+ const l=legacyState(c),tenure=clubId===c.clubId?l.tenures.at(-1):undefined;
+ // A continuing rebuild retains its entry conditions, even after the squad improves.
+ const target=expectedFinish(c,clubId),eligible=tenure?(tenure.entryTarget===17||tenure.entryStrength<=74):target===17||squadRating(c,clubId)<=74;
+ const firstTitle=!l.entries.some(e=>e.kind==='title'&&e.clubId===clubId),result=opportunity(target,squadRating(c,clubId),firstTitle,true,eligible);
+ return result;
+}
 export function startLegacySeason(c:Career,l:Legacy):Legacy {
  const targets=expectedTargets(c);
  return {...l,baseline:{season:c.world.season,clubId:c.clubId,target:targets[c.clubId]??17,targets,strength:squadRating(c),debt:c.world.finances[c.clubId]?.debt??0,estimated:c.week>0}};
@@ -77,17 +111,8 @@ export function settleLegacySeason(c:Career):Career {
  const table=standings(leagueClubs(c),c.fixtures),rank=table.findIndex(r=>r.clubId===c.clubId)+1,row=table[rank-1];if(!row||row.played!==38)return c;
  const season=c.world.season,prefix=`${season}:${c.clubId}`,entries:LegacyEntry[]=[];
  const add=(key:string,points:number,reason:string,kind:LegacyEntry['kind']='season')=>entries.push({id:`${prefix}:${key}`,season,clubId:c.clubId,points,reason,kind});
- const gap=l.baseline.target-rank;
- add('expectations',gap*20,gap>0?`Exceeded target ${l.baseline.target}: finished ${rank}.`:gap<0?`Missed target ${l.baseline.target}: finished ${rank}.`:`Met the season target: ${rank}.`);
- if(rank===1){
-  add('champion',500,'League champions.','title');
-  if(!titles(l).has(c.clubId))add('new-champion',150,'First league title with this club.');
-  const tenure=l.tenures.at(-1)!;
-  if(!titles(l).has(c.clubId)&&(tenure.entryTarget===17||tenure.entryStrength<=74))add('rebuild',800,'Rebuilt an underdog into a first-time league champion.','rebuild');
- }else if(rank<=4)add('top-four',100,'Secured a top-four finish.');
- else if(rank<=17)add('survival',25,'Kept the club in the league.');
- if(rank>=18)add('relegation',-250,'Relegation and dismissal.');
- if(gap>=5)add('overachiever',75,'Finished at least five places above expectations.');
+ const tenure=l.tenures.at(-1)!;
+ for(const reward of placementLegacy(l.baseline.target,rank,!titles(l).has(c.clubId),tenure.entryTarget===17||tenure.entryStrength<=74))add(reward.key,reward.points,reward.reason,reward.kind);
  if(row.lost===0)add('unbeaten',150,'An unbeaten league season.');
  if(row.points>=100)add('century',100,'Reached 100 league points.');
  const review=c.world.seasonReviews?.find(r=>r.season===season&&r.complete)??seasonReview(c);
