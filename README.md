@@ -1,6 +1,12 @@
-# Pocket Football GM — v2.2
+# Pocket Football GM — v2.2.1
 
 Created By: Quentin Warminsky. A mobile-first football management game built with React, TypeScript and Vite in the existing `quddha16-pixel/soccer-pocket-gm` repository. No licensed club marks, photos, external portrait services or external fonts are used.
+
+## Compact club offers (v2.2.1)
+
+Manager reputation now offers exactly **4 / 12 / 20 clubs** for **Unknown / Established / Elite** managers, both when starting a career and when reviewing jobs after a season. Promotions do not add extra offers. An incumbent renewal uses one slot. Existing careers at clubs outside the new starting tier remain playable.
+
+Every club remains visible in a smaller responsive grid, with contract highlighting and its legacy-point graphic. Use **Details** to inspect budgets, expectations, contracts and the full reward breakdown. Mobile screens use three columns where space allows and two on narrow phones; larger screens fit more columns. [Release notes](docs/v2.2.1-release.md).
 
 ## Live pitch and field play (v2.2)
 
@@ -62,7 +68,7 @@ Relegation dismisses the GM from that club; the same career can continue through
 
 ## Play and manage the club
 
-1. Start a career, choose reputation and one of three managerial specialties, then browse all 20 clubs. Unknown coaches receive six highlighted offers; Established coaches have 17 options, including smaller clubs, while Elite coaches can choose all 20. Each club card compares legacy points for a title, top four and survival. Continue restores a saved career or pending matchday.
+1. Start a career, choose reputation and one of three managerial specialties, then browse all 20 clubs. Unknown coaches receive four highlighted offers; Established coaches have 12 options, while Elite coaches can choose all 20. Each club card shows title legacy points; Details compares top-four and survival outcomes. Continue restores a saved career or pending matchday.
 2. **Home** shows your club, league position, points, recent form, next opponent and **Play Next Match**. Detailed season metrics and squad leaders are a secondary view.
 3. **Squad** contains Lineup, Depth, Players and Progress. Choose 4-3-3, 4-4-2 or 4-2-3-1; tap a starter, choose a replacement and confirm. Selecting another starter swaps slots. Toggle chemistry or open a complete profile. Match approach remains a separate screen.
 4. **Market** contains player/free-agent search, negotiations, incoming offers, history and shortlist. Search/filter opens a sheet; contract and scouting details expand on each card. **Club** links to Legacy & achievements, GM job offers, Staff & contracts, Finances and performance. **League** contains Table, Fixtures, Stats, EFL pool, Awards and Records, including previous-season scores, head coaches and promotion/relegation changes.
@@ -123,7 +129,7 @@ Saves and custom roster files remain intact. Existing completed results are reta
 
 New career creation offers **Developer**, **Negotiator** and **Football genius**. Developer multiplies your club’s positive attribute growth by 1.2 before existing caps. Negotiator reduces buying asks by 10%, base wage demands by 12%, the extra star ambition premium, signing bonuses and renewal demands. Registration, cash, wages, squad costs and positional cover still apply; repeated renewals cannot compound discounts below their reference wage. Football genius receives neither bonus and instead unlocks Positional mastery, Coordinated counterpress and Disguised transitions in Match approach. These change actual chance/defensive probabilities and fitness costs. They never guarantee a result. Existing careers with no chosen specialty remain neutral; temporary AI negotiation contexts cannot borrow the user’s perks.
 
-All 20 starting clubs are shown in a compact contract grid. Available clubs have a highlighted border and active Accept offer button; locked clubs remain named and visible. Established managers have 17 starting-club offers; title favourites remain reserved for Elite managers, who have all 20. Club reputation and expectations continue to affect the challenge.
+All 20 starting clubs are shown in a compact contract grid. Available clubs have a highlighted border and active Accept offer button; locked clubs remain named and visible. Reputation tiers offer exactly 4, 12 and 20 clubs. Full club and legacy information opens through Details. Club reputation and expectations continue to affect the challenge.
 
 All 44 club home palettes now use recognizable real-world primary/secondary colors. Original crests, club headers and managed-club accents use the palette; text accents are lightened for dark-mode readability. Animated player numbers switch ink colors, with contrast separation when two home palettes clash. These are game sRGB choices rather than licensed brand specifications. Colors and research links live in `src/data/clubThemes.ts`.
 

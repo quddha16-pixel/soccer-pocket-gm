@@ -34,8 +34,8 @@ describe('more frequent, responsive one-on-one opportunities',()=>{
 });
 describe('club access and honest legacy forecasts',()=>{
  it('opens smaller and European clubs to established managers, reserving title favourites for elite standing',()=>{
-  expect(offers('established')).toHaveLength(17);expect(offers('established').some(c=>c.id==='hull')).toBe(true);expect(offers('established').some(c=>c.id==='chelsea')).toBe(true);expect(offers('established').some(c=>c.id==='city')).toBe(false);expect(offers('elite')).toHaveLength(20);
-  const c=completed(newCareer('Established','established','chelsea',23));c.legacy!.settledSeasons=[2026];const jobs=managerJobOffers(c);expect(jobs.filter(o=>o.available).length).toBeGreaterThanOrEqual(17);expect(jobs.some(o=>!o.available)).toBe(true);expect(jobs.find(o=>o.clubId==='chelsea')!.available).toBe(true);
+  expect(offers('established')).toHaveLength(12);expect(offers('established').some(c=>c.id==='hull')).toBe(true);expect(offers('established').some(c=>c.id==='brighton')).toBe(true);expect(offers('established').some(c=>c.id==='city')).toBe(false);expect(offers('elite')).toHaveLength(20);
+  const c=completed({...newCareer('Established','elite','chelsea',23),reputation:'established' as const});c.legacy!.settledSeasons=[2026];const jobs=managerJobOffers(c);expect(jobs.filter(o=>o.available)).toHaveLength(12);expect(jobs.some(o=>!o.available)).toBe(true);expect(jobs.find(o=>o.clubId==='chelsea')!.available).toBe(true);
  });
  it('uses the real settlement rules for every starting club, including the underdog bonus',()=>{
   for(const club of clubs){const c=newCareer('Forecast','elite',club.id,23),p=startingLegacyOpportunity(club.id);expect(p.target).toBe(c.legacy!.baseline.target);expect(p).toEqual({...clubLegacyOpportunity(c,club.id),estimated:false});const settled=settleLegacySeason(completed(c));const placement=settled.legacy!.entries.filter(e=>!['award','conduct'].includes(e.kind)&&!['unbeaten','century'].some(k=>e.id.endsWith(`:${k}`)));expect(placement.reduce((n,e)=>n+e.points,0)).toBe(p.title);}

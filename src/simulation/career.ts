@@ -16,9 +16,9 @@ import { initializeWorld } from './world';
 import { rememberCompletedSubstitutions } from './recentSubs';
 import { nextMatchPlan } from './substitutionRules';
 import { resolveMatch } from './match';
-import { managerCanJoin } from './clubAccess';
+import { managerOfferClubs } from './clubAccess';
 export { score } from './scoring';
-export function offers(reputation:Reputation){return [...clubs].filter(c=>managerCanJoin(reputation,c.strength)).sort((a,b)=>a.strength-b.strength);}
+export function offers(reputation:Reputation){return managerOfferClubs(reputation,clubs);}
 export function newCareer(manager:string,reputation:Reputation,clubId:string,seed=Date.now(),managerStyle?:ManagerStyle):Career{
  if(!offers(reputation).some(c=>c.id===clubId))throw Error('This club has not offered you a job.');
  const custom=customStartingPlayers(),players=[...custom,...researchedFreeAgents(2026,custom)],lineup=autoLineup(players,clubId,'4-3-3');

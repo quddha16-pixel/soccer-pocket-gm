@@ -31,16 +31,16 @@ function fixtureSeason():Career {
 
 describe('all-club contract selection',()=>{
  it('expands offers cumulatively and opens most clubs to established managers and all 20 to elite managers',()=>{
-  const unknown=offers('unknown');expect(unknown.length).toBeGreaterThan(4);expect(unknown.length).toBeLessThan(20);
-  expect(offers('established')).toHaveLength(17);expect(offers('elite')).toHaveLength(20);for(const rep of ['established','elite'] as const)for(const club of offers(rep))expect(newCareer('Choose',rep,club.id,1).clubId).toBe(club.id);expect(()=>newCareer('No elite offer','established','city')).toThrow(/offered/);
+  const unknown=offers('unknown');expect(unknown).toHaveLength(4);
+  expect(offers('established')).toHaveLength(12);expect(offers('elite')).toHaveLength(20);for(const rep of ['established','elite'] as const)for(const club of offers(rep))expect(newCareer('Choose',rep,club.id,1).clubId).toBe(club.id);expect(()=>newCareer('No elite offer','established','city')).toThrow(/offered/);
   expect(()=>newCareer('No offer','unknown','city')).toThrow(/offered/);expect(unknown.every(c=>c.strength<=74)).toBe(true);
  });
  it('renders every club and highlights only available contracts without hiding locked teams',()=>{
   render(<App/>);fireEvent.click(screen.getByRole('button',{name:'Start career'}));fireEvent.click(screen.getByRole('button',{name:'Find job offers'}));
   expect(document.querySelectorAll('.offer-card')).toHaveLength(20);expect(document.querySelectorAll('.offer-available')).toHaveLength(offers('unknown').length);
-  const locked=screen.getByRole('article',{name:'Manchester City: Higher reputation required'});expect(within(locked).getByRole('button').hasAttribute('disabled')).toBe(true);
+  const locked=screen.getByRole('article',{name:'Manchester City: Higher reputation required'});expect(within(locked).getByRole('button',{name:'No offer yet'}).hasAttribute('disabled')).toBe(true);
   fireEvent.click(screen.getByRole('button',{name:'Back'}));fireEvent.click(screen.getByRole('button',{name:/Established manager/}));fireEvent.click(screen.getByRole('button',{name:'Find job offers'}));
-  expect(document.querySelectorAll('.offer-available')).toHaveLength(17);expect(document.querySelectorAll('.legacy-opportunity')).toHaveLength(20);const hull=screen.getByRole('article',{name:'Hull City: Contract offered'});fireEvent.click(within(hull).getByRole('button',{name:'Accept offer'}));expect(loadCareer().career!.clubId).toBe('hull');
+  expect(document.querySelectorAll('.offer-available')).toHaveLength(12);expect(document.querySelectorAll('.legacy-opportunity')).toHaveLength(20);const hull=screen.getByRole('article',{name:'Hull City: Contract offered'});fireEvent.click(within(hull).getByRole('button',{name:'Accept offer'}));expect(loadCareer().career!.clubId).toBe('hull');
  });
 });
 
