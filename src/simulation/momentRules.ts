@@ -74,7 +74,8 @@ export function assessMoment(f:Fixture,c:Career,m:KeyMoment,option:MomentOption,
   else {shooter=u;completion=.78+(passing+control-2*d)*.002;conversion=.07+(score(u)-g)*.0018;}
   assistId=a.id;
  }else if(m.kind==='one-on-one'){
-  if(option===0)conversion=.27+(finish-g)*.003-(m.keeperApproach==='advancing'?.025:0);
+  if(m.drawnPlay?.approach==='pass'){completion=.80+(passing-d)*.003-pressure*.06;conversion=.29+(score(r)-g)*.0025;shooter=r;assistId=a.id;}
+  else if(option===0)conversion=.27+(finish-g)*.003-(m.keeperApproach==='advancing'?.025:0);
   else if(option===1){completion=.64+(meanSkill(a,'dribbling','agility','acceleration')-meanSkill(k,'oneOnOne','reflexes'))*.006-pressure*.08;conversion=.51+(finish-75)*.003;}
   else conversion=.22+(control-g)*.003+(m.keeperApproach==='advancing'?.12:-.08);
   chanceType='one-on-one';
@@ -88,7 +89,7 @@ export function assessMoment(f:Fixture,c:Career,m:KeyMoment,option:MomentOption,
   else if(option===1){shooter=r;completion=.73+(delivery+passing-2*d)*.0025;conversion=.21+(score(r)-g)*.002;}
   else {shooter=u;completion=.81+(passing-d)*.003;conversion=.14+(meanSkill(u,'longShots','ballControl','composure')*fit(u)-g)*.002;chanceType='distance';}
  }
- if(m.drawnPlay&&['corner','cross'].includes(m.kind)){shooter=prepared.team.find(p=>p.id===drawnReceiver(m,m.drawnPlay!))!;assistId=a.id;}
+ if(m.drawnPlay?.delivery){shooter=prepared.team.find(p=>p.id===drawnReceiver(m,m.drawnPlay!))!;assistId=a.id;}
  const form=clamp(1+(identity(shooter).development.form-6.5)*.015,.95,1.05);
  if(m.kind!=='penalty')completion*=fatigue*(setPiece?1:.7+.3*familiarity);
  conversion*=form*(m.kind==='penalty'?(.9+.1*a.fitness/100):(.75+.25*shooter.fitness/100)*(setPiece?1:shooter.id===a.id?familiarity:fit(shooter)));
@@ -101,7 +102,7 @@ export function assessMoment(f:Fixture,c:Career,m:KeyMoment,option:MomentOption,
 
 export function resolveMoment(f:Fixture,c:Career,m:KeyMoment,option:MomentOption,prepared?:ReturnType<typeof context>):{moment:KeyMoment;event?:MatchEvent}{
  const seed=f.report!.simulationSeed??hash(f.id),rng=random(hash(`${seed}:${m.id}:outcome`)),a=assessMoment(f,c,m,option,prepared),deliveryRoll=rng(),goalRoll=rng(),targetRoll=rng();
- if(deliveryRoll>=a.completion)return {moment:{...m,outcome:m.shot||m.drawnPlay&&!m.drawnPlay.delivery?'blocked':['corner','cross','free-kick'].includes(m.kind)?'intercepted':'blocked'}};
+ if(deliveryRoll>=a.completion)return {moment:{...m,outcome:m.shot||m.drawnPlay&&!m.drawnPlay.delivery?'blocked':m.drawnPlay?.delivery||['corner','cross','free-kick'].includes(m.kind)?'intercepted':'blocked'}};
  const goal=goalRoll<a.conversion,onTarget=goal||targetRoll<a.onTarget;
  const event:MatchEvent={id:m.eventId,momentId:m.id,minute:m.minute,clubId:m.clubId,playerId:a.shooterId,creatorId:a.assistId,assistId:goal?a.assistId:undefined,type:goal?'goal':'shot',onTarget,chanceType:a.chanceType,xG:a.conversion};
  return {moment:{...m,outcome:goal?'goal':onTarget?'saved':'wide'},event};

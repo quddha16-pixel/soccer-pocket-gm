@@ -20,7 +20,7 @@ function scenario(kind:MomentKind='penalty'):Career {
  const next=refreshMatchStatistics({...f,report:{...f.report!,cornerTarget:undefined,events,keyMoments:f.report!.keyMoments!.map(x=>x.id===m.id?result.moment:x)}},c);
  return {...c,pending:{...c.pending!,minute:m.minute-1,paused:true,fixtures:c.pending!.fixtures.map(x=>x.id===f.id?next:x)}};
 }
-afterEach(()=>{cleanup();localStorage.clear();sessionStorage.clear();vi.useRealTimers();});
+afterEach(()=>{cleanup();localStorage.clear();sessionStorage.clear();vi.useRealTimers();vi.unstubAllGlobals();});
 describe('six football decisions with real outcomes',()=>{
  it('generates all six types naturally, with three distinct options each and eligible participants',()=>{
   const c=fresh(),f=c.fixtures.find(f=>f.homeId===c.clubId||f.awayId===c.clubId)!,seen=new Set();
@@ -91,12 +91,12 @@ describe('six football decisions with real outcomes',()=>{
   const legacy=fresh();delete legacy.interactiveMoments;saveCareer(legacy);expect(loadCareer().career).toEqual(legacy);
  });
  it('shows drawn chances or big-chance coaching without early outcomes',()=>{
-  for(const kind of momentKinds){const c=scenario(kind);const {unmount}=render(<KeyMomentDialog career={c} onUpdate={()=>{}}/>);expect(screen.getByRole('dialog',{name:momentTitles[kind]})).toBeTruthy();if(kind==='big-chance'){expect(document.querySelectorAll('.moment-options>button')).toHaveLength(3);}else expect(screen.getByRole('group',{name:['corner','cross'].includes(kind)?'Draw your delivery':'Draw your shot'})).toBeTruthy();expect(screen.queryByRole('dialog',{name:'The outcome'})).toBeNull();unmount();}
+  for(const kind of momentKinds){const c=scenario(kind);const {unmount}=render(<KeyMomentDialog career={c} onUpdate={()=>{}}/>);expect(screen.getByRole('dialog',{name:momentTitles[kind]})).toBeTruthy();expect(screen.getByRole('group',{name:['corner','cross'].includes(kind)?'Draw your delivery':'Draw your shot'})).toBeTruthy();expect(screen.queryByRole('dialog',{name:'The outcome'})).toBeNull();unmount();}
  });
  it('pauses the real Matchday timer, persists a choice and resumes after the result',()=>{
-  vi.useFakeTimers();let latest:Career;const start=scenario('big-chance');start.pending!.paused=false;
+  vi.useFakeTimers();vi.stubGlobal('matchMedia',()=>({matches:true}));let latest:Career;const start=scenario('penalty');start.pending!.paused=false;
   function Harness(){const [c,setC]=useState(start);latest=c;return <Matchday career={c} onUpdate={setC} onStart={()=>{}} onCommit={()=>{}} onTactics={()=>{}}/>;}
-  render(<Harness/>);expect(latest!.pending!.paused).toBe(true);const dialog=screen.getByRole('dialog',{name:'Big play chance'});act(()=>vi.advanceTimersByTime(5000));expect(latest!.pending!.minute).toBe(start.pending!.minute);
-  fireEvent.click(within(dialog).getByRole('group',{name:'Big play chance options'}).querySelector('button')!);expect(screen.getByRole('dialog',{name:'The outcome'})).toBeTruthy();expect(screen.getByRole('status')).toBeTruthy();act(()=>vi.advanceTimersByTime(1200));fireEvent.click(screen.getByRole('button',{name:'Continue match'}));expect(latest!.pending!.decisionFeedback).toBeUndefined();expect(latest!.pending!.minute).toBe(start.pending!.minute+1);
+  render(<Harness/>);expect(latest!.pending!.paused).toBe(true);const dialog=screen.getByRole('dialog',{name:'Penalty kick'});act(()=>vi.advanceTimersByTime(5000));expect(latest!.pending!.minute).toBe(start.pending!.minute);
+  fireEvent.keyDown(within(dialog).getByRole('group',{name:'Draw your shot'}),{key:'Enter'});fireEvent.click(screen.getByRole('button',{name:'Strike'}));expect(screen.getByRole('dialog',{name:'Your moment'})).toBeTruthy();expect(document.querySelector('.moment-cinema-result')).toBeTruthy();fireEvent.click(screen.getByRole('button',{name:'Continue match'}));expect(latest!.pending!.decisionFeedback).toBeUndefined();expect(latest!.pending!.minute).toBe(start.pending!.minute+1);
  });
 });

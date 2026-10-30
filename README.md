@@ -1,10 +1,10 @@
-# Pocket Football GM — v2.4.0
+# Pocket Football GM — v2.4.1
 
 Created By: Quentin Warminsky. A mobile-first football management game built with React, TypeScript and Vite in the existing `quddha16-pixel/soccer-pocket-gm` repository. No licensed club marks, photos, external portrait services or external fonts are used.
 
 ## Matchday Moments (v2.4)
 
-Penalties, free kicks, one-on-ones, corners and crosses now pause for a dedicated **draw-to-play** experience. Draw from the ball, preview your route and power, redraw if needed, then confirm. Corners and crosses have two steps: draw a delivery to the near-post, far-post or cut-back runner, then draw that player's finish. Choose driven or lofted deliveries, or a driven/chip finish at penalties and one-on-ones. Free kicks read the drawn route against the wall. Big play chances retain three coaching options.
+Penalties, free kicks, one-on-ones, corners and crosses now pause for a dedicated **draw-to-play** experience. Draw from the ball, preview your route and power, redraw if needed, then confirm. Corners and crosses have two steps: draw a delivery to the near-post, far-post or cut-back runner, then draw that player's finish. Choose driven or lofted deliveries, or a driven/chip finish at penalties and one-on-ones. Free kicks read the drawn route against the wall. **Open play (v2.4.1)** gives one-on-ones and big chances a choice of drawing a shot or drawing a pass to a supporting runner, then finishing the move with that player. A pass can be intercepted and goals credit the actual assist.
 
 A purpose-built stadium scene shows illustrated players, perspective goals and nets, floodlights, a run-up, reacting keeper, ball trail and a replay of the exact saved stroke. Slow motion and optional synthesized sound are available. Touch/mouse input updates the path immediately without writing career saves while drawing. Keyboard/tap aiming, cancellation, redraw, reduced-motion playback and **Let the players decide** are supported. Quick Sim and uninterrupted watching remain available.
 
@@ -12,7 +12,7 @@ A valid line never guarantees a goal. Placement, power, wall contact, delivery a
 
 ## Watch, decide and manage (v2.3)
 
-v2.3 restored **Matchday → Watch Match** as the default management simulation. Its original six coaching panels are superseded by v2.4 drawn opportunities for five kinds; big chances retain coaching choices. Your footballers execute those decisions using their individual abilities. Live/planned substitutions, recent substitution plans, tactics, fatigue, chemistry and Quick Sim remain. Full-contest movement and shooting buttons remain removed; drawn key opportunities return in v2.4. Old controller checkpoints resume as watched simulations, retaining played goals and substitutions; old authored shot replays remain readable.
+v2.3 restored **Matchday → Watch Match** as the default management simulation. Its original coaching panels are superseded by v2.4/v2.4.1 drawn opportunities, including shoot-or-pass choices in open play. Your footballers execute those decisions using their individual abilities. Live/planned substitutions, recent substitution plans, tactics, fatigue, chemistry and Quick Sim remain. Full-contest movement and shooting buttons remain removed; drawn key opportunities return in v2.4. Old controller checkpoints resume as watched simulations, retaining played goals and substitutions; old authored shot replays remain readable.
 
 The broadcast pitch now has stadium seating, lighting, nets, richer turf and full-body illustrated footballers with team kits, shirt numbers, moving legs, ball trails and pass paths. **Follow play**, **Tactical view** and player selection provide viewing controls. Decision results have recorded-outcome replays. Reduced motion is respected. Appearance research remains partial: **545/546 sourced heights, 64/546 inspected portraits and five published weight references**. Unchecked appearances retain neutral placeholders. [Research coverage](docs/research/avatar-status.md).
 
@@ -133,7 +133,7 @@ The key-moment system remains active in Watch Match, alongside the v1.8 sticky s
 
 ## v1.8: interactive key moments
 
-Watch Match now pauses **before your team's chance is resolved on screen** for penalties, free kicks, corners, one-on-ones, big play chances and major crosses. v2.4 now uses drawn opportunities for penalties, free kicks, corners, one-on-ones and crosses. Big play chances retain three football decisions. Choose an approach, see the outcome, then continue. **Let player decide** delegates a single chance; the pre-match **Interactive key moments** toggle enables uninterrupted watching. Quick Sim, opponent teams and skipped chances use the same assessment and resolution rules automatically.
+Watch Match now pauses **before your team's chance is resolved on screen** for penalties, free kicks, corners, one-on-ones, big play chances and major crosses. v2.4 now uses drawn opportunities for penalties, free kicks, corners, one-on-ones and crosses. Big chances now also offer drawn shots and passes in v2.4.1. Choose an approach, see the outcome, then continue. **Let player decide** delegates a single chance; the pre-match **Interactive key moments** toggle enables uninterrupted watching. Quick Sim, opponent teams and skipped chances use the same assessment and resolution rules automatically.
 
 Decisions use individual finishing, power, composure, control, passing, crossing, aerial ability, specialist traits, goalkeeper quality/movement, defensive pressure, fatigue and positional fit. Deliveries or dribbles can fail before a shot, passing options can produce a teammate's goal, and penalties are not constrained by the open-play conversion cap. There is no guaranteed scoring option. Only the current chance changes: past events, unrelated chances and the other fixtures retain their outcomes. Substitutions update future opportunities without erasing completed decisions.
 
