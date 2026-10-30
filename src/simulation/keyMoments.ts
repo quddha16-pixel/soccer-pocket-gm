@@ -1,6 +1,7 @@
+import {validDrawnPlay,drawnOption,copyDrawnPlay} from './drawnMoments';
 import { needsDecision } from './momentControl';
 import { validAimedShot } from './shotGeometry';
-import type { AimedShot, Career, KeyMoment, MomentOption } from '../models';
+import type { AimedShot, DrawnPlay, Career, KeyMoment, MomentOption } from '../models';
 import { resolveMoment } from './momentRules';
 import { refreshMatchStatistics } from './match';
 export const managedFixture=(c:Career)=>c.pending?.fixtures.find(f=>f.homeId===c.clubId||f.awayId===c.clubId);
@@ -10,14 +11,15 @@ export function activeDecision(c:Career):KeyMoment|undefined {
  return moments.find(m=>m.id===c.pending!.highlight?.momentId&&waiting(m))??moments.find(waiting);
 }
 export function decisionFeedback(c:Career){return managedFixture(c)?.report?.keyMoments?.find(m=>m.id===c.pending?.decisionFeedback);}
-export function chooseKeyMoment(c:Career,id:string,option:MomentOption,shot?:AimedShot):Career {
+export function chooseKeyMoment(c:Career,id:string,option:MomentOption,shot?:AimedShot,drawnPlay?:DrawnPlay):Career {
  if(!c.pending||c.pending.minute>=90||c.pending.decisionMode!=='interactive')throw Error('This match is not waiting for a live decision.');
  if(![0,1,2].includes(option))throw Error('Choose one of the three actions.');
  const f=managedFixture(c)!,existing=f.report?.keyMoments?.find(m=>m.id===id);
- if(existing?.selection!==undefined){if(existing.selection===option&&(!shot||JSON.stringify(existing.shot)===JSON.stringify(shot)))return c;throw Error('This decision has already been made.');}
+ if(existing?.selection!==undefined){if(existing.selection===option&&(!shot||JSON.stringify(existing.shot)===JSON.stringify(shot))&&(!drawnPlay||JSON.stringify(existing.drawnPlay)===JSON.stringify(drawnPlay)))return c;throw Error('This decision has already been made.');}
  const moment=activeDecision(c);if(!moment||moment.id!==id)throw Error('Only the current decision can be played.');
  if(shot&&(!['penalty','free-kick'].includes(moment.kind)||!validAimedShot(shot)||option!==(moment.kind==='penalty'?1:0)))throw Error('Draw a valid shot from the ball towards the goal.');
- const result=resolveMoment(f,c,{...moment,selection:option,...(shot?{shot:{...shot,path:shot.path.map(p=>({...p}))}}:{})},option);
+ if(drawnPlay&&(shot||!validDrawnPlay(drawnPlay,moment.kind)||option!==drawnOption(moment.kind,drawnPlay)))throw Error('Draw a complete, valid path for this opportunity.');
+ const result=resolveMoment(f,c,{...moment,selection:option,...(drawnPlay?{drawnPlay:copyDrawnPlay(drawnPlay)}:{}),...(shot?{shot:{...shot,path:shot.path.map(p=>({...p}))}}:{})},option);
  const events=f.report!.events.filter(e=>e.momentId!==id&&e.id!==moment.eventId);if(result.event)events.push(result.event);events.sort((a,b)=>a.minute-b.minute||a.id.localeCompare(b.id));
  const resolved=refreshMatchStatistics({...f,report:{...f.report!,events,keyMoments:f.report!.keyMoments!.map(m=>m.id===id?result.moment:m)}},c);
  return {...c,pending:{...c.pending,highlight:undefined,paused:true,decisionFeedback:id,fixtures:c.pending.fixtures.map(x=>x.id===f.id?resolved:x)}};
@@ -41,4 +43,10 @@ export function shootKeyMoment(c:Career,id:string,shot:AimedShot):Career {
  const moment=managedFixture(c)?.report?.keyMoments?.find(m=>m.id===id);
  if(!moment||!['penalty','free-kick'].includes(moment.kind)||!validAimedShot(shot))throw Error('Draw a valid shot from the ball towards the goal.');
  return chooseKeyMoment(c,id,moment.kind==='penalty'?1:0,shot);
+}
+
+export function drawKeyMoment(c:Career,id:string,play:DrawnPlay):Career {
+ const m=managedFixture(c)?.report?.keyMoments?.find(m=>m.id===id);
+ if(!m||!validDrawnPlay(play,m.kind))throw Error('Draw a complete, valid path for this opportunity.');
+ return chooseKeyMoment(c,id,drawnOption(m.kind,play),undefined,play);
 }

@@ -1,3 +1,4 @@
+import {drawnProbabilities,drawnReceiver} from './drawnMoments';
 import { aimedProbabilities } from './shotGeometry';
 import type { Career, Fixture, KeyMoment, MatchEvent, MomentKind, MomentOption, Player } from '../models';
 import { hash, identity } from './identity';
@@ -53,7 +54,7 @@ export interface MomentAssessment {completion:number;conversion:number;onTarget:
 /** Original game probabilities, not claims about official football statistics.
  * Completing a delivery/dribble and converting the eventual shot are separate. */
 export function assessMoment(f:Fixture,c:Career,m:KeyMoment,option:MomentOption,prepared=context(f,c,m)):MomentAssessment {
- const {actor:a,receiver:r,alternate:t,support:u,keeper:k,fit,defence:d}=prepared,g=keepingQuality(k),fatigue=.82+.18*a.fitness/100;
+ const {actor:a,receiver:originalReceiver,alternate:t,support:u,keeper:k,fit,defence:d}=prepared,r=m.drawnPlay?.delivery?prepared.team.find(p=>p.id===drawnReceiver(m,m.drawnPlay!))!:originalReceiver,g=keepingQuality(k),fatigue=.82+.18*a.fitness/100;
  const setPiece=['penalty','free-kick','corner'].includes(m.kind),familiarity=setPiece?1:fit(a),pressure=m.pressure==='closing'?1:0;
  const control=meanSkill(a,'ballControl','composure'),finish=meanSkill(a,'finishing','composure','positioning'),passing=meanSkill(a,'shortPassing','vision'),delivery=meanSkill(a,'crossing','longPassing');
  let completion=1,conversion=.14,onTarget=.48,shooter=a,assistId:string|undefined,chanceType:MomentAssessment['chanceType']='close';
@@ -87,18 +88,20 @@ export function assessMoment(f:Fixture,c:Career,m:KeyMoment,option:MomentOption,
   else if(option===1){shooter=r;completion=.73+(delivery+passing-2*d)*.0025;conversion=.21+(score(r)-g)*.002;}
   else {shooter=u;completion=.81+(passing-d)*.003;conversion=.14+(meanSkill(u,'longShots','ballControl','composure')*fit(u)-g)*.002;chanceType='distance';}
  }
+ if(m.drawnPlay&&['corner','cross'].includes(m.kind)){shooter=prepared.team.find(p=>p.id===drawnReceiver(m,m.drawnPlay!))!;assistId=a.id;}
  const form=clamp(1+(identity(shooter).development.form-6.5)*.015,.95,1.05);
  if(m.kind!=='penalty')completion*=fatigue*(setPiece?1:.7+.3*familiarity);
  conversion*=form*(m.kind==='penalty'?(.9+.1*a.fitness/100):(.75+.25*shooter.fitness/100)*(setPiece?1:shooter.id===a.id?familiarity:fit(shooter)));
  if(m.kind!=='penalty')conversion+=(m.baseXg-.15)*.12;
  const base={completion:completion===1?1:clamp(completion,.2,.97),conversion:clamp(conversion,m.kind==='penalty'?.4:.015,m.kind==='penalty'?.93:.48),onTarget,shooterId:shooter.id,assistId,chanceType};
+ if(m.drawnPlay)return {...base,...drawnProbabilities(base,m.drawnPlay,m.kind,meanSkill(shooter,...(m.kind==='free-kick'?['longShots','shotPower','composure'] as const:['finishing','composure'] as const))+trait(a,'set-piece-specialist')*(m.kind==='free-kick'?3:0))};
  if(m.shot&&(m.kind==='penalty'||m.kind==='free-kick'))return {...base,...aimedProbabilities(base,m.shot,m.kind,meanSkill(a,...(m.kind==='penalty'?['finishing','composure'] as const:['longShots','shotPower','composure'] as const))+trait(a,'set-piece-specialist')*3)};
  return base;
 }
 
 export function resolveMoment(f:Fixture,c:Career,m:KeyMoment,option:MomentOption,prepared?:ReturnType<typeof context>):{moment:KeyMoment;event?:MatchEvent}{
  const seed=f.report!.simulationSeed??hash(f.id),rng=random(hash(`${seed}:${m.id}:outcome`)),a=assessMoment(f,c,m,option,prepared),deliveryRoll=rng(),goalRoll=rng(),targetRoll=rng();
- if(deliveryRoll>=a.completion)return {moment:{...m,outcome:m.shot?'blocked':['corner','cross','free-kick'].includes(m.kind)?'intercepted':'blocked'}};
+ if(deliveryRoll>=a.completion)return {moment:{...m,outcome:m.shot||m.drawnPlay&&!m.drawnPlay.delivery?'blocked':['corner','cross','free-kick'].includes(m.kind)?'intercepted':'blocked'}};
  const goal=goalRoll<a.conversion,onTarget=goal||targetRoll<a.onTarget;
  const event:MatchEvent={id:m.eventId,momentId:m.id,minute:m.minute,clubId:m.clubId,playerId:a.shooterId,creatorId:a.assistId,assistId:goal?a.assistId:undefined,type:goal?'goal':'shot',onTarget,chanceType:a.chanceType,xG:a.conversion};
  return {moment:{...m,outcome:goal?'goal':onTarget?'saved':'wide'},event};

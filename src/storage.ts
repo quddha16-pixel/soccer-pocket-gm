@@ -1,3 +1,4 @@
+import {validDrawnPlay,drawnOption} from './simulation/drawnMoments';
 import {domesticFixtures} from './simulation/domestic';
 import {validDomestic} from './simulation/domesticValidation';
 import { needsDecision } from './simulation/momentControl';
@@ -88,6 +89,7 @@ export function loadCareer():{career:Career|null;error:string}{
    for(const m of r.keyMoments){
     if(typeof m.id!=='string'||typeof m.eventId!=='string'||!momentKinds.includes(m.kind)||![f.homeId,f.awayId].includes(m.clubId)||!Number.isInteger(m.minute)||m.minute<1||m.minute>90||!Number.isFinite(m.baseXg)||m.baseXg<0||m.baseXg>1||![0,1,2].includes(m.autoChoice)||(m.selection!==undefined&&![0,1,2].includes(m.selection))||!['set','advancing','committing'].includes(m.keeperApproach)||!['space','closing'].includes(m.pressure)||!['goal','saved','wide','blocked','intercepted'].includes(m.outcome))throw Error();
     if(m.highlight!==undefined&&(!['one-on-one','big-chance','corner'].includes(m.kind)||m.selection===undefined||m.shot||!validHighlightResult(m.highlight,[m.actorId,m.receiverId,m.alternateId,m.supportId])||m.highlight.outcome!==m.outcome||!Number.isFinite(m.highlight.elapsed)||m.highlight.elapsed<0||m.highlight.elapsed>20||!Number.isInteger(m.highlight.passes)||m.highlight.passes<0||m.highlight.passes>60))throw Error();
+    if(m.drawnPlay!==undefined&&(m.shot||m.highlight||!validDrawnPlay(m.drawnPlay,m.kind)||m.selection!==drawnOption(m.kind,m.drawnPlay)))throw Error();
     if(m.shot!==undefined&&(!['penalty','free-kick'].includes(m.kind)||m.selection!==(m.kind==='penalty'?1:0)||!validAimedShot(m.shot)))throw Error();
     const own=fixtureLineup(f,m.clubId,m.minute-1),other=fixtureLineup(f,m.clubId===f.homeId?f.awayId:f.homeId,m.minute-1);
     if([m.actorId,m.receiverId,m.alternateId,m.supportId].some(id=>!ids.has(id)||!own.slice(1).includes(id))||m.keeperId!==other[0])throw Error();

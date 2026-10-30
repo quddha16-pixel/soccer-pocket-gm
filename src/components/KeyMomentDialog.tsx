@@ -1,7 +1,10 @@
+import {clubById} from '../data/clubs';
+import {DrawOpportunity,DrawReplay} from './MomentArena';
+import {drawnKinds} from '../simulation/drawnMoments';
 import { useState } from 'react';
 import { ArrowRight, Flag, Target } from 'lucide-react';
 import type { Career, MomentKind, MomentOption } from '../models';
-import { activeDecision, chooseKeyMoment, continueAfterDecision, decisionFeedback, managedFixture } from '../simulation/keyMoments';
+import { activeDecision, drawKeyMoment, chooseKeyMoment, continueAfterDecision, decisionFeedback, managedFixture } from '../simulation/keyMoments';
 import { momentOptions, momentTitles } from '../simulation/momentRules';
 import { Modal } from './Modal';
 import { PlayerAvatar } from './PlayerAvatar';
@@ -25,6 +28,8 @@ export function KeyMomentDialog({career:c,onUpdate}:{career:Career;onUpdate:(c:C
  const name=(id:string)=>c.players.find(p=>p.id===id)?.name??'Teammate';
  const apply=(fn:()=>Career)=>{try{onUpdate(fn());setError('');}catch(e){setError((e as Error).message);}};
  const delegate=()=>apply(()=>continueAfterDecision(chooseKeyMoment(c,m.id,m.autoChoice)));
+ const targets=[m.receiverId,m.alternateId,m.supportId].map(id=>c.players.find(p=>p.id===id)!);
+ if((!feedback&&m.clubId===c.clubId&&drawnKinds.includes(m.kind))||feedback?.drawnPlay){const complete=replayDone===m.id,visible=f.report!.events.filter(e=>e.type==='goal'&&(e.minute<=c.pending!.minute||complete&&e.momentId===m.id)),score=(id:string)=>visible.filter(e=>e.clubId===id).length;return <Modal title={feedback?'Your moment':momentTitles[m.kind]} onClose={feedback?()=>apply(()=>continueAfterDecision(c)):delegate} closeLabel={feedback?'Close result and continue':'Close and let player decide'} className="draw-moment-modal" footer={feedback?<button disabled={!complete} className="primary full moment-continue" onClick={()=>apply(()=>continueAfterDecision(c))}>{complete?'Continue match':'Watch your chance…'}<ArrowRight size={20}/></button>:undefined}><div className="moment-match-ribbon"><span>{m.minute}′ · {f.competition?'Cup football':'Premier League'}</span><strong>{clubById(f.homeId).short} {score(f.homeId)} — {score(f.awayId)} {clubById(f.awayId).short}</strong><span>{f.homeId===c.clubId?'HOME':'AWAY'}</span></div>{error&&<p role="alert" className="error">{error}</p>}{feedback?<DrawReplay key={m.id} moment={m} actor={actor} keeper={keeper} targets={targets} wall={wallPlayers} onComplete={()=>setReplayDone(m.id)}/>:<DrawOpportunity key={m.id} moment={m} actor={actor} keeper={keeper} targets={targets} wall={wallPlayers} onPlay={p=>apply(()=>drawKeyMoment(c,m.id,p))} onDelegate={delegate}/>}</Modal>;}
  return <Modal title={feedback?'The outcome':momentTitles[m.kind]} onClose={feedback?()=>apply(()=>continueAfterDecision(c)):delegate} closeLabel={feedback?'Close result and continue':'Close and let player decide'} className={`key-moment-modal ${feedback?.shot?'shot-moment-modal':''}`} footer={feedback?<button disabled={inFlight} className="primary full" onClick={()=>apply(()=>continueAfterDecision(c))}>{inFlight?'Ball in flight…':'Continue match'} <ArrowRight size={20}/></button>:<button className="text-button full" onClick={delegate}>Let player decide</button>}>
   <div className="moment-scene-heading"><span className="moment-minute">{m.minute}′</span><span className="eyebrow">{feedback?'Decision played':'Your call'} · {f.homeId===c.clubId?'Home':'Away'}</span><span className="moment-symbol">{['corner','free-kick'].includes(m.kind)?<Flag size={21}/>:<Target size={21}/>}</span></div>
   {error&&<p role="alert" className="error">{error}</p>}
