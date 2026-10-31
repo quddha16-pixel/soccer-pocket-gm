@@ -1,5 +1,5 @@
 import type {Career,Fixture} from '../models';
-import {allClubs,leagueClubs} from '../data/clubs';
+import {universeClubs,leagueClubs} from '../data/clubs';
 import {cupStages} from './domestic';
 import type {CupTournament} from './domesticModels';
 import {validArchivedBoxScore} from './boxScore';
@@ -15,7 +15,7 @@ function validWinner(f:Fixture,t:CupTournament,index:number,players:Set<string>)
  return s.home===s.kicks.filter(k=>k.clubId===f.homeId&&k.scored).length&&s.away===s.kicks.filter(k=>k.clubId===f.awayId&&k.scored).length&&f.winnerId===(s.home>s.away?f.homeId:f.awayId);
 }
 export function validDomestic(c:Career){
- const ids=new Set(allClubs.map(t=>t.id)),players=new Set(c.players.map(p=>p.id)),d=c.domestic;
+ const ids=new Set(universeClubs(c).map(t=>t.id)),players=new Set(c.players.map(p=>p.id)),d=c.domestic;
  if(d){
   if(d.version!==1||d.season!==c.world.season||!Array.isArray(d.tournaments)||d.tournaments.length<2||d.tournaments.length>3||new Set(d.tournaments.map(t=>t.id)).size!==d.tournaments.length||!d.tournaments.some(t=>t.id==='carabao')||!d.tournaments.some(t=>t.id==='fa-cup'))return false;
   for(const t of d.tournaments){const stages=cupStages[t.id];if(!stages||t.season!==d.season||!Array.isArray(t.entrants)||new Set(t.entrants).size!==t.entrants.length||t.entrants.some(id=>!ids.has(id))||!Array.isArray(t.byes)||!Array.isArray(t.rounds)||t.rounds.length<1||t.rounds.length>stages.length)return false;

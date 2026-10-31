@@ -1,6 +1,18 @@
-# Pocket Football GM — v2.4.1
+# Pocket Football GM — v2.5.0
 
 Created By: Quentin Warminsky. A mobile-first football management game built with React, TypeScript and Vite in the existing `quddha16-pixel/soccer-pocket-gm` repository. No licensed club marks, photos, external portrait services or external fonts are used.
+
+## Build Your Franchise or Draft Your Team (v2.5)
+
+The opening screen now offers **Build Your Franchise** for the existing club-selection career and **Draft Your Team** for a separate 20-round fantasy draft. Each has its own saved career and Continue button. Your existing regular save remains in place.
+
+Name the new club, choose its primary and secondary colors, and choose your GM's name and managerial style. Each round spins one of the original 20 custom Premier League clubs; choose one available real player from that squad. Clubs may repeat, but players cannot. Your board saves after every spin and pick, and refreshing never rerolls the current club. Position filters, player faces, ratings, traits, potential, squad-balance counts and a sticky confirmation bar support selection.
+
+The draft finishes with **20 players: two goalkeepers and eighteen outfield players**, including at least one midfielder, winger or striker for the existing designated-star role. Final picks reserve missing requirements, and source clubs retain a valid XI. No footballer is cloned or replaced with a fictional starting player.
+
+Join the EPL with your club's chosen name, colors, badge and kit. In this draft universe, **Sunderland move to the Championship pool and Lincoln City leave it**. Lincoln are the lowest club by the game's existing starting strength estimate; the game does not simulate a Championship league table. The EPL remains 20 clubs, the pool 24, the full universe 44, and the season 380 league fixtures. Domestic cups, transfers, staff, contracts, finances, legacy, awards, development and Matchday Moments remain available. Founding finances are game estimates scaled to the drafted squad's wages.
+
+Drafting and playing use separate storage slots from the regular franchise, including separate playback checkpoints. A new board does not erase a completed draft career; replacing it requires confirmation after the 20-player squad is ready. Normal clubs, colors, roster data and previous careers are preserved. [v2.5 implementation and validation](docs/v2.5-release.md).
 
 ## Matchday Moments (v2.4)
 
@@ -77,6 +89,8 @@ npm test
 npm run build
 npm run preview
 # Optional compiled-browser QA (requires Playwright and Chromium):
+node node_modules/vite-node/vite-node.mjs scripts/build-draft-qa-fixtures.ts
+BASE_URL=http://localhost:4173/soccer-pocket-gm/ node scripts/fantasy-draft-qa.cjs
 node node_modules/vite-node/vite-node.mjs scripts/build-simulation-qa-fixtures.ts
 BASE_URL=http://localhost:4173/soccer-pocket-gm/ node scripts/drawn-moments-qa.cjs
 BASE_URL=http://localhost:4173/soccer-pocket-gm/ node scripts/simulation-cups-qa.cjs
@@ -94,7 +108,7 @@ Relegation dismisses the GM from that club; the same career can continue through
 
 ## Play and manage the club
 
-1. Start a career, choose reputation and one of three managerial specialties, then browse all 20 clubs. Unknown coaches receive four highlighted offers; Established coaches have 12 options, while Elite coaches can choose all 20. Each club card shows title legacy points; Details compares top-four and survival outcomes. Continue restores a saved career or pending matchday.
+1. Choose **Build Your Franchise** to begin a regular career, choose reputation and one of three managerial specialties, then browse all 20 clubs. Unknown coaches receive four highlighted offers; Established coaches have 12 options, while Elite coaches can choose all 20. Each club card shows title legacy points; Details compares top-four and survival outcomes. Continue restores a saved career or pending matchday.
 2. **Home** shows your club, league position, points, recent form, next opponent and **Play Next Match**. Detailed season metrics and squad leaders are a secondary view.
 3. **Squad** contains Lineup, Depth, Players and Progress. Choose 4-3-3, 4-4-2 or 4-2-3-1; tap a starter, choose a replacement and confirm. Selecting another starter swaps slots. Toggle chemistry or open a complete profile. Match approach remains a separate screen.
 4. **Market** contains player/free-agent search, negotiations, incoming offers, history and shortlist. Search/filter opens a sheet; contract and scouting details expand on each card. **Club** links to Legacy & achievements, GM job offers, Staff & contracts, Finances and performance. **League** contains Table, Fixtures, Stats, EFL pool, Awards and Records, including previous-season scores, head coaches and promotion/relegation changes.

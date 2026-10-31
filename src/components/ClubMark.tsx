@@ -19,7 +19,7 @@ function Motif({type}:{type:string}){switch(type){
  default:return <><circle cx="40" cy="47" r="17"/><path d="m40 36 10 8-4 12H34l-4-12ZM24 42l6 2m20 0 6-2M34 56l-4 7m16-7 4 7M40 30v6"/></>;
 }}
 export function ClubMark({club,large=false}:{club:Club;large?:boolean}){
- const palette=clubTheme(club.id);
+ const palette={primary:club.color,secondary:club.secondary??clubTheme(club.id).secondary};
  const index=Object.keys(motifs).indexOf(club.id),round=index%3===0,diamond=index%3===1;
  return <span className={`club-mark crest ${large?'large':''}`} style={{'--club-color':club.color} as React.CSSProperties} aria-hidden="true"><svg viewBox="0 0 80 92" focusable="false">{round?<circle cx="40" cy="45" r="36" fill={palette.primary} stroke={palette.secondary} strokeWidth="3"/>:<path d={diamond?'M40 4 74 17v35L62 72 40 87 18 72 6 52V17Z':'M8 8h64v44q-4 21-32 35Q12 73 8 52Z'} fill={palette.primary} stroke={palette.secondary} strokeWidth="3"/>}<path d="M19 22h42" stroke={palette.secondary} strokeOpacity=".5"/><g stroke={palette.secondary} strokeWidth="2.4" fill="none" strokeLinecap="round" strokeLinejoin="round"><Motif type={motifs[club.id]}/></g><text x="40" y="77" fill={palette.secondary} fontSize="7" fontWeight="800" textAnchor="middle" letterSpacing="1">{club.short}</text></svg></span>;
 }

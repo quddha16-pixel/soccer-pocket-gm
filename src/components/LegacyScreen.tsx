@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ArrowRight, Award, BriefcaseBusiness, Trophy } from 'lucide-react';
 import type { Career } from '../models';
-import { allClubs, clubById, clubs } from '../data/clubs';
+import { allClubs,universeClubs, clubById, clubs } from '../data/clubs';
 import { achievementDefinitions, legacyPoints, legacyState, legacyTier, settleLegacySeason, clubLegacyOpportunity } from '../simulation/legacy';
 import { acceptManagerOffer, managerJobOffers } from '../simulation/managerJobs';
 import { formatMoney } from '../simulation/management';
@@ -33,7 +33,7 @@ export function LegacyScreen({career:c,onChange,initialTab='overview'}:{career:C
  </>}
  {tab==='achievements'&&<>
  <section className="panel"><h2><Award size={23}/> Your achievements</h2><p className="muted">Unlocked once per GM career. All awards and titles come from your simulated seasons.</p><div className="achievement-grid">{achievementDefinitions.map(a=>{const unlock=l.achievements.find(u=>u.id===a.id),value=Math.min(a.goal,Math.max(0,a.progress(l)));return <article key={a.id} className={`achievement-card ${unlock?'unlocked':''}`}><div><Trophy size={22}/><span className="tag">{unlock?'Unlocked':`${value} / ${a.goal}`}</span></div><h3>{a.title}</h3><p>{a.description}</p>{unlock?<small>{unlock.season} · {clubById(unlock.clubId).name}</small>:<progress aria-label={`${a.title} progress`} value={value} max={a.goal}/>}</article>;})}</div></section>
- <section className="panel"><h2>Win with every club</h2><p className="muted">Original custom league: {clubs.filter(c=>won.has(c.id)).length} / 20. Complete universe: {won.size} / {allClubs.length}.</p><div className="legacy-club-grid">{allClubs.map(club=><div key={club.id} className={won.has(club.id)?'won':''}><ClubMark club={club}/><span>{club.name}</span>{won.has(club.id)&&<Trophy size={17} aria-label="Title won"/>}</div>)}</div></section>
+ <section className="panel"><h2>Win with every club</h2><p className="muted">Original custom league: {clubs.filter(c=>won.has(c.id)).length} / 20. Complete universe: {won.size} / {allClubs.length}.</p><div className="legacy-club-grid">{universeClubs(c).map(club=><div key={club.id} className={won.has(club.id)?'won':''}><ClubMark club={club}/><span>{club.name}</span>{won.has(club.id)&&<Trophy size={17} aria-label="Title won"/>}</div>)}</div></section>
  </>}
  {tab==='jobs'&&<>
  <section className="panel"><h2><BriefcaseBusiness size={23}/> Your next chapter</h2><p className="muted">Current GM contract: {formatMoney(wage)} / week. Offers open after the season. Your reputation opens 4 / 12 / 20 offers: Unknown / Established / Elite. Smaller rebuilding clubs remain available as your reputation grows. Renewing your current job uses one offer slot.</p><p className="small muted">One move per season. The next league includes the three randomly promoted clubs. Relegated clubs enter the pool; a dismissed GM can continue with a new employer. Current player ownership, club accounts and world history stay with their clubs.</p>{!offers.length&&<p className="notice">Finish matchweek 38 to review contracts and poaching approaches. Your current career continues while you play.</p>}</section>

@@ -36,7 +36,7 @@ describe('all-club contract selection',()=>{
   expect(()=>newCareer('No offer','unknown','city')).toThrow(/offered/);expect(unknown.every(c=>c.strength<=74)).toBe(true);
  });
  it('renders every club and highlights only available contracts without hiding locked teams',()=>{
-  render(<App/>);fireEvent.click(screen.getByRole('button',{name:'Start career'}));fireEvent.click(screen.getByRole('button',{name:'Find job offers'}));
+  render(<App/>);fireEvent.click(screen.getByRole('button',{name:'Build Your Franchise'}));fireEvent.click(screen.getByRole('button',{name:'Find job offers'}));
   expect(document.querySelectorAll('.offer-card')).toHaveLength(20);expect(document.querySelectorAll('.offer-available')).toHaveLength(offers('unknown').length);
   const locked=screen.getByRole('article',{name:'Manchester City: Higher reputation required'});expect(within(locked).getByRole('button',{name:'No offer yet'}).hasAttribute('disabled')).toBe(true);
   fireEvent.click(screen.getByRole('button',{name:'Back'}));fireEvent.click(screen.getByRole('button',{name:/Established manager/}));fireEvent.click(screen.getByRole('button',{name:'Find job offers'}));

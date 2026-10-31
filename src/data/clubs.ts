@@ -1,4 +1,4 @@
-import { clubTheme } from './clubThemes';
+import { clubTheme,registerClubPalette } from './clubThemes';
 import type { Career, Club } from '../models';
 import { championshipClubs } from './championship';
 // Authoritative 2026–27 membership supplied by the project owner.
@@ -22,7 +22,10 @@ const rows: [string,string,string,string,number,number][] = [
 export const clubs:Club[]=rows.map(([id,name,short,color,strength,budget])=>({id,name,short,color:clubTheme(id).primary,strength,budget,expectation:strength>=85?'Challenge for the title':strength>=80?'Qualify for Europe':strength>=75?'Secure a mid-table finish':'Avoid relegation'}));
 // The starting 20 remain immutable. Every career stores its own current league.
 export const allClubs:Club[]=[...clubs,...championshipClubs];
-export const clubById=(id:string)=>allClubs.find(c=>c.id===id)!;
-export function leagueClubs(c?:Pick<Career,'world'>|null):Club[]{return c?.world?.leagueClubIds?c.world.leagueClubIds.map(clubById):clubs;}
-export function poolClubs(c?:Pick<Career,'world'>|null):Club[]{return c?.world?.championshipClubIds?c.world.championshipClubIds.map(clubById):championshipClubs;}
-export function managedClubs(c:Pick<Career,'world'>):Club[]{return allClubs.filter(club=>!!c.world.finances[club.id]);}
+const draftedClubs=new Map<string,Club>();
+export function registerDraftClub(club:Club){if(!/^draft-[0-9]+-[0-9]+$/.test(club.id)||!club.name?.trim()||club.name.length>32||!club.secondary)throw Error('Invalid drafted club identity.');registerClubPalette(club.id,club.color,club.secondary);draftedClubs.set(club.id,club);}
+export const clubById=(id:string)=>allClubs.find(c=>c.id===id)??draftedClubs.get(id)!;
+export function universeClubs(c?:Pick<Career,'world'>|null):Club[]{const d=c?.world?.draftFranchise;if(!d)return allClubs;registerDraftClub(d.club);return [...allClubs.filter(t=>t.id!==d.removedClubId),d.club];}
+export function leagueClubs(c?:Pick<Career,'world'>|null):Club[]{if(c?.world?.draftFranchise)registerDraftClub(c.world.draftFranchise.club);return c?.world?.leagueClubIds?c.world.leagueClubIds.map(clubById):clubs;}
+export function poolClubs(c?:Pick<Career,'world'>|null):Club[]{if(c?.world?.draftFranchise)registerDraftClub(c.world.draftFranchise.club);return c?.world?.championshipClubIds?c.world.championshipClubIds.map(clubById):championshipClubs;}
+export function managedClubs(c:Pick<Career,'world'>):Club[]{return universeClubs(c).filter(club=>!!c.world.finances[club.id]);}

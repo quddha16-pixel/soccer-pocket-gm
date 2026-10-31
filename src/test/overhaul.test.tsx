@@ -101,7 +101,7 @@ describe('playback and navigation',()=>{
  expect(latest.pending!.fixtures).toEqual(original);
  });
  it('retains setup fields and correct previous screens without clearing a saved career',()=>{
- render(<App/>);fireEvent.click(screen.getByRole('button',{name:'Start career'}));fireEvent.change(screen.getByLabelText('Manager name'),{target:{value:'Saved Name'}});fireEvent.click(screen.getByRole('button',{name:'Find job offers'}));fireEvent.click(screen.getByRole('button',{name:'Back'}));expect((screen.getByLabelText('Manager name') as HTMLInputElement).value).toBe('Saved Name');
+ render(<App/>);fireEvent.click(screen.getByRole('button',{name:'Build Your Franchise'}));fireEvent.change(screen.getByLabelText('Manager name'),{target:{value:'Saved Name'}});fireEvent.click(screen.getByRole('button',{name:'Find job offers'}));fireEvent.click(screen.getByRole('button',{name:'Back'}));expect((screen.getByLabelText('Manager name') as HTMLInputElement).value).toBe('Saved Name');
  cleanup();saveCareer(career());render(<App/>);fireEvent.click(screen.getByRole('button',{name:'Continue career'}));fireEvent.click(screen.getAllByRole('button',{name:'Squad'})[0]);fireEvent.click(screen.getByRole('button',{name:/Match approach/}));fireEvent.click(screen.getByRole('button',{name:'Back'}));expect(screen.getByRole('heading',{name:'Squad'})).toBeTruthy();expect(loadCareer().career!.week).toBe(0);
  },15000);
 });

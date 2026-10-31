@@ -1,0 +1,10 @@
+import {mkdirSync,readFileSync,writeFileSync} from 'node:fs';
+import ts from 'typescript';
+import {newCareer,advance} from '../src/simulation/career';
+import {encodeSave} from '../src/simulation/codec';
+import {availableDraftPlayers,spinDraft,pickDraftPlayer,finishDraft,draftPlayers} from '../src/simulation/fantasyDraft';
+import type {DraftState} from '../src/simulation/draftModels';
+const dir='/tmp/pocket-v25-fixtures';mkdirSync(dir,{recursive:true});
+const regular=advance(newCareer('Quentin','elite','everton',33));writeFileSync(`${dir}/regular.json`,JSON.stringify({save:encodeSave(JSON.stringify(regular))}));
+let state:DraftState={version:1,seed:815,name:'Second Wave FC',primary:'#2876DD',secondary:'#FFE0AA',manager:'Quentin',managerStyle:'developer',picks:[]};for(let i=0;i<20;i++){state=spinDraft(state);state=pickDraftPlayer(state,availableDraftPlayers(state)[0].id);}writeFileSync(`${dir}/ready-draft.json`,JSON.stringify(state));writeFileSync(`${dir}/draft-career.json`,JSON.stringify({save:encodeSave(JSON.stringify(finishDraft(state)))}));
+writeFileSync(`${dir}/catalog.json`,JSON.stringify(draftPlayers().map(p=>({id:p.id,name:p.name,clubId:p.clubId,position:p.position,overall:p.overall}))));writeFileSync(`${dir}/codec.cjs`,ts.transpileModule(readFileSync('src/simulation/codec.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText);console.log('Generated real-roster draft fixtures, normal career and codec.');

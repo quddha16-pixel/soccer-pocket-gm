@@ -1,3 +1,5 @@
+import {validDraftCareer} from './simulation/fantasyDraft';
+import type {CareerMode} from './simulation/draftModels';
 import {validDrawnPlay,drawnOption} from './simulation/drawnMoments';
 import {domesticFixtures} from './simulation/domestic';
 import {validDomestic} from './simulation/domesticValidation';
@@ -14,14 +16,18 @@ import { encodeSave, decodeSave } from './simulation/codec';
 import { initializeWorld } from './simulation/world';
 import type { Career } from './models';
 import { autoLineup, eligibleStars, formations, validLineup } from './simulation/management';
-import { clubs, allClubs, leagueClubs, managedClubs, clubById } from './data/clubs';
+import { clubs, allClubs,universeClubs, leagueClubs, managedClubs, clubById } from './data/clubs';
 import { generateFixtures } from './simulation/league';
 export const SAVE_KEY='pocket-football-gm-v1';
+export const DRAFT_SAVE_KEY='pocket-football-gm-fantasy-v1';
 export const MANUAL_SAVE_KEY=`${SAVE_KEY}-manual`;
-export function saveManualProgress(c:Career,state:NonNullable<Career['pending']>['manual']){localStorage.setItem(MANUAL_SAVE_KEY,JSON.stringify({seed:c.seed,season:c.world.season,week:c.pending?.week,state}));}
-export function loadCareer():{career:Career|null;error:string}{
+export const modeSaveKey=(mode:CareerMode)=>mode==='draft'?DRAFT_SAVE_KEY:SAVE_KEY;
+export const careerSaveKey=(c:Career)=>modeSaveKey(c.mode==='draft'?'draft':'franchise');
+export function saveManualProgress(c:Career,state:NonNullable<Career['pending']>['manual']){localStorage.setItem(`${careerSaveKey(c)}-manual`,JSON.stringify({seed:c.seed,season:c.world.season,week:c.pending?.week,state}));}
+export function loadCareer(mode:CareerMode='franchise'):{career:Career|null;error:string}{
+ const saveKey=modeSaveKey(mode),manualKey=`${saveKey}-manual`;
  try{
- const raw=localStorage.getItem(SAVE_KEY);if(!raw)return {career:null,error:''};
+ const raw=localStorage.getItem(saveKey);if(!raw)return {career:null,error:''};
  const parsed=JSON.parse(decodeSave(raw));const oldVersion=parsed.version;
  let c=parsed as Career;
  if(parsed.version===1){
@@ -29,11 +35,12 @@ export function loadCareer():{career:Career|null;error:string}{
   c.starId=eligibleStars(c)[0]?.id??'';c.transferBudget=clubById(c.clubId).budget*1e6;c.statsStartWeek=c.week+1;
  }
  if(oldVersion===1||oldVersion===2)c=initializeWorld(c);
- const progressRaw=localStorage.getItem(`${SAVE_KEY}-playback`);
+ const progressRaw=localStorage.getItem(`${saveKey}-playback`);
  if(progressRaw&&c.pending){try{const progress=JSON.parse(progressRaw);if(progress.seed===c.seed&&progress.season===c.world.season&&progress.week===c.pending.week&&progress.roundId===c.pending.competition?.roundId){const candidate={...c,pending:{...c.pending,minute:progress.minute,speed:progress.speed,paused:progress.paused,decisionMode:progress.decisionMode,decisionFeedback:progress.decisionFeedback,highlight:progress.highlight}};if(validHighlight(candidate))c=candidate;}}catch{/* The authoritative snapshot remains available. */}}
- if(c.pending?.manual){try{const raw=localStorage.getItem(MANUAL_SAVE_KEY);if(raw){const progress=JSON.parse(raw);if(progress.seed===c.seed&&progress.season===c.world.season&&progress.week===c.pending.week&&progress.state?.elapsed>=c.pending.manual.elapsed){const candidate=snapshotManual(c,progress.state,true);if(validManualState(candidate))c=candidate;}}}catch{/* Keep the authoritative checkpoint if a sidecar is interrupted. */}}
+ if(c.pending?.manual){try{const raw=localStorage.getItem(manualKey);if(raw){const progress=JSON.parse(raw);if(progress.seed===c.seed&&progress.season===c.world.season&&progress.week===c.pending.week&&progress.state?.elapsed>=c.pending.manual.elapsed){const candidate=snapshotManual(c,progress.state,true);if(validManualState(candidate))c=candidate;}}}catch{/* Keep the authoritative checkpoint if a sidecar is interrupted. */}}
 
- const ids=new Set(allClubs.map(x=>x.id)),currentIds=c.world?.leagueClubIds??clubs.map(club=>club.id);
+ if((mode==='draft')!==(c.mode==='draft')||!validDraftCareer(c))throw Error();
+ const ids=new Set(universeClubs(c).map(x=>x.id)),currentIds=c.world?.leagueClubIds??clubs.map(club=>club.id);
  if(c.matchPlan!==undefined){const plan=c.matchPlan,players=new Set(c.players.map(p=>p.id));if(!plan||!Array.isArray(plan.bench)||plan.bench.length>9||new Set(plan.bench).size!==plan.bench.length||plan.bench.some(id=>!players.has(id))||!Array.isArray(plan.changes)||plan.changes.length>5||plan.changes.some(s=>s.clubId!==c.clubId||!players.has(s.offId)||!players.has(s.onId)||!Number.isInteger(s.minute)||s.minute<1||s.minute>89))throw Error();}
  if(c.recentSubPlans!==undefined){
   const plans=c.recentSubPlans,players=new Set(c.players.map(p=>p.id));
@@ -116,11 +123,14 @@ export function loadCareer():{career:Career|null;error:string}{
  return {career:c,error:''};
  }catch{return {career:null,error:'Your saved career could not be loaded. Start a new career to replace it.'};}
 }
-let lastSnapshot:Career|null=null;
+const lastSnapshots=new Map<string,Career>();
 export function saveCareer(c:Career){
- const sameRound=localStorage.getItem(SAVE_KEY)&&lastSnapshot&&['seed','week','manager','reputation','clubId','status','tactic','formation','starId','playableHighlights','interactiveMoments'].every(key=>c[key as keyof Career]===lastSnapshot![key as keyof Career])&&c.domestic===lastSnapshot.domestic&&c.pending?.competition?.roundId===lastSnapshot.pending?.competition?.roundId&&c.lineup===lastSnapshot.lineup&&c.world===lastSnapshot.world&&c.players===lastSnapshot.players&&c.fixtures===lastSnapshot.fixtures&&c.pending?.fixtures===lastSnapshot.pending?.fixtures&&c.pending?.manual===lastSnapshot.pending?.manual&&c.pending&&lastSnapshot.pending;
- if(sameRound){localStorage.setItem(`${SAVE_KEY}-playback`,JSON.stringify({seed:c.seed,season:c.world.season,week:c.pending!.week,roundId:c.pending!.competition?.roundId,minute:c.pending!.minute,speed:c.pending!.speed,paused:c.pending!.paused,decisionMode:c.pending!.decisionMode,decisionFeedback:c.pending!.decisionFeedback,highlight:c.pending!.highlight}));lastSnapshot=c;return;}
- const previous=localStorage.getItem(SAVE_KEY);
- if(previous&&!previous.startsWith('PFGM-LZW1:')){try{const version=JSON.parse(previous).version;if(version<3&&!localStorage.getItem(`${SAVE_KEY}-backup-v${version}`))localStorage.setItem(`${SAVE_KEY}-backup-v${version}`,encodeSave(previous));}catch(error){if(error instanceof DOMException)throw error;}}
- localStorage.setItem(SAVE_KEY,encodeSave(JSON.stringify(c)));localStorage.removeItem(`${SAVE_KEY}-playback`);localStorage.removeItem(MANUAL_SAVE_KEY);lastSnapshot=c;
+ const saveKey=careerSaveKey(c),manualKey=`${saveKey}-manual`,lastSnapshot=lastSnapshots.get(saveKey);
+ const sameRound=localStorage.getItem(saveKey)&&lastSnapshot&&['seed','week','manager','reputation','clubId','status','tactic','formation','starId','playableHighlights','interactiveMoments'].every(key=>c[key as keyof Career]===lastSnapshot![key as keyof Career])&&c.domestic===lastSnapshot.domestic&&c.pending?.competition?.roundId===lastSnapshot.pending?.competition?.roundId&&c.lineup===lastSnapshot.lineup&&c.world===lastSnapshot.world&&c.players===lastSnapshot.players&&c.fixtures===lastSnapshot.fixtures&&c.pending?.fixtures===lastSnapshot.pending?.fixtures&&c.pending?.manual===lastSnapshot.pending?.manual&&c.pending&&lastSnapshot.pending;
+ if(sameRound){localStorage.setItem(`${saveKey}-playback`,JSON.stringify({seed:c.seed,season:c.world.season,week:c.pending!.week,roundId:c.pending!.competition?.roundId,minute:c.pending!.minute,speed:c.pending!.speed,paused:c.pending!.paused,decisionMode:c.pending!.decisionMode,decisionFeedback:c.pending!.decisionFeedback,highlight:c.pending!.highlight}));lastSnapshots.set(saveKey,c);return;}
+ const previous=localStorage.getItem(saveKey);
+ if(previous&&!previous.startsWith('PFGM-LZW1:')){try{const version=JSON.parse(previous).version;if(version<3&&!localStorage.getItem(`${saveKey}-backup-v${version}`))localStorage.setItem(`${saveKey}-backup-v${version}`,encodeSave(previous));}catch(error){if(error instanceof DOMException)throw error;}}
+ localStorage.setItem(saveKey,encodeSave(JSON.stringify(c)));localStorage.removeItem(`${saveKey}-playback`);localStorage.removeItem(manualKey);lastSnapshots.set(saveKey,c);
 }
+
+export function clearCareer(mode:CareerMode){const key=modeSaveKey(mode);for(const suffix of ['','-playback','-manual'])localStorage.removeItem(`${key}${suffix}`);lastSnapshots.delete(key);}

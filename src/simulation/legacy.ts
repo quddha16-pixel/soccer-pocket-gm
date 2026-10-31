@@ -1,5 +1,5 @@
 import type { Career } from '../models';
-import { allClubs, clubs, clubById, leagueClubs } from '../data/clubs';
+import { allClubs,universeClubs, clubs, clubById, leagueClubs } from '../data/clubs';
 import { standings } from './league';
 import { financialSummary } from './economy';
 import { seasonReview, type SeasonReview } from './records';
@@ -129,7 +129,7 @@ export function settleLegacySeason(c:Career):Career {
 /** Strict optional-save validation; old careers without legacy remain supported. */
 export function validLegacy(c:Career){
  if(c.legacy===undefined)return true;
- const l=c.legacy,ids=new Set(allClubs.map(t=>t.id)),year=(n:number)=>Number.isInteger(n)&&n>=2026&&n<=c.world.season;
+ const l=c.legacy,ids=new Set(universeClubs(c).map(t=>t.id)),year=(n:number)=>Number.isInteger(n)&&n>=2026&&n<=c.world.season;
  const integer=(n:number)=>Number.isSafeInteger(n),target=(n:number)=>[1,4,10,17].includes(n);
  if(!l||l.version!==1||!year(l.sinceSeason)||!Array.isArray(l.entries)||!Array.isArray(l.achievements)||!Array.isArray(l.tenures)||!l.tenures.length||!Array.isArray(l.settledSeasons)||new Set(l.settledSeasons).size!==l.settledSeasons.length||l.settledSeasons.some(y=>!year(y)))return false;
  const b=l.baseline;

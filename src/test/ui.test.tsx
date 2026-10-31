@@ -8,7 +8,7 @@ afterEach(()=>{cleanup();localStorage.clear();sessionStorage.clear();});
 // These flows include full roster serialization and, below, a complete season.
 it('creates a career, advances, displays results, persists, navigates, and resets',async()=>{
  const user=userEvent.setup();const {unmount}=render(<App/>);
- await user.click(screen.getByRole('button',{name:/Start career/i}));
+ await user.click(screen.getByRole('button',{name:/Build Your Franchise/i}));
  await user.clear(screen.getByLabelText('Manager name'));await user.type(screen.getByLabelText('Manager name'),'Jamie Test');
  await user.click(screen.getByRole('button',{name:/Find job offers/}));
  expect(screen.getAllByRole('button',{name:/Accept offer/})).toHaveLength(offers('unknown').length);
@@ -25,7 +25,7 @@ it('creates a career, advances, displays results, persists, navigates, and reset
  await user.click(screen.getAllByRole('button',{name:'Squad'})[0]);expect(screen.getByRole('heading',{name:'Squad'})).toBeTruthy();await user.click(screen.getByRole('button',{name:'Players'}));expect(document.querySelectorAll('.roster-card')).toHaveLength(33);
  await user.click(screen.getAllByRole('button',{name:'League'})[0]);expect(document.querySelectorAll('.compact-table tbody tr')).toHaveLength(20);
  await user.click(screen.getAllByRole('button',{name:'Fixtures'})[0]);expect(document.querySelectorAll('.fixture')).toHaveLength(10);
- await user.click(screen.getByRole('button',{name:'Main menu'}));await user.click(screen.getByRole('button',{name:/Start career/i}));await user.click(screen.getByRole('button',{name:'Start completely new career'}));
+ await user.click(screen.getByRole('button',{name:'Main menu'}));await user.click(screen.getByRole('button',{name:/Build Your Franchise/i}));await user.click(screen.getByRole('button',{name:'Start completely new career'}));
  expect(screen.getByRole('heading',{name:'Meet the manager.'})).toBeTruthy();expect(localStorage.getItem(SAVE_KEY)).toBeNull();
 },30000);
 it('shows dismissal and a route to continue a relegated GM’s legacy',async()=>{
